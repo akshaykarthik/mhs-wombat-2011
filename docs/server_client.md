@@ -43,8 +43,8 @@ They will be in the form:
 	Inputn:Value
 
 
-
-### 4 End Connection
+4
+###  End Connection
 Server will simply send one line status message
 	A Won/B Won/ Etc
 
