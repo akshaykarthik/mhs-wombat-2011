@@ -1,8 +1,8 @@
 -- conf.lua
 function love.conf(t)
 	-- basic configurations
-    t.title = "Super Racer"
-    t.author = "Akshay, Drew, Peter"
+    t.title = "Super Race"
+    t.author = "Akshay, Drew, and Peter"
     t.url = "https://github.com/akshaykarthik/wombat"
 
     -- identity configurations
@@ -13,8 +13,8 @@ function love.conf(t)
 
     -- screen configurations
     t.screen.fullscreen = false
-    t.screen.height = 768
     t.screen.width = 1024
+    t.screen.height = 768
     t.screen.vsync = true
     t.screen.fsaa = 0
 
