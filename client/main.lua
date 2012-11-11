@@ -17,12 +17,12 @@ ui_button = require 'classes.ui.button'
 
 
 states = {}
-states["menu"] 			= require "states.menu"
-states["credits"] 		= require "states.credits"
--- states["single_menu"] 	= require "states.single_menu"
--- states["single_player"] 	= require "states.single_player"
--- states["network_menu"] 	= require "states.network_menu"
--- states["network_game"] 	= require "states.network_menu"
+states.menu			= require "states.menu"
+states.credits		= require "states.credits"
+-- states.single_menu 	= require "states.single_menu"
+-- states.single_player	= require "states.single_player"
+-- states.network_menu 	= require "states.network_menu"
+-- states.network_game 	= require "states.network_menu"
 
 
 
@@ -36,7 +36,7 @@ function love.load()
 	loader.init()
 
 	gamestate.registerEvents()
-	gamestate.switch(states["menu"])
+	gamestate.switch(states.menu)
 	--[[
 	the base menu state should be able route the game through all other states
 	ideally we have a splash screen state that goes first that redirects to the
