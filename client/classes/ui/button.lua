@@ -31,8 +31,8 @@ end
 function button:draw(  )
     if self.status == "none" then
         self.img = self.base
-    elseif self.status = "hover" then
-        self.img  self.hover
+    elseif self.status == "hover" then
+        self.img = self.hover
     else
         self.img = self.click
     end
