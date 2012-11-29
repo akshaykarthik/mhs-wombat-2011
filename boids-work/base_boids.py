@@ -4,8 +4,6 @@ try:
     import sys
     import random
     import math
-    import os
-    import getopt
     import pygame
     from socket import *
     from pygame.locals import *
@@ -14,17 +12,16 @@ except ImportError, err:
     sys.exit(2)
 
 from engine import *
-from engine.statemanager import *
 
 
-class base_boids(state):
+class base_boids(State):
     def __init__(self, sm):
         super(state, self).__init__()
         self.name = "base_boids"
         self.boids = []
         for i in range(10):
             for j in range(10):
-                self.boids.append(Boid(i * 100, j * 100))
+                self.boids.append(Boid(200 + i * 100, 200 + j * 100))
 
     def update(self, dt):
         pygame.display.set_caption(self.name)
@@ -89,6 +86,11 @@ class Boid:
         self.velocityX += (avgX / 40)
         self.velocityY += (avgY / 40)
 
+    def moveMouse(self):
+        pos = pygame.mouse.get_pos()
+        self.velocityX += (pos[0] - self.x)/200
+        self.velocityY += (pos[1] - self.y)/200
+
     "Move away from a set of boids. This avoids crowding"
     def moveAway(self, boids, minDistance):
         if len(boids) < 1:
@@ -131,19 +133,26 @@ class Boid:
             scaleFactor = maxVelocity / max(abs(self.velocityX), abs(self.velocityY))
             self.velocityX *= scaleFactor
             self.velocityY *= scaleFactor
-
+        self.ox = self.clamp(self.x, 1024, 0)
+        self.oy = self.clamp(self.y, 768, 0)
         self.x += self.velocityX
         self.y += self.velocityY
+
+
 
     def update(self, dt, boids):
         self.moveCloser(boids)
         self.moveWith(boids)
         self.moveAway(boids, 20)
+        self.moveMouse()
 
         self.move()
 
+    def clamp(self, val, max, min):
+        return val%max + min
+
     def draw(self, screen):
         pygame.draw.circle(screen,
-            (255, 255, 255),
-            (int(self.x), int(self.y)),
-            10, 1)
+                (255, 255, 255),
+                (int(self.clamp(self.x, 1024, 0)), int(self.clamp(self.y, 768, 0))),
+                1, 1)
