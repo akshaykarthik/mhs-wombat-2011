@@ -22,3 +22,6 @@ class BaseObject(object):
     def __str__(self):
         return ("{ Object: \n\tEnabled:" + str(self.is_enabled) +
             "\n\t Tags:" + str(self.tags) + "\n}")
+
+    def update(self, dt):
+        pass

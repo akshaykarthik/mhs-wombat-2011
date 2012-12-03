@@ -1,6 +1,8 @@
+import numbers
+from math import sqrt
+
+
 class Vector2(object):
-    def __version__():
-        return '1.01'
 
     """basic vector2 class that can be used in place of tuples"""
     def __init__(self, ix=0.0, iy=0.0):
@@ -9,25 +11,13 @@ class Vector2(object):
         self.y = iy
 
     def __add__(self, other):
-        if isinstance(other, Vector2):
-            new_vec = Vector2()
-            new_vec.x = self.x + other.x
-            new_vec.y = self.y + other.y
-            return new_vec
-        else:
-            raise TypeError("other must be of type Vector2")
+        return Vector2(self.x + other.x, self.y + other.y)
 
     def __radd__(self, other):
         return self.__add__(other)
 
     def __sub__(self, other):
-        if isinstance(other, Vector2):
-            new_vec = Vector2()
-            new_vec.x = self.x - other.x
-            new_vec.y = self.y - other.y
-            return new_vec
-        else:
-            raise TypeError("other must be of type Vector2")
+        return Vector2(self.x - other.x, self.y - other.y)
 
     def __rsub__(self, other):
         return self.__sub__(other)
@@ -91,11 +81,16 @@ class Vector2(object):
         else:
             self.y = value
 
+
+    def to_int(self):
+        return Vector2(int(self.x), int(self.y))
+
     def __str__(self):
         return "<Vector2> [ " + str(self.x) + ", " + str(self.y) + " ]"
 
     def __len__(self):
         return 2
+
 
     @staticmethod
     def zero():
@@ -109,14 +104,15 @@ class Vector2(object):
 
     def copy(self):
         """Create a copy of this Vector"""
-        new_vec = Vector2()
-        new_vec.x = self.x
-        new_vec.y = self.y
-        return new_vec
+        return Vector2(self.x, self.y)
 
     def length(self):
         """Gets the length of this Vector"""
-        return math.sqrt((self.x * self.x) + (self.y * self.y))
+        return sqrt((self.x * self.x) + (self.y * self.y))
+
+    def reset(self):
+        self.x = 0
+        self.y = 0
 
     def normalize(self):
         """Gets the normalized Vector"""
@@ -124,8 +120,7 @@ class Vector2(object):
         if length > 0:
             self.x /= length
             self.y /= length
-        else:
-            print "Length 0, cannot normalize."
+        return self
 
     def normalize_copy(self):
         """Create a copy of this Vector, normalize it, and return it."""
@@ -134,7 +129,7 @@ class Vector2(object):
         return vec
 
     @staticmethod
-    def distance(vec1, vec2):
+    def dist(vec1, vec2):
         """Calculate the distance between two Vectors"""
         if isinstance(vec1, Vector2)   \
         and isinstance(vec2, Vector2):
@@ -205,3 +200,4 @@ class Vector2(object):
         new_vec.x = vec1.x / vec2.x
         new_vec.y = vec1.y / vec2.y
         return new_vec
+

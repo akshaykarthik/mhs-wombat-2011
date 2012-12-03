@@ -19,3 +19,7 @@ class Utils(object):
     @staticmethod
     def clamp(val, low, high):
         return max(min(val, high), low)
+
+    @staticmethod
+    def loop(val, low, high):
+        return (val % (high - low) + low)

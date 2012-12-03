@@ -8,37 +8,30 @@ class Game(object):
     def __init__(self,
             name,
             screen_size=(1024, 768),
+            fps=240,
             clock=None,
             screen=None):
 
         super(Game, self).__init__()
         self.name = name
         self.screen_size = screen_size
+        self.fps = fps
 
         pygame.init()
         pygame.display.set_caption(name)
 
-        if clock is None:
-            self.clock = pygame.time.Clock()
-        else:
-            self.clock = clock
-
-        if screen is None:
-            self.screen = pygame.display.set_mode(screen_size)
-        else:
-            self.screen = screen
-
+        self.clock = clock or pygame.time.Clock()
+        self.screen = screen or pygame.display.set_mode(screen_size, DOUBLEBUF)
         self.states = []
         self.current_state = None
-
         self.background_color = (0, 0, 0)
 
     def setup(self):
         pass
 
     def preupdate(self):
-        self.clock.tick()
-        self.dt = self.clock.get_time()
+        self.clock.tick(self.fps)
+        self.dt = self.clock.get_time() * 0.001
 
     def update(self):
         if self.current_state is not None:
