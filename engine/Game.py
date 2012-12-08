@@ -1,5 +1,6 @@
 # Game.py
 import pygame
+from Draw import Draw
 from pygame.locals import *
 
 

@@ -4,26 +4,26 @@
 __all__ = []
 
 
-def addtoall(str):
+def lib_import(str):
     __all__.append(str)
 
-addtoall("Vector2")
+lib_import("Vector2")
 from Vector2 import Vector2
 
-addtoall("Pool")
+lib_import("Pool")
 from Pool import Pool
 
-addtoall("BaseObject")
+lib_import("BaseObject")
 from BaseObject import BaseObject
 
-addtoall("DrawableObject")
+lib_import("DrawableObject")
 from DrawableObject import DrawableObject
 
-addtoall("State")
+lib_import("State")
 from State import State
 
-addtoall("Game")
+lib_import("Game")
 from Game import Game
 
-addtoall("Utils")
-from Utils import Utils
+lib_import("utils")
+from utils import utils

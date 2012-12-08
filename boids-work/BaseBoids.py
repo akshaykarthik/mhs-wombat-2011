@@ -6,15 +6,16 @@ from pygame.surface import Surface
 from pygame.locals import *
 from engine import Vector2
 from engine import Game
+from engine import utils
 
 from Boid import Boid
 
 
 class BaseBoids(Game):
     """docstring for BaseBoids"""
+
     def __init__(self):
         super(BaseBoids, self).__init__("BaseBoids")
-        self.debug_font = pygame.font.SysFont("monospace", 15)
         self.boids = []
         self.boids.append(Boid(Vector2(100, 100)))
 
@@ -27,55 +28,44 @@ class BaseBoids(Game):
         self.alignment_toggle = True
         self.cohesion_toggle = True
         self.separation_toggle = True
-        self.random_toggle = True
+        self.follow_toggle = True
 
         self.boidsurface = Surface(self.screen_size)
 
-    def text(self, text, color, position):
-        self.screen.blit(self.debug_font.render(
-            text, 1, color), position)
-
     def draw(self):
-        pygame.draw.circle(self.screen,
-                (255, 255, 255),
-                Vector2(100, 100),
-                1,
-                1)
 
-        alignment_toggle = not pygame.key.get_pressed()[K_a]
-        cohesion_toggle = not pygame.key.get_pressed()[K_s]
-        separation_toggle = not pygame.key.get_pressed()[K_d]
-        random_toggle = not pygame.key.get_pressed()[K_f]
+        draw = utils.draw
 
         self.boidsurface.unlock()
+
+        draw.setup(self.boidsurface)
         self.boidsurface.fill(self.background_color)
         for boid in self.boids:
             boid.draw(self.dt, self.boidsurface,
                 not pygame.key.get_pressed()[K_q])
-        self.screen.blit(self.boidsurface.convert(), (0, 0))
+        self.screen.blit(self.boidsurface, (0, 0))
+        draw.shutdown()
+
         self.boidsurface.lock()
 
-        self.text("fps    : " + str(self.clock.get_fps()),
-            (255, 255, 255), (100, 20))
-        self.text("dt     : " + str(self.dt), (255, 255, 255), (100, 40))
-        self.text("Randomness      (f): " + str(random_toggle),
-            (255, 255, 255), (100, 80))
-        self.text("Alignment      (a): " + str(alignment_toggle),
-            (255, 0, 255), (100, 100))
-        self.text("Cohesion       (s): " + str(cohesion_toggle),
-            (0, 255, 255), (100, 120))
-        self.text("Separation      (d): " + str(separation_toggle),
-            (255, 255, 0), (100, 140))
+        draw.setup(self.screen)
+        draw.text("fps  : " + str(self.clock.get_fps()), (255, 255, 255), (100, 20))
+        draw.text("dt   : " + str(self.dt), (255, 255, 255), (100, 40))
+
+        draw.text("Alignment    (a): " + str(self.alignment_toggle), Boid._colors["acolor"], (100, 100))
+        draw.text("Cohesion     (s): " + str(self.cohesion_toggle), Boid._colors["ccolor"], (100, 120))
+        draw.text("Separation   (d): " + str(self.separation_toggle), Boid._colors["scolor"], (100, 140))
+        draw.text("Follow Mouse (g): " + str(self.follow_toggle), Boid._colors["mousecolor"], (100, 160))
 
         if self.pressed:
             pygame.draw.line(self.screen, (255, 255, 255),
                 self.pressed_pos, pygame.mouse.get_pos())
 
     def update(self):
-        alignment_toggle = not pygame.key.get_pressed()[K_a]
-        cohesion_toggle = not pygame.key.get_pressed()[K_s]
-        separation_toggle = not pygame.key.get_pressed()[K_d]
-        random_toggle = not pygame.key.get_pressed()[K_f]
+        self.alignment_toggle = not pygame.key.get_pressed()[K_a]
+        self.cohesion_toggle = not pygame.key.get_pressed()[K_s]
+        self.separation_toggle = not pygame.key.get_pressed()[K_d]
+        self.follow_toggle = not pygame.key.get_pressed()[K_g]
 
         if pygame.key.get_pressed()[K_ESCAPE]:
             pygame.event.post(pygame.event.Event(QUIT))
@@ -83,12 +73,13 @@ class BaseBoids(Game):
         if pygame.key.get_pressed()[K_r] and len(self.boids) > 0:
             self.boids.pop()
 
-        for boid in self.boids:
-            boid.update(self.dt, self.boids,
-                alignment_toggle,
-                cohesion_toggle,
-                separation_toggle,
-                random_toggle)
+        if not pygame.key.get_pressed()[K_SPACE]:
+            for boid in self.boids:
+                boid.update(self.dt, self.boids,
+                    self.alignment_toggle,
+                    self.cohesion_toggle,
+                    self.separation_toggle,
+                    self.follow_toggle)
 
         if pygame.mouse.get_pressed()[0]:
             if self.pressed == False:
@@ -102,5 +93,3 @@ class BaseBoids(Game):
                 self.boids.append(Boid(self.pressed_pos,
                     self.released_pos - self.pressed_pos))
             self.pressed = False
-
-        pygame.time.wait(32)

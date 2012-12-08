@@ -1,13 +1,20 @@
-import math
 from engine import Vector2
 from engine import DrawableObject
-from engine import Utils
-import random
+from engine import utils
 import pygame
 from pygame.locals import *
 
 
 class Boid(DrawableObject):
+    _colors = {
+        'boidcolor': pygame.Color('white'),
+        'neighborcolor': pygame.Color('grey'),
+        'acolor': pygame.Color('purple'),
+        'ccolor': pygame.Color('cyan'),
+        'scolor': pygame.Color('yellow'),
+        'srangecolor': pygame.Color('lightyellow'),
+        'mousecolor': pygame.Color('lightblue')
+    }
 
     def __init__(self, pos=Vector2(), vel=Vector2()):
         super(Boid, self).__init__()
@@ -23,6 +30,7 @@ class Boid(DrawableObject):
         self.alignforce = Vector2()
         self.cohesionforce = Vector2()
         self.separateforce = Vector2()
+        self.fleeforce = Vector2()
 
     def subupdate(self, boid):
         diff = self.pos - boid.pos
@@ -32,18 +40,18 @@ class Boid(DrawableObject):
             self.alignforce += (boid.vel)
             if dist > self.minsep:
                 diff /= dist
-            self.separateforce += diff
+            self.separateforce += diff * 2
             self.neighborcount += 1
 
-    def update(self, dt, boids, at, ct, st, rt):
-        self.pos.x = Utils.loop(self.pos.x, 0, 1024)
-        self.pos.y = Utils.loop(self.pos.y, 0, 768)
+    def update(self, dt, boids, at, ct, st, fm):
+        self.pos.x = utils.math.loop(self.pos.x, 0, 1024)
+        self.pos.y = utils.math.loop(self.pos.y, 0, 768)
         self.alignforce.reset()
         self.cohesionforce.reset()
         self.separateforce.reset()
         self.cohesion_point.reset()
+        self.fleeforce.reset()
         self.neighborcount = 0
-        loopcount = 0
 
         map(self.subupdate, boids)
 
@@ -59,51 +67,34 @@ class Boid(DrawableObject):
             self.vel += self.cohesionforce
         if st:
             self.vel += self.separateforce
+        if fm:
+            mos = pygame.mouse.get_pos()
+            mos = Vector2(mos[0], mos[1])
+            if Vector2.dist(mos, self.pos) < self.neighborDist:
+                self.fleeforce = (mos - self.pos)
+                self.vel += self.fleeforce
 
-        self.vel.x = Utils.clamp(self.vel.x, -self.maxvel, self.maxvel)
-        self.vel.y = Utils.clamp(self.vel.y, -self.maxvel, self.maxvel)
-        if rt:
-            self.vel.x += random.randint(-1, 1)
-            self.vel.y += random.randint(-1, 1)
-
+        self.vel.x = utils.math.clamp(self.vel.x, -self.maxvel, self.maxvel)
+        self.vel.y = utils.math.clamp(self.vel.y, -self.maxvel, self.maxvel)
         self.pos += (self.vel * dt)
 
-        return loopcount
-
     def draw(self, dt, screen, debug=True):
+        draw = utils.draw
         pos = self.pos.to_int()
-        color = (255, 255, 255)
 
-        pygame.draw.circle(screen, color, pos, 5, 5)
-        #pygame.draw.circle(screen, (0, 255, 255), self.cohesion.avg.to_int(), 20, 5)
+        draw.circle(self._colors["boidcolor"], pos, 5, 5)
 
         if debug:
-            pygame.draw.circle(screen, (128, 128, 128), pos,
-                    self.neighborDist, 1)
+            draw.circle(self._colors["neighborcolor"], pos, self.neighborDist)
 
-            pygame.draw.circle(screen, (128, 128, 0), pos,
-                    self.minsep, 1)
+            draw.circle(self._colors["srangecolor"], pos, self.minsep)
 
-            pygame.draw.line(screen, (255, 255, 255), pos, pos + self.vel)
+            draw.line(self._colors["boidcolor"], pos, pos + self.vel)
+            draw.line(self._colors["acolor"], pos, pos + self.alignforce)
+            draw.line(self._colors["ccolor"], pos, pos + self.cohesionforce)
+            draw.line(self._colors["scolor"], pos, pos + self.separateforce)
+            draw.line(self._colors["mousecolor"], pos, pos + self.fleeforce)
 
-            pygame.draw.line(screen, (255, 0, 255), pos,
-                pos + self.alignforce)
-
-            pygame.draw.line(screen, (0, 255, 255), pos,
-                pos + self.cohesionforce)
-
-            pygame.draw.circle(screen, (0, 255, 255), self.cohesion_point.to_int(),
-                5, 5)
-            pygame.draw.line(screen, (255, 255, 0), pos,
-                pos + self.separateforce)
-
-        # pygame.draw.line(screen, (128, 128, 128), pos,
-        #     pos + self.alignforce)
-        # pygame.draw.line(screen, (128, 128, 128), pos + self.alignforce,
-        #     pos + self.alignforce + self.cohesionforce)
-        # pygame.draw.line(screen, (128, 128, 128),
-        #     pos + self.alignforce + self.cohesionforce,
-        #     pos + self.alignforce + self.cohesionforce + self.separateforce
-        #     )
+            draw.circle(self._colors["ccolor"], self.cohesion_point, 2, 2)
 
 
