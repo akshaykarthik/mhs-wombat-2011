@@ -1,6 +1,7 @@
 # Game.py
 import pygame
 from Draw import Draw
+from Vector2 import Vector2
 from pygame.locals import *
 
 
@@ -8,7 +9,7 @@ class Game(object):
     """docstring for Game"""
     def __init__(self,
             name,
-            screen_size=(1024, 768),
+            screen_size=Vector2(1024, 768),
             fps=240,
             clock=None,
             screen=None):

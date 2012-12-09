@@ -2,6 +2,7 @@
 from math import *
 import pygame
 from pygame.locals import *
+import pymunk as pm
 
 
 class utils(object):
@@ -49,8 +50,8 @@ class utils(object):
 
         @staticmethod
         def circle(color, point, radius, width=1):
-            pygame.draw.circle(utils.draw._screen, color, point.to_int(),
-                radius, width)
+            pygame.draw.circle(utils.draw._screen, color, (int(point[0]), int(point[1])),
+                int(radius), width)
 
         @staticmethod
         def text(text, color, position):
@@ -70,3 +71,12 @@ class utils(object):
 
         def held(key):
             return key
+
+    class physics(object):
+        @staticmethod
+        def circle(position, mass, radius, inertia=None):
+            iinertia = inertia or pm.moment_for_circle(mass, 0, radius)
+            body = pm.Body(mass, iinertia)
+            body.position = position
+            shape = pm.Circle(body, radius)
+            return (body, shape)

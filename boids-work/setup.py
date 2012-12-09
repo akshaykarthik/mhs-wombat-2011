@@ -12,6 +12,10 @@ import sys
 import os
 import shutil
 import operator
+import pymunk
+
+
+sys.path.append('..')
 
 origIsSystemDLL = py2exe.build_exe.isSystemDLL
 
@@ -69,10 +73,10 @@ if __name__ == '__main__':
              'excludes': [],
              'packages': [],
              'dll_excludes': [],
-             'includes': []
+             'includes': ["engine"]
             }},
         zipfile=None,
-        data_files=[],
+        data_files=[(os.path.dirname(pymunk.__file__) + '/chipmunk.dll')],
         dist_dir="dist"
         )
 

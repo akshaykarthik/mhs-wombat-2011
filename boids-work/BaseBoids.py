@@ -1,5 +1,6 @@
 #BaseBoids.py
-
+import sys
+sys.path.append('..')
 import pygame
 import pygame.key
 from pygame.surface import Surface
@@ -10,12 +11,16 @@ from engine import utils
 
 from Boid import Boid
 
+import pymunk as pm
+
 
 class BaseBoids(Game):
     """docstring for BaseBoids"""
 
     def __init__(self):
         super(BaseBoids, self).__init__("BaseBoids")
+        self.space = pm.Space()
+
         self.boids = []
         self.boids.append(Boid(Vector2(100, 100)))
 
@@ -31,6 +36,8 @@ class BaseBoids(Game):
         self.follow_toggle = True
 
         self.boidsurface = Surface(self.screen_size)
+        self.pobject = utils.physics.circle((500, 25), 10, 10)
+        self.space.add(self.pobject)
 
     def draw(self):
 
@@ -49,6 +56,9 @@ class BaseBoids(Game):
         self.boidsurface.lock()
 
         draw.setup(self.screen)
+        draw.circle((255, 255, 255), (self.pobject[0].position.x, self.pobject[0].position.y),
+            self.pobject[1].radius)
+
         draw.text("fps  : " + str(self.clock.get_fps()), (255, 255, 255), (100, 20))
         draw.text("dt   : " + str(self.dt), (255, 255, 255), (100, 40))
 
@@ -66,6 +76,8 @@ class BaseBoids(Game):
         self.cohesion_toggle = not pygame.key.get_pressed()[K_s]
         self.separation_toggle = not pygame.key.get_pressed()[K_d]
         self.follow_toggle = not pygame.key.get_pressed()[K_g]
+
+        self.space.step(self.dt)
 
         if pygame.key.get_pressed()[K_ESCAPE]:
             pygame.event.post(pygame.event.Event(QUIT))
