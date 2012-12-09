@@ -14,9 +14,6 @@ import shutil
 import operator
 import pymunk
 
-
-sys.path.append('..')
-
 origIsSystemDLL = py2exe.build_exe.isSystemDLL
 
 

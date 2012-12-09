@@ -39,6 +39,7 @@ class utils(object):
 
         @staticmethod
         def setup(screen, font=None):
+            """sets up a screen"""
             utils.draw._screen = screen
             if font is None:
                 utils.draw._font = pygame.font.SysFont("monospace", 15)
@@ -50,6 +51,7 @@ class utils(object):
 
         @staticmethod
         def circle(color, point, radius, width=1):
+            """color, point (x,y), radius, width"""
             pygame.draw.circle(utils.draw._screen, color, (int(point[0]), int(point[1])),
                 int(radius), width)
 

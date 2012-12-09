@@ -1,6 +1,5 @@
 # Game.py
 import pygame
-from Draw import Draw
 from Vector2 import Vector2
 from pygame.locals import *
 
@@ -23,7 +22,7 @@ class Game(object):
         pygame.display.set_caption(name)
 
         self.clock = clock or pygame.time.Clock()
-        self.screen = screen or pygame.display.set_mode(screen_size, DOUBLEBUF)
+        self.screen = screen or pygame.display.set_mode(screen_size)
         self.states = []
         self.current_state = None
         self.background_color = (0, 0, 0)

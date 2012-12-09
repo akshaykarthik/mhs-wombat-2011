@@ -1,6 +1,4 @@
 #BaseBoids.py
-import sys
-sys.path.append('..')
 import pygame
 import pygame.key
 from pygame.surface import Surface
@@ -8,7 +6,6 @@ from pygame.locals import *
 from engine import Vector2
 from engine import Game
 from engine import utils
-
 from Boid import Boid
 
 import pymunk as pm
@@ -19,6 +16,7 @@ class BaseBoids(Game):
 
     def __init__(self):
         super(BaseBoids, self).__init__("BaseBoids")
+
         self.space = pm.Space()
 
         self.boids = []
@@ -42,20 +40,13 @@ class BaseBoids(Game):
     def draw(self):
 
         draw = utils.draw
+        draw.setup(self.screen)
 
-        self.boidsurface.unlock()
-
-        draw.setup(self.boidsurface)
-        self.boidsurface.fill(self.background_color)
         for boid in self.boids:
             boid.draw(self.dt, self.boidsurface,
                 not pygame.key.get_pressed()[K_q])
-        self.screen.blit(self.boidsurface, (0, 0))
-        draw.shutdown()
+        self.screen.blit(self.screen, (0, 0))
 
-        self.boidsurface.lock()
-
-        draw.setup(self.screen)
         draw.circle((255, 255, 255), (self.pobject[0].position.x, self.pobject[0].position.y),
             self.pobject[1].radius)
 
