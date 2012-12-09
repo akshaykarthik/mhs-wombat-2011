@@ -37,6 +37,7 @@ local.properties
 ## Python
 #################
 *.pyc
+dist/
 
 #################
 ## General
