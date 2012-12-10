@@ -1,7 +1,7 @@
 # Game.py
 import pygame
 from pygame.locals import *
-from State import StateManager
+from State import State
 
 
 class Game(object):
@@ -9,23 +9,40 @@ class Game(object):
     def __init__(self,
             name,
             screen_size=(1024, 768),
-            fps=240,
+            fps=120,
             clock=None,
             screen=None):
 
         super(Game, self).__init__()
         self.name = name
         self.screen_size = screen_size
+        self.current_state = None
         self.fps = fps
+
+        self.states = dict()
+        self._add_state(State(self, 'null'))
 
         pygame.init()
         pygame.display.set_caption(name)
 
         self.clock = clock or pygame.time.Clock()
         self.screen = screen or pygame.display.set_mode(screen_size)
-        self.sm = StateManager()
         self.background_color = (0, 0, 0)
-        self.current_state = None
+
+    def _add_state(self, st):
+        if isinstance(st, State):
+            self.states[st.name] = st
+            if self.current_state is None:
+                self.current_state = st.name
+        else:
+            raise TypeError("var passed in is not typeof state")
+
+    def _switch(self, st):
+        if st in self.states:
+            self.current_state = st
+            return True
+        else:
+            return False
 
     def setup(self):
         pass
@@ -35,16 +52,16 @@ class Game(object):
         self.dt = self.clock.get_time() * 0.001
 
     def update(self):
-        self.sm.update(self.dt)
+        self.states[self.current_state].update(self.dt)
 
     def postupdate(self):
         pass
 
-    def draw(self):
-        self.sm.draw(self.screen)
-
     def predraw(self):
         self.screen.fill(self.background_color)
+
+    def draw(self):
+        self.states[self.current_state].draw(self.screen)
 
     def postdraw(self):
         pygame.display.flip()
