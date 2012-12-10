@@ -1,30 +1,31 @@
-from DataStructures import *
+from DataStructures import E_DamageType
 from Dice import *
+from collections import namedtuple
+Weapon = namedtuple("Weapon", ['name', 'minlvl', 'roll', 'description'])
 
+hand = Weapon('hand', 0, lambda: d2() -  1,
+    "your hands do {1d2} damage")
 
-def make_weapon(name, classtype, damage, element_type):
-    class wpn(object):
-        def __init__(self):
-            self.name = name
-            self.classtype = classtype
-            self.damage = damage
-            self.element_type = element_type
+worn_wooden_staff = Weapon('worn wooden staff', 0, lambda: 1 + d4(),
+    "a worn wooden staff, broken by time, does {1 + 1d4} damage")
 
-        def roll():
-            return (damage(), element_type)
+wooden_staff = Weapon('wooden staff', 0, lambda: 2 + d4(),
+    "a wooden staff made from twigs, does {2 + 1d4} damage")
 
-hands = make_weapon("hand", E_Class.Wanderer,
-    lambda: d2(),
-    E_DamageType.Normal)
+rusty_iron_blade = Weapon('rusty iron blade', 0, lambda: 2 + d3(),
+    "a rusty iron blade used by children to practice their swordsmanship, does {2 + 1d3} damage")
 
-shiny_iron_axe = make_weapon("shiny iron axe", E_Class.Wanderer,
-    lambda: 3 + d4(),
-    E_DamageType.Normal)
+iron_blade = Weapon('iron blade', 0, lambda: 3 + d3(),
+    "a new iron blade used to train army recruits, does {3 + 1d3} damage"),
 
-iron_axe = make_weapon("iron axe", E_Class.Wanderer,
-    lambda: 2 + d4(),
-    E_DamageType.Normal)
+shiny_iron_blade = Weapon('shiny iron blade', 0, lambda: 4 + d3(),
+    "a shiny iron blade which hasnt been used yet, it has that new sword smell, does {4 + 1d3} damage")
 
-rusty_iron_axe = make_weapon("rusty iron axe", E_Class.Wanderer,
-    lambda: 1 + d4(),
-    E_DamageType.Normal)
+rusty_steel_blade = Weapon('rusty steel blade', 1, lambda: 4 + d3(),
+    "a rusty steel blade used by rich children to practice their swordsmanship, does {4 + 1d3} damage")
+
+steel_blade = Weapon('steel blade', 1, lambda: 5 + d3(),
+    "a new steel blade used to train army officers, does {5 + 1d3} damage")
+
+shiny_steel_blade = Weapon('shiny steel blade', 1, lambda: 6 + d3(),
+    "a shiny steel blade which hasnt been used yet, it has that new sword smell, does {6 + 1d3} damage")

@@ -73,7 +73,7 @@ if __name__ == '__main__':
              'includes': ["engine"]
             }},
         zipfile=None,
-        data_files=[(os.path.dirname(pymunk.__file__) + '/chipmunk.dll')],
+        data_files=[],
         dist_dir="dist"
         )
 

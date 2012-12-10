@@ -1,5 +1,6 @@
 from DataStructures import *
 import Weapon
+
 import Dice
 
 class Actor(object):
@@ -18,6 +19,7 @@ class Actor(object):
         self.resist = resist
         self.race = 0
         self.weapon = Weapon.hands
+        self.lvl = 0
 
 
     def isDead(self):
@@ -29,3 +31,4 @@ class Actor(object):
 
     def attack(self):
         return self.weapon.roll()
+
