@@ -19,6 +19,7 @@ class Actor(object):
         self.resist = resist
         self.race = 0
         self.weapon = Weapon.hands
+        self.inventory = []
         self.lvl = 0
 
 
@@ -31,4 +32,7 @@ class Actor(object):
 
     def attack(self):
         return self.weapon.roll()
+
+    def add_item(obj):
+        self.inventory.append(obj)
 

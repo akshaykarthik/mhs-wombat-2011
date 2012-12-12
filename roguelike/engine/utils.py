@@ -3,6 +3,7 @@ from math import *
 import pygame
 from pygame.locals import *
 import pymunk as pm
+from contextlib import contextmanager
 
 
 class utils(object):
@@ -38,14 +39,21 @@ class utils(object):
         _font = None
 
         @staticmethod
-        def setup(screen, font=None):
+        @contextmanager
+        def using(scr, font=None):
+            utils.draw._setup(scr, font)
+            yield
+            utils.draw._shutdown()
+
+        @staticmethod
+        def _setup(screen, font=None):
             """sets up a screen"""
             utils.draw._screen = screen
             if font is None:
                 utils.draw._font = pygame.font.SysFont("monospace", 15)
 
         @staticmethod
-        def shutdown():
+        def _shutdown():
             utils.draw._screen = None
             utils.draw._font = None
 
@@ -73,12 +81,3 @@ class utils(object):
 
         def held(key):
             return key
-
-    class physics(object):
-        @staticmethod
-        def circle(position, mass, radius, inertia=None):
-            iinertia = inertia or pm.moment_for_circle(mass, 0, radius)
-            body = pm.Body(mass, iinertia)
-            body.position = position
-            shape = pm.Circle(body, radius)
-            return (body, shape)

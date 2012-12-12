@@ -13,7 +13,7 @@ class MenuState(State):
 
     def draw(self, scr):
         draw = utils.draw
-        draw.setup(scr)
-        draw.text(str(self.game.clock.get_fps()), (255, 255, 255), (0, 0))
-        draw.shutdown()
+        with draw.using(scr):
+            draw.text(str(self.game.clock.get_fps()), (255, 255, 255), (0, 0))
+
 
