@@ -32,17 +32,6 @@ class Boid(DrawableObject):
         self.separateforce = Vector2()
         self.fleeforce = Vector2()
 
-    def subupdate(self, boid):
-        diff = self.pos - boid.pos
-        dist = diff.length()
-        if (0 < dist < self.neighborDist):
-            self.cohesion_point += (boid.pos)
-            self.alignforce += (boid.vel)
-            if dist > self.minsep:
-                diff /= dist
-            self.separateforce += diff * 2
-            self.neighborcount += 1
-
     def update(self, dt, boids, at, ct, st, fm):
         self.pos.x = utils.math.loop(self.pos.x, 0, 1024)
         self.pos.y = utils.math.loop(self.pos.y, 0, 768)
@@ -53,7 +42,16 @@ class Boid(DrawableObject):
         self.fleeforce.reset()
         self.neighborcount = 0
 
-        map(self.subupdate, boids)
+        for boid in boids:
+            diff = self.pos - boid.pos
+            dist = diff.length()
+            if (0 < dist < self.neighborDist):
+                self.cohesion_point += boid.pos
+                self.alignforce += boid.vel
+                if dist > self.minsep:
+                    diff /= dist
+                self.separateforce += diff * 2
+                self.neighborcount += 1
 
         if self.neighborcount > 0:
             self.cohesion_point /= self.neighborcount
