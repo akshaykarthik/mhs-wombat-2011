@@ -1,0 +1,4 @@
+Package Control
+SublimeCodeIntel
+SublimeRope
+SublimeLinter
