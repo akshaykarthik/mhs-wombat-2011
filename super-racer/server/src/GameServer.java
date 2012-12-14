@@ -1,12 +1,12 @@
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.net.ServerSocket;
 
 public class GameServer {
 
 	public static void main(String[] args) throws IOException {
 		ServerSocket server = null;
 		boolean inLobby = true;
-		int port = 25565;
+		int port = 25565; //Chat port.  Edit in config.ini
 		try {
 			server = new ServerSocket(port); // Make it so that the
 												// server
