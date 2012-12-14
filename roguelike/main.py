@@ -23,6 +23,10 @@ def main():
         game.postdraw()
 
 if __name__ == '__main__':
-    cProfile.run('main()', "perf.log")
-    p = pstats.Stats("perf.log")
-    p.sort_stats("time").print_stats()
+    import sys
+    if len(sys.argv) <= 1:
+        cProfile.run('main()', "perf.log")
+        p = pstats.Stats("perf.log")
+        p.sort_stats("time").print_stats()
+    else:
+        main()
