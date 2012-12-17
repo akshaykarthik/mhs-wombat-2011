@@ -3,19 +3,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import org.ini4j.Ini;
-
 public class GameServerThread extends Thread {
 	private DatagramSocket socket = null;
 	private DatagramSocket serverSocket = null;
 	private int serverPort;
 	private int port;
 	private String netA = "203.0.113.0";
-
-	public GameServerThread(Ini ini) throws IOException {
-		ini.Section server = ini.get("server");
-		this(25565, 25566); // Client, Server ports. Edit in config.ini
-	}
 
 	public GameServerThread(int port, int sPort) throws IOException {
 		super("GameServerThread");

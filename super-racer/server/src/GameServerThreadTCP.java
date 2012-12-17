@@ -19,11 +19,11 @@ public class GameServerThreadTCP extends Thread {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 			String user = "Bob";
-			String input, output;
+			String output;
 			output = user + " has joined the lobby";
 			out.println(output);
 
-			while ((input = in.readLine()) != null) {
+			while (in.readLine() != null) {
 				// if the client didn't send the message
 				output = in.readLine();
 				System.out.println(output);
