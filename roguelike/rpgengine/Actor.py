@@ -1,38 +1,43 @@
 from DataStructures import *
-import Weapon
 
-import Dice
 
 class Actor(object):
+
+    max_str = 100
+    max_dex = 100
+    max_int = 100
+    max_end = 100
+
     def __init__(self,
                 position,
                 health,
-                attributes=Attributes(50, 50, 50, 50, 50, 50),
-                align=E_Alignment.Neutral,
-                resist=Resist(0, 0, 0, 0, 0, 0)):
-        super(Actor, self).__init__()
-        self.x = position[0]
-        self.y = position[1]
-        self.maxhealth = health
+                istr,
+                dex,
+                iint,
+                end):
+        self.position = position
         self.health = health
-        self.align = align
-        self.resist = resist
-        self.race = 0
-        self.weapon = Weapon.hands
-        self.inventory = []
-        self.lvl = 0
-
+        self.str = istr
+        self.dex = dex
+        self.int = iint
+        self.end = end
 
     def isDead(self):
         return health < 0
 
     def damage(self, damage, damagetype):
-        self.health -= (damage * (100 - self.resist[damagetype]) / 100)
+        return damage
 
+    def crit_damage(self, critdmg_mult=1.5):
+        return (self.str / self.max_str) * critdmg_mult
 
-    def attack(self):
-        return self.weapon.roll()
+    def strong_damage(self, damage_mult=1.5):
+        return self.str * damage_mult
 
-    def add_item(obj):
-        self.inventory.append(obj)
+    def dodge_chance(self):
+        return (self.dex) / self.max_dex
+
+    def max_health(self, base, class_bonus=0, str_mult=1, end_mult=2):
+        return (str_mult * self.str) + (end_mult * self.end) + class_bonus + base
+
 
