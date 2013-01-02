@@ -24,7 +24,7 @@ public class GameServer {
 												// via reading a
 												// text document
 		} catch (IOException e) {
-			System.err.println("Could not listen on port: 27000");
+			System.err.println("Could not listen on port: "+port);
 			System.exit(-1);
 		}
 
