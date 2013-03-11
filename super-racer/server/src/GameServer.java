@@ -9,8 +9,6 @@ public class GameServer {
 		ServerSocket server = null;
 		boolean inLobby = true;
 
-		//Ini ini = new Ini(new FileReader("config.ini"));
-		//Ini.Section serv = ini.get("server");
 		Properties serv = new Properties();
 		serv.load(new FileReader("config.ini"));
 		
