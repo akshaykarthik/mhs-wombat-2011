@@ -10,7 +10,8 @@
 using namespace std;
 
 class GameState {
-
+	vector <> staticObjs (0);
+	vector <> 
 };
 
 JNIEXPORT jint JNICALL Java_GameState_intMethod(JNIEnv *env, jobject obj) {
