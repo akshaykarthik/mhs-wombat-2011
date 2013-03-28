@@ -4,7 +4,7 @@
  *  Created on: Feb 12, 2013
  *      Author: Drew
  */
-
+#include "stdafx.h"
 #include "GameState.h"
 #include <iostream>
 using namespace std;
