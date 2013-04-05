@@ -1,28 +1,24 @@
 
 public class LevelPiece {
 	private int ID = -1;
-	private double x, y;
+	private Wireframe wire;
 	
-	public LevelPiece(int id, double x, double y){
+	
+	
+	public LevelPiece(int id, Wireframe a){
 		this.ID = id;
-		this.x = x;
-		this.y = y;
+		wire = a;
 		
 	}
 	
-	public void setX(double x){
-		this.x = x;
+	public void translate(double x, double y){
+		wire.translate(x, y);
 	}
-	public void setY(double y){
-		this.y = y;
+	public void translateTo(double x, double y){
+		wire.translateTo(x, y);
 	}
 	
-	public double getX(){
-		return x;
-	}
-	public double getY(){
-		return y;
-	}
+	
 	
 	
 	

@@ -32,6 +32,8 @@ public class GameServerThread extends Thread {
 			// position and stuff
 			// Must use this data to update master
 			// (server version) of game state
+			String r = new String(received.getData(), 0, received.getLength());
+			
 			
 			// ****************************
 			// ********GAME UPDATES********
