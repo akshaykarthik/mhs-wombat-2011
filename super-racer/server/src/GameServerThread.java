@@ -33,12 +33,11 @@ public class GameServerThread extends Thread {
 			// Must use this data to update master
 			// (server version) of game state
 			String r = new String(received.getData(), 0, received.getLength());
-			
-			
+
 			// ****************************
 			// ********GAME UPDATES********
 			// ****************************
-
+			buf = r.getBytes();
 			// Send Data to every client
 			DatagramPacket packet = new DatagramPacket(buf, buf.length, group,
 					this.port);
