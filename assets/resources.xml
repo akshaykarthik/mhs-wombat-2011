@@ -4,6 +4,7 @@
 	<!-- sounds -->
 	<!-- songs -->
 	<!-- images -->
+	<image key="logo" file="logo_1.png"/>
 	<!-- sheets -->
 	<!-- fonts -->
 </resources>

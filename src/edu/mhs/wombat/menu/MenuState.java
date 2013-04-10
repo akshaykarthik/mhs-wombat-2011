@@ -3,6 +3,7 @@ package edu.mhs.wombat.menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -10,11 +11,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
 
 public class MenuState extends BasicGameState {
 	private GameContainer gc;
 	private StateBasedGame gm;
+	private Image logo;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -26,6 +29,7 @@ public class MenuState extends BasicGameState {
 	
 	public void enter(GameContainer container, StateBasedGame game) {
 		System.out.println("ENTERED STATE MENU");
+		logo = ResourceManager.getImage("logo");
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
@@ -35,9 +39,8 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		g.drawImage(logo, 0, 0);
 		g.setColor(Color.yellow);
-		g.drawRect(200, 200, Globals.WIDTH, Globals.HEIGHT);
-		
 		g.drawString("Test State: Menu", 160, 160);
 		
 	}
