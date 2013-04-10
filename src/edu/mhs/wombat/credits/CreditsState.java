@@ -1,6 +1,5 @@
 package edu.mhs.wombat.credits;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -9,7 +8,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.StateUtils;
 
 public class CreditsState extends BasicGameState {
@@ -26,6 +24,7 @@ public class CreditsState extends BasicGameState {
 
 	public void enter(GameContainer container, StateBasedGame game) {
 		System.out.println("ENTERED STATE CREDITS");
+		
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
