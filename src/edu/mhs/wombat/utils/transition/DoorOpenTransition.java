@@ -18,14 +18,16 @@ public class DoorOpenTransition implements Transition {
 
 	private GameState next;
 	private GameState prev;
-	private float offset;
-	private boolean finish;
+	private float offset = 0;
+	private float offset2 = 0;
+	private float finish;
 
 	private Image door;
-
+	private Image door2;
 
 	public DoorOpenTransition() {
 		door = ResourceManager.getImage("transition_door");
+		door2 = ResourceManager.getImage("transition_door2");
 	}
 
 	public void init(GameState firstState, GameState secondState) {
@@ -34,15 +36,18 @@ public class DoorOpenTransition implements Transition {
 	}
 
 	public boolean isComplete() {
-		return finish;
+		return finish > Globals.TRANSITION_FACTOR3;
 	}
 
 	public void postRender(StateBasedGame game, GameContainer container,
 			Graphics g) throws SlickException {
-		g.drawImage(door, -offset, 0);
-		g.drawImage(door.getFlippedCopy(true, false), Globals.WIDTH / 2
+		g.drawImage(door2, -offset, 0);
+		g.drawImage(door2.getFlippedCopy(true, false), Globals.WIDTH / 2
 				+ offset, 0);
 
+		g.drawImage(door, -offset2, 0);
+		g.drawImage(door.getFlippedCopy(true, false), Globals.WIDTH / 2
+				+ offset2, 0);
 	}
 
 	public void preRender(StateBasedGame game, GameContainer container,
@@ -51,9 +56,17 @@ public class DoorOpenTransition implements Transition {
 
 	public void update(StateBasedGame game, GameContainer container, int delta)
 			throws SlickException {
-		offset += delta * Globals.TRANSITION_FACTOR;
-		if (offset > container.getWidth() / 2) {
-			finish = true;
+
+		if (offset >= container.getWidth() / 2) {
+			offset = container.getWidth() / 2;
+			if (offset2 >= container.getWidth() / 2) {
+				offset2 = container.getWidth() / 2;
+				finish += delta;
+			} else {
+				offset2 += delta * Globals.TRANSITION_FACTOR2;
+			}
+		} else {
+			offset += delta * Globals.TRANSITION_FACTOR;
 		}
 	}
 }

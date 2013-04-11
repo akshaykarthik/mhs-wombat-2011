@@ -19,13 +19,28 @@ public class MenuState extends BasicGameState {
 	private Image logo;
 
 	private int current_selection = 0;
+	private MenuOption[] options = { new MenuOption("Play", 160, 160),
+			new MenuOption("Options", 260, 160),
+			new MenuOption("Credits", 410, 160),
+			new MenuOption("Quit", 540, 160) };
+
+	private class MenuOption {
+		public String name;
+		public float x;
+		public float y;
+
+		public MenuOption(String name, float ix, float iy) {
+			this.name = name;
+			this.x = ix;
+			this.y = iy;
+		}
+	}
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		gc = container;
 		gm = game;
-
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
@@ -46,26 +61,12 @@ public class MenuState extends BasicGameState {
 
 		g.setFont(ResourceManager.getFont("40"));
 
-		if (current_selection == 0)
-			g.setColor(Color.red);
-		g.drawString("Play", 160, 160);
-		g.setColor(Color.white);
-
-		if (current_selection == 1)
-			g.setColor(Color.red);
-		g.drawString("Options", 260, 160);
-		g.setColor(Color.white);
-
-		if (current_selection == 2)
-			g.setColor(Color.red);
-		g.drawString("Credits", 410, 160);
-		g.setColor(Color.white);
-		
-		if (current_selection == 3)
-			g.setColor(Color.red);
-		g.drawString("Quit", 540, 160);
-		g.setColor(Color.white);
-
+		for (int i = 0; i < options.length; i++) {
+			if (current_selection == i)
+				g.setColor(Color.red);
+			g.drawString(options[i].name, options[i].x, options[i].y);
+			g.setColor(Color.white);
+		}
 	}
 
 	@Override
@@ -75,30 +76,46 @@ public class MenuState extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_2) {
-			StateUtils.switchTo(gm, States.CREDITS);
-		}
-		
+
 		if (key == Input.KEY_4) {
 			StateUtils.switchTo(gm, States.DEFEAT);
 		}
 
-		if(key == Input.KEY_RIGHT){
+		if (key == Input.KEY_RIGHT) {
 			current_selection++;
 		}
-		
-		if(key == Input.KEY_LEFT){
+
+		if (key == Input.KEY_LEFT) {
 			current_selection--;
 		}
+
+		if (current_selection > options.length - 1)
+			current_selection = 0;
+		if (current_selection < 0)
+			current_selection = options.length - 1;
 		
-		if(current_selection > 3) current_selection = 0;
-		if(current_selection < 0) current_selection = 3;		
+		if(key == Input.KEY_ENTER){
+			switch (current_selection) {
+			case 0:
+			
+				break;
+			case 1:
+				break;
+			case 2:
+				StateUtils.switchTo(gm, States.CREDITS);
+				break;
+			case 3:
+				gc.exit();
+				break;
+			default:
+				break;
+			}
+		}
 
 	}
 
 	@Override
 	public int getID() {
-
 		return States.MENU.ordinal();
 	}
 

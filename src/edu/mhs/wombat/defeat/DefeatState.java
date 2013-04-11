@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
 
 public class DefeatState extends BasicGameState {
@@ -27,6 +28,7 @@ public class DefeatState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		g.setFont(ResourceManager.getFont("40"));
 		g.drawString("GAME OVER", Globals.WIDTH/2-20, Globals.HEIGHT/2);
 
 	}
@@ -41,7 +43,6 @@ public class DefeatState extends BasicGameState {
 		if(key==Input.KEY_ESCAPE){
 			StateUtils.switchTo(gm, States.MENU);
 		}
-		
 	}
 	
 	@Override

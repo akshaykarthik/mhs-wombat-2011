@@ -8,6 +8,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
+import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
 
 public class CreditsState extends BasicGameState {
@@ -34,7 +35,12 @@ public class CreditsState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.drawString("Test State: Credits", 160, 160);
+		g.setFont(ResourceManager.getFont("60"));
+		g.drawString("Credits", 160, 160);
+		g.setFont(ResourceManager.getFont("40"));
+		g.drawString("Drew S.", 160, 260);
+		g.drawString("Akshay K.", 160, 360);
+		g.drawString("Peter O.", 160, 460);
 	}
 
 	@Override
