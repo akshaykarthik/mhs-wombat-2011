@@ -8,6 +8,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.endgame.DefeatState;
 import edu.mhs.wombat.endgame.VictoryState;
 import edu.mhs.wombat.menu.CreditsState;
+import edu.mhs.wombat.menu.HighState;
 import edu.mhs.wombat.menu.MenuState;
 import edu.mhs.wombat.menu.OptionsState;
 import edu.mhs.wombat.preloader.PreloaderState;
@@ -32,6 +33,7 @@ public class Wombat extends StateBasedGame {
 		addState(new OptionsState());
 		addState(new DefeatState());
 		addState(new VictoryState());
+		addState(new HighState());
 	}
 
 	/**

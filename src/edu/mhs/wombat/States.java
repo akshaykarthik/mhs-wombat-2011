@@ -9,5 +9,6 @@ public enum States {
 	GAME, // 5
 	VICTORY, // 6
 	DEFEAT, // 7
-	SCORE // 8
+	SCORE, // 8
+	HIGHSCORE //9
 }

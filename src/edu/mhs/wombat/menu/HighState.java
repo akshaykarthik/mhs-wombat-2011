@@ -16,7 +16,7 @@ import edu.mhs.wombat.utils.StateUtils;
 
 public class HighState extends BasicGameState {
 	private StateBasedGame gm;
-	
+
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -27,33 +27,40 @@ public class HighState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		int[] scores = new int[10];
 		try {
 			Scanner f = new Scanner(new FileReader("Highscores.txt"));
+			int i = 0;
+			while (f.hasNext() && i < 10) {
+				scores[i] = Integer.parseInt(f.nextLine().substring(
+						f.nextLine().indexOf('=')));
+				g.drawString("Highscore " + i + "\t" + scores[i], 225, 225 + 50 * i);
+				i++;
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
 	}
-	
+
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
 			StateUtils.switchTo(gm, States.MENU);
 		}
 	}
-	
+
 	@Override
 	public int getID() {
 		// TODO Auto-generated method stub
-		return 0;
+		return States.HIGHSCORE.ordinal();
 	}
 
 }

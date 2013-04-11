@@ -55,7 +55,7 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		//g.drawImage(logo, 0, 0);
+		// g.drawImage(logo, 0, 0);
 		stars.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
 		g.drawString("Menu", 160, 20);
@@ -81,7 +81,7 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		
+
 	}
 
 	public void keyReleased(int key, char c) {
@@ -93,7 +93,11 @@ public class MenuState extends BasicGameState {
 		if (key == Input.KEY_5) {
 			StateUtils.switchTo(gm, States.VICTORY);
 		}
-
+		
+		if (key == Input.KEY_6) {
+			StateUtils.switchTo(gm, States.HIGHSCORE);
+		}
+		
 		if (key == Input.KEY_RIGHT || key == Input.KEY_DOWN) {
 			current_selection++;
 		}
