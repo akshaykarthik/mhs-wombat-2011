@@ -20,10 +20,12 @@ public class MenuState extends BasicGameState {
 	private Starfield stars;
 
 	private int current_selection = 0;
-	private MenuOption[] options = { new MenuOption("Play", 160, 200),
-			new MenuOption("Options", 160, 300),
-			new MenuOption("Credits", 160, 400),
-			new MenuOption("Quit", 160, 500) };
+	private MenuOption[] options = { // Menu options
+			new MenuOption("Play", 160, 200), //0
+			new MenuOption("Options", 160, 300),//1
+			new MenuOption("Credits", 160, 400),//2
+			new MenuOption("High Scores", 160, 500),//3
+			new MenuOption("Quit", 160, 600) };//4
 
 	private class MenuOption {
 		public String name;
@@ -123,6 +125,9 @@ public class MenuState extends BasicGameState {
 				StateUtils.switchTo(gm, States.CREDITS);
 				break;
 			case 3:
+				StateUtils.switchTo(gm,  States.HIGHSCORE);
+				break;
+			case 4:
 				gc.exit();
 				break;
 			default:
