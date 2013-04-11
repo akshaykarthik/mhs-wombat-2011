@@ -78,22 +78,22 @@ public class MenuState extends BasicGameState {
 		if (key == Input.KEY_2) {
 			StateUtils.switchTo(gm, States.CREDITS);
 		}
-<<<<<<< HEAD
+		
 		if (key == Input.KEY_4) {
 			StateUtils.switchTo(gm, States.DEFEAT);
 		}
 
-=======
 		if(key == Input.KEY_RIGHT){
 			current_selection++;
 		}
+		
 		if(key == Input.KEY_LEFT){
 			current_selection--;
 		}
 		
 		if(current_selection > 3) current_selection = 0;
 		if(current_selection < 0) current_selection = 3;		
->>>>>>> Working Basic Transition and Menu
+
 	}
 
 	@Override
