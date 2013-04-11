@@ -19,7 +19,7 @@ public class CreditsState extends BasicGameState {
 			throws SlickException {
 		gc = container;
 		gm = game;
-
+		
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {

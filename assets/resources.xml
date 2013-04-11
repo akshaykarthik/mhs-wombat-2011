@@ -5,6 +5,37 @@
 	<!-- songs -->
 	<!-- images -->
 	<image key="logo" file="logo_1.png"/>
+	<image key="transition_door" file="transition_door_1.png"/>
+
+	<!-- TODO: Uncomment this part to load copies of the door to show preloader in action
+	<image key="transition_door1" file="transition_door_1.png"/>
+	<image key="transition_door2" file="transition_door_1.png"/>
+	<image key="transition_door3" file="transition_door_1.png"/>
+	<image key="transition_door4" file="transition_door_1.png"/>
+	<image key="transition_door5" file="transition_door_1.png"/>
+	<image key="transition_door6" file="transition_door_1.png"/>
+	<image key="transition_door7" file="transition_door_1.png"/>
+	<image key="transition_door8" file="transition_door_1.png"/>
+	<image key="transition_door9" file="transition_door_1.png"/>
+	<image key="transition_door10" file="transition_door_1.png"/>
+	<image key="transition_door11" file="transition_door_1.png"/>
+	<image key="transition_door12" file="transition_door_1.png"/>
+	<image key="transition_door13" file="transition_door_1.png"/>
+	<image key="transition_door14" file="transition_door_1.png"/>
+	<image key="transition_door15" file="transition_door_1.png"/>
+	<image key="transition_door16" file="transition_door_1.png"/>
+	<image key="transition_door17" file="transition_door_1.png"/>
+	<image key="transition_door18" file="transition_door_1.png"/>
+	<image key="transition_door19" file="transition_door_1.png"/>
+	<image key="transition_door20" file="transition_door_1.png"/>
+	-->
+
 	<!-- sheets -->
 	<!-- fonts -->
+	<unicodefont key="10" file="fonts/AliquamREG.ttf" fontSize="10" />
+	<unicodefont key="20" file="fonts/AliquamREG.ttf" fontSize="20" />
+	<unicodefont key="30" file="fonts/AliquamREG.ttf" fontSize="30" />
+	<unicodefont key="40" file="fonts/AliquamREG.ttf" fontSize="40" />
+	<unicodefont key="50" file="fonts/AliquamREG.ttf" fontSize="50" />
+	<unicodefont key="60" file="fonts/AliquamREG.ttf" fontSize="60" />
 </resources>
