@@ -34,6 +34,7 @@ public class DoorCloseTransition implements Transition {
 		prev = secondState;
 		next = firstState;
 	}
+	
 
 	public boolean isComplete() {
 		return finish > Globals.TRANSITION_FACTOR3;

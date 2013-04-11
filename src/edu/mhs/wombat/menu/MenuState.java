@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -62,8 +63,16 @@ public class MenuState extends BasicGameState {
 		g.setFont(ResourceManager.getFont("40"));
 
 		for (int i = 0; i < options.length; i++) {
-			if (current_selection == i)
+			if (current_selection == i) {
 				g.setColor(Color.red);
+				g.draw(new Polygon(new float[] { options[i].x - 5, // x1
+						options[i].y + 25, // y1
+						options[i].x - 10, // x2
+						options[i].y + 30, // y2
+						options[i].x - 10, // x3
+						options[i].y + 20 // y3
+						}));
+			}
 			g.drawString(options[i].name, options[i].x, options[i].y);
 			g.setColor(Color.white);
 		}
@@ -81,6 +90,10 @@ public class MenuState extends BasicGameState {
 			StateUtils.switchTo(gm, States.DEFEAT);
 		}
 
+		if (key == Input.KEY_5) {
+			StateUtils.switchTo(gm, States.VICTORY);
+		}
+
 		if (key == Input.KEY_RIGHT) {
 			current_selection++;
 		}
@@ -93,11 +106,11 @@ public class MenuState extends BasicGameState {
 			current_selection = 0;
 		if (current_selection < 0)
 			current_selection = options.length - 1;
-		
-		if(key == Input.KEY_ENTER){
+
+		if (key == Input.KEY_ENTER) {
 			switch (current_selection) {
 			case 0:
-			
+
 				break;
 			case 1:
 				break;

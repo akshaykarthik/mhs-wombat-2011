@@ -1,4 +1,4 @@
-package edu.mhs.wombat.defeat;
+package edu.mhs.wombat.endgame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -29,7 +29,7 @@ public class DefeatState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setFont(ResourceManager.getFont("40"));
-		g.drawString("GAME OVER", Globals.WIDTH/2-20, Globals.HEIGHT/2);
+		g.drawString("Defeat", Globals.WIDTH/2-20, Globals.HEIGHT/2);
 
 	}
 	

@@ -6,7 +6,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.credits.CreditsState;
-import edu.mhs.wombat.defeat.DefeatState;
+import edu.mhs.wombat.endgame.DefeatState;
+import edu.mhs.wombat.endgame.VictoryState;
 import edu.mhs.wombat.menu.MenuState;
 import edu.mhs.wombat.preloader.PreloaderState;
 import edu.mhs.wombat.utils.Globals;
@@ -28,6 +29,7 @@ public class Wombat extends StateBasedGame {
 		addState(new MenuState());
 		addState(new CreditsState());
 		addState(new DefeatState());
+		addState(new VictoryState());
 	}
 
 	/**
