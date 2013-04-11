@@ -114,7 +114,7 @@ public class MenuState extends BasicGameState {
 		if (key == Input.KEY_ENTER) {
 			switch (current_selection) {
 			case 0:
-
+				StateUtils.switchTo(gm,  States.GAME);
 				break;
 			case 1:
 				StateUtils.switchTo(gm, States.OPTIONS);

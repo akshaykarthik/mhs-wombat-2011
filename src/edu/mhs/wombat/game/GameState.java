@@ -1,8 +1,7 @@
-package edu.mhs.wombat.endgame;
+package edu.mhs.wombat.game;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -14,8 +13,7 @@ import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
 import edu.mhs.wombat.utils.effects.Starfield;
 
-public class VictoryState extends BasicGameState {
-
+public class GameState extends BasicGameState{
 	private StateBasedGame gm;
 	private Starfield bg;
 
@@ -39,7 +37,7 @@ public class VictoryState extends BasicGameState {
 			throws SlickException {
 		bg.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
-		g.drawString("Victory!", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
+		g.drawString("In Game Now", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
 
 	}
 
@@ -57,7 +55,6 @@ public class VictoryState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return States.VICTORY.ordinal();
+		return States.GAME.ordinal();
 	}
-
 }
