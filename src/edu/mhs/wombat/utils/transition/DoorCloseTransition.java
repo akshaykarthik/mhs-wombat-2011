@@ -17,8 +17,6 @@ public class DoorCloseTransition implements Transition {
 
 	protected static SGL GL = Renderer.get();
 
-	private GameState next;
-	private GameState prev;
 	private float offset = 0;
 	private float offset2 = 0;
 	private float finish;
@@ -31,8 +29,8 @@ public class DoorCloseTransition implements Transition {
 	}
 
 	public void init(GameState firstState, GameState secondState) {
-		prev = secondState;
-		next = firstState;
+
+		
 	}
 	
 

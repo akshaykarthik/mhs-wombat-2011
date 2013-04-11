@@ -2,7 +2,6 @@ package edu.mhs.wombat.endgame;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -12,21 +11,20 @@ import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
+import edu.mhs.wombat.utils.effects.Starfield;
 
 public class DefeatState extends BasicGameState {
-	private GameContainer gc;
 	private StateBasedGame gm;
-	private Image background;
+	private Starfield bg;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		gc = container;
 		gm = game;
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		background = ResourceManager.getImage("background_defeat");
+		bg = new Starfield(10, 0);
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
@@ -37,7 +35,7 @@ public class DefeatState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 
-		g.drawImage(background, 0, 0);
+		bg.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
 		g.drawString("Defeat!", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
 

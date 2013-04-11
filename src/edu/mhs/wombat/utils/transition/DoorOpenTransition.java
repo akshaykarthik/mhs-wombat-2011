@@ -16,8 +16,6 @@ import edu.mhs.wombat.utils.ResourceManager;
 public class DoorOpenTransition implements Transition {
 	protected static SGL GL = Renderer.get();
 
-	private GameState next;
-	private GameState prev;
 	private float offset = 0;
 	private float offset2 = 0;
 	private float finish;
@@ -31,12 +29,11 @@ public class DoorOpenTransition implements Transition {
 	}
 
 	public void init(GameState firstState, GameState secondState) {
-		prev = secondState;
-		next = firstState;
+
 	}
 
 	public boolean isComplete() {
-		return finish > Globals.TRANSITION_FACTOR3;
+		return finish > 1;//Globals.TRANSITION_FACTOR3;
 	}
 
 	public void postRender(StateBasedGame game, GameContainer container,

@@ -1,4 +1,4 @@
-package edu.mhs.wombat.credits;
+package edu.mhs.wombat.menu;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -10,21 +10,21 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
+import edu.mhs.wombat.utils.effects.Starfield;
 
-public class CreditsState extends BasicGameState {
-	private GameContainer gc;
+public class OptionsState extends BasicGameState{
 	private StateBasedGame gm;
+	private Starfield bg;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		gc = container;
 		gm = game;
 		
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		
+		bg = new Starfield(0, 10);
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
@@ -34,12 +34,10 @@ public class CreditsState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+		bg.render(g);
 		g.setFont(ResourceManager.getFont("font60"));
-		g.drawString("Credits", 160, 160);
+		g.drawString("Options", 160, 160);
 		g.setFont(ResourceManager.getFont("font40"));
-		g.drawString("Drew S.", 160, 260);
-		g.drawString("Akshay K.", 160, 360);
-		g.drawString("Peter O.", 160, 460);
 	}
 
 	@Override
@@ -49,7 +47,7 @@ public class CreditsState extends BasicGameState {
 	}
 
 	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_2) {
+		if (key == Input.KEY_ESCAPE) {
 			StateUtils.switchTo(gm, States.MENU);
 		}
 
@@ -57,7 +55,6 @@ public class CreditsState extends BasicGameState {
 
 	@Override
 	public int getID() {
-		return States.CREDITS.ordinal();
+		return States.OPTIONS.ordinal();
 	}
-
 }

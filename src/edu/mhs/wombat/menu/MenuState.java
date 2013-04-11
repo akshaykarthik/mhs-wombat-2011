@@ -3,7 +3,6 @@ package edu.mhs.wombat.menu;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Polygon;
@@ -13,11 +12,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
+import edu.mhs.wombat.utils.effects.Starfield;
 
 public class MenuState extends BasicGameState {
 	private GameContainer gc;
 	private StateBasedGame gm;
-	private Image logo;
+	private Starfield stars;
 
 	private int current_selection = 0;
 	private MenuOption[] options = { new MenuOption("Play", 160, 200),
@@ -45,7 +45,7 @@ public class MenuState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		logo = ResourceManager.getImage("background1");
+		stars = new Starfield(-10, 0);
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
@@ -55,7 +55,8 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.drawImage(logo, 0, 0);
+		//g.drawImage(logo, 0, 0);
+		stars.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
 		g.drawString("Menu", 160, 20);
 
@@ -80,7 +81,7 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-
+		
 	}
 
 	public void keyReleased(int key, char c) {
@@ -112,6 +113,7 @@ public class MenuState extends BasicGameState {
 
 				break;
 			case 1:
+				StateUtils.switchTo(gm, States.OPTIONS);
 				break;
 			case 2:
 				StateUtils.switchTo(gm, States.CREDITS);
