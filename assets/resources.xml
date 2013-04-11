@@ -5,15 +5,17 @@
 	<!-- songs -->
 	<!-- images -->
 	<image key="logo" file="logo_1.png"/>
+	<image key="background1" file="background_1.png"/>
+	<image key="background_victory" file="background_1.png"/>
+	<image key="background_defeat" file="background_1.png"/>
 	<image key="transition_door" file="transition_door_1.png"/>
 	<image key="transition_door2" file="transition_door_2.png"/>
 
 	<!-- sheets -->
 	<!-- fonts -->
-	<unicodefont key="10" file="fonts/AliquamREG.ttf" fontSize="10" />
-	<unicodefont key="20" file="fonts/AliquamREG.ttf" fontSize="20" />
-	<unicodefont key="30" file="fonts/AliquamREG.ttf" fontSize="30" />
-	<unicodefont key="40" file="fonts/AliquamREG.ttf" fontSize="40" />
-	<unicodefont key="50" file="fonts/AliquamREG.ttf" fontSize="50" />
-	<unicodefont key="60" file="fonts/AliquamREG.ttf" fontSize="60" />
+	<unicodefont key="font20" file="fonts/AliquamREG.ttf" fontSize="20" />
+	<unicodefont key="font40" file="fonts/AliquamREG.ttf" fontSize="40" />
+	<unicodefont key="font60" file="fonts/AliquamREG.ttf" fontSize="60" />
+	<unicodefont key="font80" file="fonts/AliquamREG.ttf" fontSize="80" />
+	<unicodefont key="font100" file="fonts/AliquamREG.ttf" fontSize="100" />
 </resources>

@@ -44,6 +44,7 @@ public class Wombat extends StateBasedGame {
 			container.setDisplayMode(Globals.WIDTH, Globals.HEIGHT, false);
 			container.setTargetFrameRate(Globals.TARGET_FPS);
 			container.setShowFPS(Globals.DEBUG);
+			container.setVerbose(Globals.DEBUG); 
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

@@ -20,10 +20,10 @@ public class MenuState extends BasicGameState {
 	private Image logo;
 
 	private int current_selection = 0;
-	private MenuOption[] options = { new MenuOption("Play", 160, 160),
-			new MenuOption("Options", 260, 160),
-			new MenuOption("Credits", 410, 160),
-			new MenuOption("Quit", 540, 160) };
+	private MenuOption[] options = { new MenuOption("Play", 160, 200),
+			new MenuOption("Options", 160, 300),
+			new MenuOption("Credits", 160, 400),
+			new MenuOption("Quit", 160, 500) };
 
 	private class MenuOption {
 		public String name;
@@ -45,22 +45,21 @@ public class MenuState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		System.out.println("ENTERED STATE MENU");
-		logo = ResourceManager.getImage("logo");
+		logo = ResourceManager.getImage("background1");
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
-		System.out.println("LEAVING STATE MENU");
+
 	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.drawImage(logo, 0, 0);
-		g.setFont(ResourceManager.getFont("60"));
-		g.drawString("Menu", 160, 100);
+		g.setFont(ResourceManager.getFont("font100"));
+		g.drawString("Menu", 160, 20);
 
-		g.setFont(ResourceManager.getFont("40"));
+		g.setFont(ResourceManager.getFont("font40"));
 
 		for (int i = 0; i < options.length; i++) {
 			if (current_selection == i) {
@@ -94,11 +93,11 @@ public class MenuState extends BasicGameState {
 			StateUtils.switchTo(gm, States.VICTORY);
 		}
 
-		if (key == Input.KEY_RIGHT) {
+		if (key == Input.KEY_RIGHT || key == Input.KEY_DOWN) {
 			current_selection++;
 		}
 
-		if (key == Input.KEY_LEFT) {
+		if (key == Input.KEY_LEFT || key == Input.KEY_UP) {
 			current_selection--;
 		}
 

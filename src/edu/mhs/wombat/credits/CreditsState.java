@@ -24,20 +24,19 @@ public class CreditsState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		System.out.println("ENTERED STATE CREDITS");
 		
 	}
 
 	public void leave(GameContainer container, StateBasedGame game) {
-		System.out.println("LEAVING STATE CREDITS");
+		
 	}
 	
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setFont(ResourceManager.getFont("60"));
+		g.setFont(ResourceManager.getFont("font60"));
 		g.drawString("Credits", 160, 160);
-		g.setFont(ResourceManager.getFont("40"));
+		g.setFont(ResourceManager.getFont("font40"));
 		g.drawString("Drew S.", 160, 260);
 		g.drawString("Akshay K.", 160, 360);
 		g.drawString("Peter O.", 160, 460);
