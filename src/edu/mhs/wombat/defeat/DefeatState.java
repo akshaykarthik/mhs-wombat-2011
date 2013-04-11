@@ -1,9 +1,7 @@
-package edu.mhs.wombat.menu;
+package edu.mhs.wombat.defeat;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
@@ -11,14 +9,13 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
 
-public class MenuState extends BasicGameState {
+public class DefeatState extends BasicGameState {
+	
 	private GameContainer gc;
 	private StateBasedGame gm;
-	private Image logo;
-
+	
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
@@ -26,45 +23,30 @@ public class MenuState extends BasicGameState {
 		gm = game;
 
 	}
-	
-	public void enter(GameContainer container, StateBasedGame game) {
-		System.out.println("ENTERED STATE MENU");
-		logo = ResourceManager.getImage("logo");
-	}
-
-	public void leave(GameContainer container, StateBasedGame game) {
-		System.out.println("LEAVING STATE MENU");
-	}
 
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.drawImage(logo, 0, 0);
-		g.setColor(Color.yellow);
-		g.drawString("Test State: Menu", 160, 160);
-		
-	}
+		g.drawString("GAME OVER", Globals.WIDTH/2-20, Globals.HEIGHT/2);
 
+	}
+	
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 
 	}
-
-	public void keyReleased(int key, char c) {
-		if (key == Input.KEY_2) {
-			StateUtils.switchTo(gm, States.CREDITS);
+	
+	public void keyReleased(int key, char c){
+		if(key==Input.KEY_ESCAPE){
+			StateUtils.switchTo(gm, States.MENU);
 		}
-		if (key == Input.KEY_4) {
-			StateUtils.switchTo(gm, States.DEFEAT);
-		}
-
+		
 	}
-
+	
 	@Override
 	public int getID() {
-
-		return States.MENU.ordinal();
+		return States.DEFEAT.ordinal();
 	}
 
 }
