@@ -37,6 +37,7 @@ public class HighState extends BasicGameState {
 				g.drawString("Highscore " + i + "\t" + scores[i], 225, 225 + 50 * i);
 				i++;
 			}
+			f.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
