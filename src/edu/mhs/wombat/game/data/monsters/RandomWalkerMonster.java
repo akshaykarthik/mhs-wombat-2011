@@ -1,28 +1,52 @@
 package edu.mhs.wombat.game.data.monsters;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
-import edu.mhs.wombat.game.core.EntityInstance;
+import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.core.Hitbox;
+import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
 public class RandomWalkerMonster implements Entity {
 	private static Circle c = new Circle(0, 0, 5);
 
-	@Override
-	public void init(GameStatus gs) {
-
+	public Vector2f pos;
+	public Vector2f vel;
+	public EntityState state;
+	public Hitbox hitbox;
+	public float maxvel = 2;
+	
+	public RandomWalkerMonster(float ix, float iy) {
+		state = EntityState.ALIVE;
+		pos = new Vector2f(ix, iy);
+		vel = new Vector2f(0, 0);
+		hitbox = new Hitbox(4.5f, 4.5f);
 	}
 
 	@Override
-	public void update(StateBasedGame game, GameStatus gs, EntityInstance ei,
-			int delta) {
-		/*
-		switch (ei.getState()) {
+	public EntityState getState() {
+		return this.state;
+	}
+
+	@Override
+	public void setState(EntityState es) {
+		this.state = es;
+	}
+
+	@Override
+	public void init(GameStatus gs) {
+	}
+
+	@Override
+	public void update(StateBasedGame game, GameStatus gs, int delta) {
+		switch (state) {
 		case ALIVE:
 			break;
 		case DEAD:
@@ -35,35 +59,45 @@ public class RandomWalkerMonster implements Entity {
 			break;
 		default:
 			break;
-		}*/
-
-		RandomWalkerMonsterInstance ti = (RandomWalkerMonsterInstance) ei;
-		ti.dx = ((float) (ti.dx + (Math.random() < 0.5 ? -1.0 : 1.0)));
-		ti.dy = ((float) (ti.dy + (Math.random() < 0.5 ? -1.0 : 1.0)));
-		ti.x += ti.dx;
-		ti.y += ti.dy;
-		ti.x = (float) MathUtils.loop(ti.x, 0, Globals.WIDTH);
-		ti.y = (float) MathUtils.loop(ti.y, 0, Globals.HEIGHT);
-
-		float dv = (float) Math.hypot(ti.dx, ti.dy);
-		float ndv = (float) MathUtils.clamp(dv, -50, 50);
-		if (dv != ndv) {
-			ti.dx *= (dv / ndv);
-			ti.dy *= (dv / ndv);
 		}
+
+		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
+		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
+		pos = pos.add(vel);
+		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
+
+		if (vel.length() > maxvel)
+			vel.normalise().scale(maxvel);
 	}
 
 	@Override
-	public void render(StateBasedGame game, EntityInstance ei, Graphics g) {
-		RandomWalkerMonsterInstance ti = (RandomWalkerMonsterInstance) ei;
-		c.setCenterX(ti.x);
-		c.setCenterY(ti.y);
+	public Hitbox getHitBox() {
+		return hitbox;
+	}
+
+	@Override
+	public void render(StateBasedGame game, Graphics g) {
+		g.setColor(state == EntityState.DEAD ? Color.red : Color.white);
+		c.setCenterX(pos.x);
+		c.setCenterY(pos.y);
 		g.draw(c);
+		g.setColor(Color.white);
 	}
 
 	@Override
-	public void collideWith(EntityInstance a, Entity ba, EntityInstance bb) {
+	public void collideWith(Entity b) {
+		this.setState(EntityState.DEAD);
+	}
 
+	@Override
+	public Vector2f getPos() {
+		return pos;
+	}
+
+	@Override
+	public void playerCollide(Player a) {
+		this.setState(EntityState.ALIVE);
 	}
 
 }

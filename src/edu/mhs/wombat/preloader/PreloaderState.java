@@ -12,7 +12,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.game.core.EntityMapper;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
@@ -76,7 +75,6 @@ public class PreloaderState extends BasicGameState {
 		percent = (numResources - loader.remainingElements()) / numResources;
 
 		if (isComplete) {
-			EntityMapper.load();
 			StateUtils.switchToNoTransition(gm, States.MENU);
 		} else {
 			description = loader.loadNext();

@@ -1,7 +1,5 @@
 package edu.mhs.wombat.game;
 
-import java.util.ArrayList;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,8 +8,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.game.core.EntityInstance;
-import edu.mhs.wombat.game.core.EntityMapper;
 import edu.mhs.wombat.game.data.MonsterFactory;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -48,9 +44,6 @@ public class GameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		bg.render(g);
-		g.setFont(ResourceManager.getFont("font100"));
-		g.drawString("In Game Now", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
-
 		gs.render(game, g);
 	}
 
@@ -63,6 +56,9 @@ public class GameState extends BasicGameState {
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
 			StateUtils.switchTo(gm, States.MENU);
+		}
+		if(key == Input.KEY_F1){
+			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}
 	}
 

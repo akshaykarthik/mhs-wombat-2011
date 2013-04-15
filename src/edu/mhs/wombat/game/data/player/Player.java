@@ -4,26 +4,30 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
-import edu.mhs.wombat.game.core.EntityInstance;
+import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
-public class Player {
-	public float x, dx;
-	public float y, dy;
+public class Player implements Entity{
+	public Vector2f pos;
+	public Vector2f vel;
 	public float health, energy;
+	public Hitbox hitbox;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
-		x = 150;
-		y = 150;
+		pos = new Vector2f(250, 250);
+		vel = new Vector2f(0, 0);
+		hitbox = new Hitbox(85, 85);
 	}
 
 	public void init(GameStatus gs) {
@@ -40,64 +44,90 @@ public class Player {
 			boolean down = (input.isKeyDown(Input.KEY_DOWN));
 
 			if (left && !right)
-				dx = -10;
+				vel.x = -10;
 			else if (right && !left)
-				dx = 10;
+				vel.x = 10;
 			else
-				dx = 0;
+				vel.x = 0;
 
 			if (up && !down)
-				dy = -10;
+				vel.y = -10;
 			else if (down && !up)
-				dy = 10;
+				vel.y = 10;
 			else
-				dy = 0;
+				vel.y = 0;
 
 			if (input.isKeyDown(Input.KEY_SPACE)) {
-				dx = 0;
-				dy = 0;
+				vel.x = 0;
+				vel.y = 0;
 			}
 
 			break;
 		case DEAD:
-			dx = 0;
-			dy = 0;
+			vel.x = 0;
+			vel.y = 0;
 			break;
 		case DYING:
-			dx = 0;
-			dy = 0;
+			vel.x = 0;
+			vel.y = 0;
 			break;
 		case SPAWNING:
-			dx = 0;
-			dy = 0;
+			vel.x = 0;
+			vel.y = 0;
 			break;
 		case STUNNED:
-			dx = 0;
-			dy = 0;
+			vel.x = 0;
+			vel.y = 0;
 			break;
 		}
-		x += dx;
-		y += dy;
-
-		x = (float) MathUtils.loop(x, 0, Globals.WIDTH);
-		y = (float) MathUtils.loop(y, 0, Globals.HEIGHT);
+		
+		pos = pos.add(vel);
+		
+		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.magenta);
-		shape.setCenterX(x);
-		shape.setCenterY(y);
+		shape.setCenterX(pos.x);
+		shape.setCenterY(pos.y);
 		g.fill(shape);
 		g.setColor(Color.cyan);
 		float x2 = input.getAbsoluteMouseX();
 		float y2 = input.getAbsoluteMouseY();
-		g.drawLine(x, y, x2, y2);
+		g.drawLine(pos.x, pos.y, x2, y2);
 		g.setColor(Color.white);
 
 	}
 
-	public void collideWith(EntityInstance a, Entity ba, EntityInstance bb) {
+	public void collideWith(Entity b) {
 
+	}
+
+	@Override
+	public EntityState getState() {
+		return null; // uses playerstate instead
+	}
+
+	@Override
+	public void setState(EntityState es) {
+		// uses playerstate instead
+	}
+
+	@Override
+	public Hitbox getHitBox() {
+		return hitbox;
+	}
+
+	@Override
+	public void playerCollide(Player a) {
+		// ignore, can't collide with self
+		
+	}
+
+	@Override
+	public Vector2f getPos() {
+		return pos;
 	}
 
 }

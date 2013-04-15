@@ -11,4 +11,6 @@ public class Globals {
 	public static final float TRANSITION_FACTOR3 = 500f;
 
 	public static final boolean DEBUG = true;
+	public static boolean GAME_DEBUG = true;
+
 }
