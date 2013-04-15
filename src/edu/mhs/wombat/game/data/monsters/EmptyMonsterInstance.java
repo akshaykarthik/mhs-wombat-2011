@@ -17,6 +17,7 @@ public class EmptyMonsterInstance implements EntityInstance{
 	public EmptyMonsterInstance(float ix, float iy){
 		x = ix;
 		y = iy;
+		state = EntityState.ALIVE;
 	}
 	
 	@Override

@@ -21,6 +21,7 @@ public class RandomWalkerMonster implements Entity {
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, EntityInstance ei,
 			int delta) {
+		/*
 		switch (ei.getState()) {
 		case ALIVE:
 			break;
@@ -34,7 +35,7 @@ public class RandomWalkerMonster implements Entity {
 			break;
 		default:
 			break;
-		}
+		}*/
 
 		RandomWalkerMonsterInstance ti = (RandomWalkerMonsterInstance) ei;
 		ti.dx = ((float) (ti.dx + (Math.random() < 0.5 ? -1.0 : 1.0)));

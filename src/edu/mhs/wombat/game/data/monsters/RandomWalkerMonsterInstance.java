@@ -18,6 +18,7 @@ public class RandomWalkerMonsterInstance implements EntityInstance {
 	public RandomWalkerMonsterInstance(float ix, float iy){
 		x = ix;
 		y = iy;
+		state = state.ALIVE;
 	}
 	
 	@Override

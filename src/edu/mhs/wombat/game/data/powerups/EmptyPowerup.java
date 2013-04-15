@@ -31,7 +31,6 @@ public class EmptyPowerup implements Entity {
 		default:
 			break;
 		}
-
 	}
 
 	@Override
@@ -43,5 +42,4 @@ public class EmptyPowerup implements Entity {
 	public void collideWith(EntityInstance a, Entity ba, EntityInstance bb) {
 		a.setState(EntityState.DEAD);
 	}
-
 }

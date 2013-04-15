@@ -12,11 +12,11 @@ public class EmptyMonster implements Entity {
 
 	@Override
 	public void init(GameStatus gs) {
-
 	}
 
 	@Override
-	public void update(StateBasedGame game, GameStatus gs, EntityInstance ei, int delta) {
+	public void update(StateBasedGame game, GameStatus gs, EntityInstance ei,
+			int delta) {
 		switch (ei.getState()) {
 		case ALIVE:
 			break;

@@ -17,6 +17,7 @@ public class SlowChaserMonsterInstance implements EntityInstance{
 	public SlowChaserMonsterInstance(float ix, float iy){
 		x = ix;
 		y = iy;
+		state = EntityState.ALIVE;
 	}
 	
 	@Override

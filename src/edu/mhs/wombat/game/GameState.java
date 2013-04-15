@@ -22,7 +22,6 @@ public class GameState extends BasicGameState {
 	private StateBasedGame gm;
 	private Starfield bg;
 	private GameStatus gs;
-	private ArrayList<EntityInstance> entities;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -34,10 +33,9 @@ public class GameState extends BasicGameState {
 
 	public void enter(GameContainer container, StateBasedGame game) {
 		bg = new Starfield(-10, -10);
-		entities = new ArrayList<EntityInstance>();
-		int NUMTEST = 1000;
+		int NUMTEST = 100;
 		for (int i = 0; i < NUMTEST ; i++) {
-			entities.add(MonsterFactory.newRandomWalkerMonster(150, 150));
+			gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(150, 150));
 		}
 
 	}
@@ -52,15 +50,14 @@ public class GameState extends BasicGameState {
 		bg.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
 		g.drawString("In Game Now", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
-		for (EntityInstance ei : entities)
-			EntityMapper.getEntity(ei).render(game, ei, g);
+
+		gs.render(game, g);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		for (EntityInstance ei : entities)
-			EntityMapper.getEntity(ei).update(game, gs, ei, delta);
+		gs.update(game, delta);
 	}
 
 	public void keyReleased(int key, char c) {
