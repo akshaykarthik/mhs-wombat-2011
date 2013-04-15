@@ -1,8 +1,6 @@
 package edu.mhs.wombat.game.data.powerups;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
@@ -18,7 +16,7 @@ public class EmptyPowerup implements Entity {
 	}
 
 	@Override
-	public void update(StateBasedGame game, EntityInstance ei, int delta) {
+	public void update(StateBasedGame game,  GameStatus gs,EntityInstance ei, int delta) {
 		switch (ei.getState()) {
 		case ALIVE:
 			break;

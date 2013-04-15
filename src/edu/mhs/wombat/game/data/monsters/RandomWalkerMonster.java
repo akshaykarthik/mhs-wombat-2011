@@ -19,7 +19,8 @@ public class RandomWalkerMonster implements Entity {
 	}
 
 	@Override
-	public void update(StateBasedGame game, EntityInstance ei, int delta) {
+	public void update(StateBasedGame game, GameStatus gs, EntityInstance ei,
+			int delta) {
 		switch (ei.getState()) {
 		case ALIVE:
 			break;
@@ -34,7 +35,7 @@ public class RandomWalkerMonster implements Entity {
 		default:
 			break;
 		}
-		
+
 		RandomWalkerMonsterInstance ti = (RandomWalkerMonsterInstance) ei;
 		ti.dx = ((float) (ti.dx + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		ti.dy = ((float) (ti.dy + (Math.random() < 0.5 ? -1.0 : 1.0)));
@@ -45,9 +46,9 @@ public class RandomWalkerMonster implements Entity {
 
 		float dv = (float) Math.hypot(ti.dx, ti.dy);
 		float ndv = (float) MathUtils.clamp(dv, -50, 50);
-		if(dv != ndv){
-			ti.dx *= (dv/ndv);
-			ti.dy *= (dv/ndv);
+		if (dv != ndv) {
+			ti.dx *= (dv / ndv);
+			ti.dy *= (dv / ndv);
 		}
 	}
 
@@ -61,8 +62,7 @@ public class RandomWalkerMonster implements Entity {
 
 	@Override
 	public void collideWith(EntityInstance a, Entity ba, EntityInstance bb) {
-		
-		
+
 	}
 
 }

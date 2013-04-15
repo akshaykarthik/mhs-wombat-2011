@@ -21,12 +21,14 @@ import edu.mhs.wombat.utils.effects.Starfield;
 public class GameState extends BasicGameState {
 	private StateBasedGame gm;
 	private Starfield bg;
+	private GameStatus gs;
 	private ArrayList<EntityInstance> entities;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
 		gm = game;
+		gs = new GameStatus();
 
 	}
 
@@ -58,7 +60,7 @@ public class GameState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		for (EntityInstance ei : entities)
-			EntityMapper.getEntity(ei).update(game, ei, delta);
+			EntityMapper.getEntity(ei).update(game, gs, ei, delta);
 	}
 
 	public void keyReleased(int key, char c) {

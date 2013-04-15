@@ -1,6 +1,8 @@
 package edu.mhs.wombat.game.core;
 
-import edu.mhs.wombat.game.data.monsters.*;
+import edu.mhs.wombat.game.data.monsters.EmptyMonster;
+import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
+import edu.mhs.wombat.game.data.monsters.SlowChaserMonster;
 
 public class EntityMapper {
 	private static Entity _EmptyMonster;
