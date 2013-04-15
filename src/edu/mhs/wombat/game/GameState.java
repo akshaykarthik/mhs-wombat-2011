@@ -35,7 +35,7 @@ public class GameState extends BasicGameState {
 		entities = new ArrayList<EntityInstance>();
 		int NUMTEST = 1000;
 		for (int i = 0; i < NUMTEST ; i++) {
-			entities.add(MonsterFactory.newRandomWalkerMonster());
+			entities.add(MonsterFactory.newRandomWalkerMonster(150, 150));
 		}
 
 	}

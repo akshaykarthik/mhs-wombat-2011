@@ -20,6 +20,21 @@ public class RandomWalkerMonster implements Entity {
 
 	@Override
 	public void update(StateBasedGame game, EntityInstance ei, int delta) {
+		switch (ei.getState()) {
+		case ALIVE:
+			break;
+		case DEAD:
+			break;
+		case DYING:
+			break;
+		case SPAWNING:
+			break;
+		case STUNNED:
+			break;
+		default:
+			break;
+		}
+		
 		RandomWalkerMonsterInstance ti = (RandomWalkerMonsterInstance) ei;
 		ti.dx = ((float) (ti.dx + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		ti.dy = ((float) (ti.dy + (Math.random() < 0.5 ? -1.0 : 1.0)));
@@ -42,6 +57,12 @@ public class RandomWalkerMonster implements Entity {
 		c.setCenterX(ti.x);
 		c.setCenterY(ti.y);
 		g.draw(c);
+	}
+
+	@Override
+	public void collideWith(EntityInstance a, Entity ba, EntityInstance bb) {
+		
+		
 	}
 
 }
