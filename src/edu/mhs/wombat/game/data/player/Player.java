@@ -1,5 +1,6 @@
 package edu.mhs.wombat.game.data.player;
 
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -21,6 +22,7 @@ public class Player implements Entity {
 	public Hitbox hitbox;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
+	public boolean attack = false;
 
 	private Circle shape = new Circle(0, 0, 15, 15);
 
@@ -42,7 +44,8 @@ public class Player implements Entity {
 			boolean left = (input.isKeyDown(Input.KEY_LEFT));
 			boolean up = (input.isKeyDown(Input.KEY_UP));
 			boolean down = (input.isKeyDown(Input.KEY_DOWN));
-
+			attack = Mouse.isButtonDown(0);
+			
 			if (left && !right)
 				vel.x = -10;
 			else if (right && !left)
@@ -61,7 +64,7 @@ public class Player implements Entity {
 				vel.x = 0;
 				vel.y = 0;
 			}
-
+			
 			break;
 		case DEAD:
 			vel.x = 0;
@@ -79,6 +82,8 @@ public class Player implements Entity {
 			vel.x = 0;
 			vel.y = 0;
 			break;
+			
+			
 		}
 
 		pos = pos.add(vel);
@@ -97,6 +102,9 @@ public class Player implements Entity {
 		float y2 = input.getAbsoluteMouseY();
 		g.drawLine(pos.x, pos.y, x2, y2);
 		g.setColor(Color.white);
+		
+		if(attack)
+			g.drawLine(pos.x, pos.y, Mouse.getX(), Globals.HEIGHT - Mouse.getY());
 
 	}
 

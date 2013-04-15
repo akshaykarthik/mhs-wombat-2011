@@ -10,20 +10,22 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 
-public class EmptyPowerup implements Entity {
-
+public class PowerupDamage implements Entity {
+	
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
 	
-	public EmptyPowerup(){
-		
+	public PowerupDamage(){
+		state = EntityState.ALIVE;
+		pos = new Vector2f(0, 0);
+		vel = new Vector2f(10*(float)(Math.random() - 0.5), 10*(float)(Math.random()- 0.5));
 	}
 	
-	public EmptyPowerup(float ix, float iy){
+	public PowerupDamage(float ix, float iy){
 		state = EntityState.ALIVE;
 		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(0, 0);
+		vel = new Vector2f(10*(float)(Math.random() - 0.5), 10*(float)(Math.random()- 0.5));
 	}
 
 
@@ -57,7 +59,9 @@ public class EmptyPowerup implements Entity {
 		default:
 			break;
 		}
+		//Maybe needs a timer.  When it is up then powerup ends? Until then, adds damage to player...
 		
+
 	}
 	
 	@Override
@@ -68,7 +72,7 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-
+		g.drawRect(pos.x, pos.y, 10, 10);
 	}
 
 	@Override
@@ -83,6 +87,7 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public void playerCollide(Player a) {
-		
+		this.setState(EntityState.DEAD);
 	}
 }
+	
