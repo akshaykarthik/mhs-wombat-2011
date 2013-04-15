@@ -11,6 +11,7 @@
 	<image key="transition_door" file="transition_door_1.png"/>
 	<image key="transition_door2" file="transition_door_2.png"/>
 	
+	<image key="pause_screen" file="pause_screen.png"/>
 	<image key="starfield1" file="starfield_1.png"/>
 
 	<!-- sheets -->

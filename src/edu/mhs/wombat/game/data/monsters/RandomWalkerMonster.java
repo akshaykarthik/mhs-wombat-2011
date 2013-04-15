@@ -22,12 +22,12 @@ public class RandomWalkerMonster implements Entity {
 	public EntityState state;
 	public Hitbox hitbox;
 	public float maxvel = 2;
-	
+
 	public RandomWalkerMonster(float ix, float iy) {
 		state = EntityState.ALIVE;
 		pos = new Vector2f(ix, iy);
 		vel = new Vector2f(0, 0);
-		hitbox = new Hitbox(4.5f, 4.5f);
+		hitbox = new Hitbox(9, 9);
 	}
 
 	@Override

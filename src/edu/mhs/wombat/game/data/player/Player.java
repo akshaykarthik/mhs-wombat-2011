@@ -14,7 +14,7 @@ import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
-public class Player implements Entity{
+public class Player implements Entity {
 	public Vector2f pos;
 	public Vector2f vel;
 	public float health, energy;
@@ -27,7 +27,7 @@ public class Player implements Entity{
 	public Player() {
 		pos = new Vector2f(250, 250);
 		vel = new Vector2f(0, 0);
-		hitbox = new Hitbox(85, 85);
+		hitbox = new Hitbox(28, 28);
 	}
 
 	public void init(GameStatus gs) {
@@ -80,9 +80,9 @@ public class Player implements Entity{
 			vel.y = 0;
 			break;
 		}
-		
+
 		pos = pos.add(vel);
-		
+
 		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
 		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
 	}
@@ -122,7 +122,7 @@ public class Player implements Entity{
 	@Override
 	public void playerCollide(Player a) {
 		// ignore, can't collide with self
-		
+
 	}
 
 	@Override

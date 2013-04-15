@@ -51,13 +51,13 @@ public class GameStatus {
 	public void render(StateBasedGame game, Graphics g) {
 		for(Entity e: entities){
 			e.render(game, g);
-			if(Globals.DEBUG){
+			if(Globals.GAME_DEBUG){
 				Hitbox.renderHitbox(e, g);
 			}
 		}
 		player.render(game, g);
 		
-		if(Globals.DEBUG){
+		if(Globals.GAME_DEBUG){
 			Hitbox.renderHitbox(player, g);
 		}
 	}

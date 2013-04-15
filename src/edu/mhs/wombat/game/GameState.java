@@ -18,6 +18,7 @@ public class GameState extends BasicGameState {
 	private StateBasedGame gm;
 	private Starfield bg;
 	private GameStatus gs;
+	private boolean paused = false;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -30,8 +31,9 @@ public class GameState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) {
 		bg = new Starfield(-10, -10);
 		int NUMTEST = 100;
-		for (int i = 0; i < NUMTEST ; i++) {
-			gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(150, 150));
+		for (int i = 0; i < NUMTEST; i++) {
+			gs.addEntityInstance(MonsterFactory
+					.newRandomWalkerMonster(150, 150));
 		}
 
 	}
@@ -45,21 +47,41 @@ public class GameState extends BasicGameState {
 			throws SlickException {
 		bg.render(g);
 		gs.render(game, g);
+		if (paused)
+			g.drawImage(ResourceManager.getImage("pause_screen"), 0, 0);
 	}
 
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		gs.update(game, delta);
+		if (!paused)
+			gs.update(game, delta);
 	}
 
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			StateUtils.switchTo(gm, States.MENU);
+			if (paused)
+				StateUtils.switchTo(gm, States.MENU);
+			else
+				pause();
 		}
-		if(key == Input.KEY_F1){
+		if(paused && key != Input.KEY_ESCAPE){
+			resume();
+		}
+		
+		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}
+	}
+
+	public void pause() {
+		paused = true;
+		bg.pause();
+	}
+
+	public void resume() {
+		paused = false;
+		bg.resume();
 	}
 
 	@Override

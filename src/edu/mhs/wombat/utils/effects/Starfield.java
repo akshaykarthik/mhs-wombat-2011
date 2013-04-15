@@ -21,15 +21,16 @@ public class Starfield {
 	private int width, height;
 	private float[] depths;
 	private float dx, dy;
+	private boolean pause = false;
+
 	public Starfield(int w, int h) {
 		loadImage();
 		dx = w;
 		dy = h;
 		width = Globals.WIDTH;
 		height = Globals.HEIGHT;
-		this.depths = new float[]{12f, 8f, 5f, 3.5f, 1f};
+		this.depths = new float[] { 12f, 8f, 5f, 3.5f, 1f };
 	}
-
 
 	public Image loadImage() {
 		if (img == null) {
@@ -38,12 +39,13 @@ public class Starfield {
 		return img;
 	}
 
-
 	public void render(Graphics g) {
 		g.setDrawMode(Graphics.MODE_ADD);
 		for (int d = 0; d < depths.length; d++) {
-			x += dx;
-			y += dy;
+			if (!pause) {
+				x += dx;
+				y += dy;
+			}
 			float scale = depths[d];
 			float cornerX = x / scale - width / 2 / scale;
 			float cornerY = y / scale - height / 2 / scale;
@@ -60,6 +62,14 @@ public class Starfield {
 			}
 		}
 		g.setDrawMode(Graphics.MODE_NORMAL);
+	}
+
+	public void pause() {
+		pause = true;
+	}
+	
+	public void resume(){
+		pause = false;
 	}
 
 }
