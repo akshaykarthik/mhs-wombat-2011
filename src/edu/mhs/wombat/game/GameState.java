@@ -32,8 +32,12 @@ public class GameState extends BasicGameState {
 		bg = new Starfield(-10, -10);
 		int NUMTEST = 100;
 		for (int i = 0; i < NUMTEST; i++) {
-			gs.addEntityInstance(MonsterFactory
-					.newRandomWalkerMonster(150, 150));
+			if (Math.random() < 0.5)
+				gs.addEntityInstance(MonsterFactory.newSlowChaserMonster(150,
+						150));
+			else
+				gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(150,
+						150));
 		}
 
 	}
@@ -45,7 +49,7 @@ public class GameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-
+		g.setAntiAlias(false);
 		Camera.preDraw(g, gs);
 		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		bg.render(g);
@@ -76,6 +80,17 @@ public class GameState extends BasicGameState {
 
 		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
+		}
+		if (key == Input.KEY_Q) {
+			for (int i = 0; i < 100; i++) {
+
+				if (Math.random() < 0.01)
+					gs.addEntityInstance(MonsterFactory.newSlowChaserMonster(
+							150, 150));
+				else
+					gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(
+							150, 150));
+			}
 		}
 	}
 

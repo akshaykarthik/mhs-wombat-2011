@@ -10,6 +10,10 @@
 	<image key="background_defeat" file="background_1.png"/>
 	<image key="transition_door" file="transition_door_1.png"/>
 	<image key="transition_door2" file="transition_door_2.png"/>
+
+	<image key="powerup_health_up" file="powerups/health_up.png"/>
+	<image key="powerup_weapon_up" file="powerups/weapon_up.png"/>
+	<image key="powerup_damage_up" file="powerups/damage_up.png"/>
 	
 	<image key="pause_screen" file="pause_screen.png"/>
 	<image key="starfield1" file="starfield_1.png"/>

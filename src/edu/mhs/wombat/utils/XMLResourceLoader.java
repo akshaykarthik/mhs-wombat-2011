@@ -91,6 +91,10 @@ public class XMLResourceLoader {
 			Element e = image.remove(0);
 			loadImage(e);
 			name = e.getAttribute("key");
+		} else if (unicodefont.size() > 0) {
+			Element e = unicodefont.remove(0);
+			loadUnicodeFont(e);
+			name = e.getAttribute("key");
 		} else if (sheet.size() > 0) {
 			Element e = sheet.remove(0);
 			loadSpriteSheet(e);
@@ -103,10 +107,6 @@ public class XMLResourceLoader {
 			Element e = angelcodefont.remove(0);
 			loadAngelCodeFont(e);
 			name = e.getAttribute("key");
-		} else if (unicodefont.size() > 0) {
-			Element e = unicodefont.remove(0);
-			loadUnicodeFont(e);
-			name = e.getAttribute("key");
 		} else if (spritesheetfont.size() > 0) {
 			Element e = spritesheetfont.remove(0);
 			loadSpriteSheetFont(e);
@@ -115,7 +115,6 @@ public class XMLResourceLoader {
 			Element e = param.remove(0);
 			loadParameter(e);
 			name = e.getAttribute("key");
-
 		}
 		return name;
 	}

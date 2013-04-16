@@ -90,7 +90,6 @@ public class RandomWalkerMonster extends Monster{
 	public void collideWith(Entity b) {
 		if(b instanceof Bullet){
 			this.takeDamage(10);
-			
 		}
 	}
 
