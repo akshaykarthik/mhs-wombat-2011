@@ -6,6 +6,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.core.Entity;
+import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
@@ -26,16 +27,23 @@ public class GameStatus {
 
 	public void update(StateBasedGame game, int delta) {
 		// logic updates
+		
+		ArrayList<Entity> markForRemoval = new ArrayList<Entity>();
 		for(Entity e: entities){
 			e.update(game, this, delta);
+			if(e.getState() == EntityState.DEAD){
+				markForRemoval.add(e);
+			}
 		}
 		player.update(game, this, delta);
 		
+		for(Entity e: markForRemoval)
+			entities.remove(e);
 		
 		// collision updates
 		for(Entity a: entities){
 			for(Entity b: entities){
-				if(Hitbox.collides(a, b)){
+				if(a != b && Hitbox.collides(a, b)){
 					a.collideWith(b);
 				}
 			}
@@ -45,6 +53,7 @@ public class GameStatus {
 				player.collideWith(a);
 			}
 		}
+		
 		
 	}
 

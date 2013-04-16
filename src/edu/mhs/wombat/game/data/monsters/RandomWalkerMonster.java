@@ -10,11 +10,12 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
+import edu.mhs.wombat.game.data.common.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
-public class RandomWalkerMonster implements Entity {
+public class RandomWalkerMonster extends Monster{
 	private static Circle c = new Circle(0, 0, 5);
 
 	public Vector2f pos;
@@ -87,7 +88,9 @@ public class RandomWalkerMonster implements Entity {
 
 	@Override
 	public void collideWith(Entity b) {
-		this.setState(EntityState.DEAD);
+		if(b instanceof Bullet){
+			state = EntityState.DEAD;
+		}
 	}
 
 	@Override

@@ -45,10 +45,15 @@ public class GameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
+
+		Camera.preDraw(g, gs);
+		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		bg.render(g);
 		gs.render(game, g);
+		Camera.postDraw(g, gs);
 		if (paused)
 			g.drawImage(ResourceManager.getImage("pause_screen"), 0, 0);
+
 	}
 
 	@Override
@@ -65,10 +70,10 @@ public class GameState extends BasicGameState {
 			else
 				pause();
 		}
-		if(paused && key != Input.KEY_ESCAPE){
+		if (paused && key != Input.KEY_ESCAPE) {
 			resume();
 		}
-		
+
 		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}

@@ -10,7 +10,7 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 
-public class EmptyMonster implements Entity {
+public class EmptyMonster extends Monster{
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;

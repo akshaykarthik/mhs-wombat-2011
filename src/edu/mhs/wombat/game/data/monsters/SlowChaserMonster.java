@@ -10,7 +10,7 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 
-public class SlowChaserMonster implements Entity {
+public class SlowChaserMonster extends Monster{
 
 	public Vector2f pos;
 	public Vector2f vel;

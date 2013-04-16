@@ -11,10 +11,13 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import edu.mhs.wombat.game.Camera;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
+import edu.mhs.wombat.game.data.CommonFactory;
+import edu.mhs.wombat.game.data.MonsterFactory;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
@@ -29,6 +32,8 @@ public class Player implements Entity {
 	public boolean[] weapons = new boolean[5];  //If you have the weapon
 	public int cWep = 0;
 
+	private float attacktimer = 0;
+	private float attackcd = 100;
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
@@ -47,35 +52,25 @@ public class Player implements Entity {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		switch (state) {
 		case ALIVE:
-			boolean right = (input.isKeyDown(Input.KEY_RIGHT));
-			boolean left = (input.isKeyDown(Input.KEY_LEFT));
-			boolean up = (input.isKeyDown(Input.KEY_UP));
-			boolean down = (input.isKeyDown(Input.KEY_DOWN));
-			attack = Mouse.isButtonDown(0);
-			
-			if (left && !right)
-				vel.x = -10;
-			else if (right && !left)
-				vel.x = 10;
-			else
-				vel.x = 0;
-
-			if (up && !down)
-				vel.y = -10;
-			else if (down && !up)
-				vel.y = 10;
-			else
-				vel.y = 0;
-
-			if (input.isKeyDown(Input.KEY_SPACE)) {
-				vel.x = 0;
-				vel.y = 0;
+			handleMovementInput();
+			attacktimer -= delta;
+			if (attacktimer < 0 && attack) {
+				attacktimer = attackcd;
+				float x2 = input.getAbsoluteMouseX();
+				float y2 = input.getAbsoluteMouseY();
+				Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
+				gs.addEntityInstance(CommonFactory.newLinearBullet(pos,
+						mousepos, 10));
 			}
+<<<<<<< HEAD
 			//Swap weapons
 			if(Keyboard.getEventKey()==Keyboard.KEY_1 && weapons[0])
 				cWep = 0;
 			if(Keyboard.getEventKey()==Keyboard.KEY_2 && weapons[1])
 				cWep = 1;
+=======
+
+>>>>>>> Working Bullets, working camera
 			break;
 		case DEAD:
 			vel.x = 0;
@@ -93,8 +88,7 @@ public class Player implements Entity {
 			vel.x = 0;
 			vel.y = 0;
 			break;
-			
-			
+
 		}
 
 		pos = pos.add(vel);
@@ -111,8 +105,10 @@ public class Player implements Entity {
 		g.setColor(Color.cyan);
 		float x2 = input.getAbsoluteMouseX();
 		float y2 = input.getAbsoluteMouseY();
-		g.drawLine(pos.x, pos.y, x2, y2);
+		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
+		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
 		g.setColor(Color.white);
+<<<<<<< HEAD
 		
 		if(attack){
 			if(cWep == 0)
@@ -120,6 +116,12 @@ public class Player implements Entity {
 			if(cWep == 1)
 				g.drawGradientLine(pos.x, pos.y, Color.green, Mouse.getX(), Globals.HEIGHT - Mouse.getY(), Color.red);
 		}
+=======
+
+		if (attack)
+			g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
+
+>>>>>>> Working Bullets, working camera
 	}
 
 	public void collideWith(Entity b) {
@@ -152,4 +154,30 @@ public class Player implements Entity {
 		return pos;
 	}
 
+	private void handleMovementInput() {
+		boolean right = (input.isKeyDown(Input.KEY_RIGHT));
+		boolean left = (input.isKeyDown(Input.KEY_LEFT));
+		boolean up = (input.isKeyDown(Input.KEY_UP));
+		boolean down = (input.isKeyDown(Input.KEY_DOWN));
+		attack = Mouse.isButtonDown(0);
+
+		if (left && !right)
+			vel.x = -10;
+		else if (right && !left)
+			vel.x = 10;
+		else
+			vel.x = 0;
+
+		if (up && !down)
+			vel.y = -10;
+		else if (down && !up)
+			vel.y = 10;
+		else
+			vel.y = 0;
+
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			vel.x = 0;
+			vel.y = 0;
+		}
+	}
 }
