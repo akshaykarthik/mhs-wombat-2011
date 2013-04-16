@@ -1,5 +1,8 @@
 package edu.mhs.wombat.game.data.player;
 
+import java.util.ArrayList;
+
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -23,6 +26,8 @@ public class Player implements Entity {
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 	public boolean attack = false;
+	public boolean[] weapons = new boolean[5];  //If you have the weapon
+	public int cWep = 0;
 
 	private Circle shape = new Circle(0, 0, 15, 15);
 
@@ -30,6 +35,8 @@ public class Player implements Entity {
 		pos = new Vector2f(250, 250);
 		vel = new Vector2f(0, 0);
 		hitbox = new Hitbox(28, 28);
+		weapons[0] = true;
+		weapons[1] = true;
 	}
 
 	public void init(GameStatus gs) {
@@ -64,7 +71,11 @@ public class Player implements Entity {
 				vel.x = 0;
 				vel.y = 0;
 			}
-			
+			//Swap weapons
+			if(Keyboard.getEventKey()==Keyboard.KEY_1 && weapons[0])
+				cWep = 0;
+			if(Keyboard.getEventKey()==Keyboard.KEY_2 && weapons[1])
+				cWep = 1;
 			break;
 		case DEAD:
 			vel.x = 0;
@@ -103,9 +114,12 @@ public class Player implements Entity {
 		g.drawLine(pos.x, pos.y, x2, y2);
 		g.setColor(Color.white);
 		
-		if(attack)
-			g.drawLine(pos.x, pos.y, Mouse.getX(), Globals.HEIGHT - Mouse.getY());
-
+		if(attack){
+			if(cWep == 0)
+				g.drawLine(pos.x, pos.y, Mouse.getX(), Globals.HEIGHT - Mouse.getY());
+			if(cWep == 1)
+				g.drawGradientLine(pos.x, pos.y, Color.green, Mouse.getX(), Globals.HEIGHT - Mouse.getY(), Color.red);
+		}
 	}
 
 	public void collideWith(Entity b) {
