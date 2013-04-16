@@ -29,7 +29,7 @@ public class Player implements Entity {
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 	public boolean attack = false;
-	public boolean[] weapons = new boolean[5];  //If you have the weapon
+	public boolean[] weapons = new boolean[5];
 	public int cWep = 0;
 
 	private float attacktimer = 0;
@@ -62,15 +62,7 @@ public class Player implements Entity {
 				gs.addEntityInstance(CommonFactory.newLinearBullet(pos,
 						mousepos, 10));
 			}
-<<<<<<< HEAD
-			//Swap weapons
-			if(Keyboard.getEventKey()==Keyboard.KEY_1 && weapons[0])
-				cWep = 0;
-			if(Keyboard.getEventKey()==Keyboard.KEY_2 && weapons[1])
-				cWep = 1;
-=======
 
->>>>>>> Working Bullets, working camera
 			break;
 		case DEAD:
 			vel.x = 0;
@@ -108,20 +100,11 @@ public class Player implements Entity {
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
 		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
 		g.setColor(Color.white);
-<<<<<<< HEAD
-		
-		if(attack){
-			if(cWep == 0)
-				g.drawLine(pos.x, pos.y, Mouse.getX(), Globals.HEIGHT - Mouse.getY());
-			if(cWep == 1)
-				g.drawGradientLine(pos.x, pos.y, Color.green, Mouse.getX(), Globals.HEIGHT - Mouse.getY(), Color.red);
-		}
-=======
+
 
 		if (attack)
 			g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
 
->>>>>>> Working Bullets, working camera
 	}
 
 	public void collideWith(Entity b) {
