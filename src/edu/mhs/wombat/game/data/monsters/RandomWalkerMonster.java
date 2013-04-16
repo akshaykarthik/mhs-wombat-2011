@@ -89,7 +89,8 @@ public class RandomWalkerMonster extends Monster{
 	@Override
 	public void collideWith(Entity b) {
 		if(b instanceof Bullet){
-			state = EntityState.DEAD;
+			this.takeDamage(10);
+			
 		}
 	}
 

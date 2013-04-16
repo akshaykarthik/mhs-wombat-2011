@@ -33,7 +33,7 @@ public class Player implements Entity {
 	public int cWep = 0;
 
 	private float attacktimer = 0;
-	private float attackcd = 100;
+	private float attackcd = 500;
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
@@ -59,8 +59,8 @@ public class Player implements Entity {
 				float x2 = input.getAbsoluteMouseX();
 				float y2 = input.getAbsoluteMouseY();
 				Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-				gs.addEntityInstance(CommonFactory.newLinearBullet(pos,
-						mousepos, 10));
+				gs.addEntityInstance(CommonFactory.newAccelBullet(pos,
+						mousepos, -10 ,0.3f));
 			}
 
 			break;
