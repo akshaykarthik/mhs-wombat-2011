@@ -29,8 +29,6 @@ public class Player implements Entity {
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 	public boolean attack = false;
-	public boolean[] weapons = new boolean[5];
-	public int cWep = 0;
 
 	private float attacktimer = 0;
 	private float attackcd = 10;
@@ -40,8 +38,7 @@ public class Player implements Entity {
 		pos = new Vector2f(250, 250);
 		vel = new Vector2f(0, 0);
 		hitbox = new Hitbox(28, 28);
-		weapons[0] = true;
-		weapons[1] = true;
+
 	}
 
 	public void init(GameStatus gs) {
@@ -59,7 +56,7 @@ public class Player implements Entity {
 				float x2 = input.getAbsoluteMouseX();
 				float y2 = input.getAbsoluteMouseY();
 				Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-				gs.addEntityInstance(CommonFactory.newLinearBullet(pos,
+				gs.addEntityInstance(CommonFactory.newCurveBullet(pos,
 						mousepos, 10/* ,0.3f*/));
 			}
 

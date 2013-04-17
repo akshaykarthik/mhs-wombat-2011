@@ -4,6 +4,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.data.common.AccelBullet;
+import edu.mhs.wombat.game.data.common.CurveBullet;
 import edu.mhs.wombat.game.data.common.LinearBullet;
 
 public class CommonFactory {
@@ -13,5 +14,9 @@ public class CommonFactory {
 	
 	public static Entity newAccelBullet(Vector2f src, Vector2f target, float ivel, float accel){
 		return new AccelBullet(src, target, ivel, accel);
+	}
+	
+	public static Entity newCurveBullet(Vector2f src, Vector2f target, float velocity){
+		return new CurveBullet(src, target, velocity);
 	}
 }
