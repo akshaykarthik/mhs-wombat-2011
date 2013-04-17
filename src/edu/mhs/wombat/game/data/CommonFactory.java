@@ -17,12 +17,14 @@ public class CommonFactory {
 		return new AccelBullet(src, target, ivel, accel);
 	}
 	
-<<<<<<< HEAD
+
 	public static Entity newCurveBullet(Vector2f src, Vector2f target, float velocity){
 		return new CurveBullet(src, target, velocity);
-=======
+
+	}
+	
 	public static Entity newWobblyBullet(Vector2f src, Vector2f target, float velocity){
 		return new WobblyBullet(src, target, velocity);
->>>>>>> TinyBullet for linear bullet
+
 	}
 }
