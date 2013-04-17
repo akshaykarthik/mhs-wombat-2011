@@ -31,7 +31,7 @@ public class Player implements Entity {
 	public boolean attack = false;
 
 	private float attacktimer = 0;
-	private float attackcd = 10;
+	private float attackcd = 0;
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {

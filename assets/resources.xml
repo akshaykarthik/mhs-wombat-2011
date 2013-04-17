@@ -14,7 +14,8 @@
 	<image key="powerup_health_up" file="powerups/health_up.png"/>
 	<image key="powerup_weapon_up" file="powerups/weapon_up.png"/>
 	<image key="powerup_damage_up" file="powerups/damage_up.png"/>
-	
+
+	<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>	
 	<image key="pause_screen" file="pause_screen.png"/>
 	<image key="starfield1" file="starfield_1.png"/>
 

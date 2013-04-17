@@ -2,7 +2,6 @@ package edu.mhs.wombat.game.data.common;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,33 +14,23 @@ import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class LinearBullet extends Bullet {
+public class WobblyBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
-
-	private static Image image;
-	private static Hitbox hitbox;;
 	//
-	// private float time = 0;
-	// private float wobble = 500;
-	// private float reset = 1000;
+	private float time = 0;
+	private float wobble = 500;
+	private float reset = 1000;
 
 	private Circle shape = new Circle(0, 0, 4);
+	private Hitbox hitbox = new Hitbox(8, 8);
 
-	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
-		if (image == null || hitbox == null) {
-			image = ResourceManager.getImage("weps_tiny_bullet");
-			hitbox = new Hitbox(image.getWidth(), image.getHeight());
-
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
-
-		}
+	public WobblyBullet(Vector2f source, Vector2f target, float velocity) {
 		pos = source.copy();
 		Vector2f norm = target.copy().sub(pos.copy());
 		vel = norm.normalise().scale(velocity);
-
+		vel.add(10);
 		state = EntityState.ALIVE;
 	}
 
@@ -64,7 +53,20 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
+		time += 1000 / delta;
+
 		pos = pos.add(vel);
+		if (time < wobble) {
+			vel = vel.add(delta/100);
+		} else if (time < reset) {
+			vel.sub(delta/100);
+		} else {
+			time = 0;
+		}
+		
+
+		shape.setCenterX(pos.x);
+		shape.setCenterY(pos.y);
 		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
 				|| pos.y > Globals.HEIGHT)
 			state = EntityState.DEAD;
@@ -73,10 +75,7 @@ public class LinearBullet extends Bullet {
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		image.setRotation((float) vel.getTheta());
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
-
+		g.draw(shape);
 		g.setColor(Color.white);
 	}
 
