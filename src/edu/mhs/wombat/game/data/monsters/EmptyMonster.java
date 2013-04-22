@@ -82,4 +82,11 @@ public class EmptyMonster extends Monster{
 	public void playerCollide(Player a) {
 		
 	}
+
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
 }

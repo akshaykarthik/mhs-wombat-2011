@@ -1,9 +1,7 @@
 package edu.mhs.wombat.game.data.monsters;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -87,15 +85,13 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(state == EntityState.DEAD ? Color.red : Color.white);
 		image.drawCentered(pos.x, pos.y);
-		g.setColor(Color.white);
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (b instanceof Bullet) {
-			this.takeDamage(10);
+			this.takeDamage(((Bullet) b).getDamage());
 		}
 	}
 
@@ -107,6 +103,12 @@ public class RandomWalkerMonster extends Monster {
 	@Override
 	public void playerCollide(Player a) {
 		this.setState(EntityState.ALIVE);
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

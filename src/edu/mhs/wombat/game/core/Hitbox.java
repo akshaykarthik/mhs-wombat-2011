@@ -2,8 +2,6 @@ package edu.mhs.wombat.game.core;
 
 import org.newdawn.slick.Graphics;
 
-import edu.mhs.wombat.game.data.player.Player;
-
 public class Hitbox {
 	public float w, h;
 

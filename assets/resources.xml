@@ -20,6 +20,7 @@
 
 	<!-- Weapons -->
 	<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>
+	<image key="weps_mine_1" file="weps/tiny_bullet.png"/>
 
 	<!-- Monsters -->
 	<image key="monsters_red_swirly" file="monsters/red_swirly.png"/>

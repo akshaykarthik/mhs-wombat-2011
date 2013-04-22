@@ -14,6 +14,7 @@ public interface Entity {
 	public void init(GameStatus gs);
 	public void update(StateBasedGame game, GameStatus gs, int delta);
 	public void render(StateBasedGame game, Graphics g);
+	public void close();
 	
 	public Hitbox getHitBox();
 	public void collideWith(Entity b);

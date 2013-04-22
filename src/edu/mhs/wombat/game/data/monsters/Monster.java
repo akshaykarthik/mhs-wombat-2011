@@ -10,7 +10,10 @@ public abstract class Monster implements Entity{
 	
 	protected void takeDamage(float damage){
 		health -= damage;
-		if(health < 10){
+		if(health < maxHealth/4f){
+			setState(EntityState.DYING);
+		}
+		if(health <= 0){
 			setState(EntityState.DEAD);
 		}
 	}

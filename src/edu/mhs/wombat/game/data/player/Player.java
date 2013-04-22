@@ -1,8 +1,5 @@
 package edu.mhs.wombat.game.data.player;
 
-import java.util.ArrayList;
-
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -16,8 +13,6 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
-import edu.mhs.wombat.game.data.CommonFactory;
-import edu.mhs.wombat.game.data.MonsterFactory;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
@@ -28,10 +23,8 @@ public class Player implements Entity {
 	public Hitbox hitbox;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
-	public boolean attack = false;
-
-	private float attacktimer = 0;
-	private float attackcd = 0;
+	public WeaponSystem weps = new WeaponSystem();
+	
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
@@ -50,14 +43,9 @@ public class Player implements Entity {
 		switch (state) {
 		case ALIVE:
 			handleMovementInput();
-			attacktimer -= delta;
-			if (attacktimer < 0 && attack) {
-				attacktimer = attackcd;
-				float x2 = input.getAbsoluteMouseX();
-				float y2 = input.getAbsoluteMouseY();
-				Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-				gs.addEntityInstance(CommonFactory.newCurveBullet(pos,
-						mousepos, 10/* ,0.3f*/));
+			weps.update(delta);
+			if (Mouse.isButtonDown(0)) {
+				weps.fire(gs);
 			}
 
 			break;
@@ -97,11 +85,6 @@ public class Player implements Entity {
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
 		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
 		g.setColor(Color.white);
-
-
-		if (attack)
-			g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
-
 	}
 
 	public void collideWith(Entity b) {
@@ -135,11 +118,10 @@ public class Player implements Entity {
 	}
 
 	private void handleMovementInput() {
-		boolean right = (input.isKeyDown(Input.KEY_RIGHT));
-		boolean left = (input.isKeyDown(Input.KEY_LEFT));
-		boolean up = (input.isKeyDown(Input.KEY_UP));
-		boolean down = (input.isKeyDown(Input.KEY_DOWN));
-		attack = Mouse.isButtonDown(0);
+		boolean right = (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D));
+		boolean left = (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A));
+		boolean up = (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W));
+		boolean down = (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S));
 
 		if (left && !right)
 			vel.x = -10;
@@ -159,5 +141,11 @@ public class Player implements Entity {
 			vel.x = 0;
 			vel.y = 0;
 		}
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 }

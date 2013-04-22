@@ -85,4 +85,10 @@ public class EmptyPowerup implements Entity {
 	public void playerCollide(Player a) {
 		
 	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
 }

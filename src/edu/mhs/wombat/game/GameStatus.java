@@ -14,6 +14,7 @@ import edu.mhs.wombat.utils.Globals;
 public class GameStatus {
 	public Player player;
 	public ArrayList<Entity> entities;
+	
 
 	public GameStatus() {
 		player = new Player();
@@ -37,8 +38,10 @@ public class GameStatus {
 		}
 		player.update(game, this, delta);
 		
-		for(Entity e: markForRemoval)
+		for(Entity e: markForRemoval){
+			e.close();
 			entities.remove(e);
+		}
 		
 		// collision updates
 		for(Entity a: entities){

@@ -17,8 +17,7 @@ public class AccelBullet extends Bullet {
 	private Vector2f vel;
 	private Vector2f accel;
 	private EntityState state;
-
-	private float acc_const = 0.5f;
+	
 
 	private Circle shape = new Circle(0, 0, 6);
 	private Hitbox hitbox = new Hitbox(11, 11);
@@ -87,6 +86,17 @@ public class AccelBullet extends Bullet {
 	@Override
 	public Vector2f getPos() {
 		return pos;
+	}
+
+	@Override
+	public float getDamage() {
+		return 10;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -89,5 +89,11 @@ public class PowerupDamage implements Entity {
 	public void playerCollide(Player a) {
 		this.setState(EntityState.DEAD);
 	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
 }
 	

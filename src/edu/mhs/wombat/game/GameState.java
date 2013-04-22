@@ -8,7 +8,8 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.game.data.MonsterFactory;
+import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
+import edu.mhs.wombat.game.data.monsters.SlowChaserMonster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
@@ -33,11 +34,9 @@ public class GameState extends BasicGameState {
 		int NUMTEST = 100;
 		for (int i = 0; i < NUMTEST; i++) {
 			if (Math.random() < 0.5)
-				gs.addEntityInstance(MonsterFactory.newSlowChaserMonster(150,
-						150));
+				gs.addEntityInstance(new SlowChaserMonster(150, 150));
 			else
-				gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(150,
-						150));
+				gs.addEntityInstance(new RandomWalkerMonster(150, 150));
 		}
 
 	}
@@ -86,11 +85,9 @@ public class GameState extends BasicGameState {
 			for (int i = 0; i < 100; i++) {
 
 				if (Math.random() < 0.01)
-					gs.addEntityInstance(MonsterFactory.newSlowChaserMonster(
-							150, 150));
+					gs.addEntityInstance(new SlowChaserMonster(150, 150));
 				else
-					gs.addEntityInstance(MonsterFactory.newRandomWalkerMonster(
-							150, 150));
+					gs.addEntityInstance(new RandomWalkerMonster(150, 150));
 			}
 		}
 	}

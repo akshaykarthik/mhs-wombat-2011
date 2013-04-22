@@ -22,12 +22,6 @@ public class LinearBullet extends Bullet {
 
 	private static Image image;
 	private static Hitbox hitbox;;
-	//
-	// private float time = 0;
-	// private float wobble = 500;
-	// private float reset = 1000;
-
-	private Circle shape = new Circle(0, 0, 4);
 
 	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null || hitbox == null) {
@@ -58,7 +52,6 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public void init(GameStatus gs) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -99,6 +92,16 @@ public class LinearBullet extends Bullet {
 	@Override
 	public Vector2f getPos() {
 		return pos;
+	}
+
+	@Override
+	public float getDamage() {
+		return 1;
+	}
+
+	@Override
+	public void close() {
+		
 	}
 
 }

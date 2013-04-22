@@ -12,7 +12,6 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.ResourceManager;
 
 public class WobblyBullet extends Bullet {
 	private Vector2f pos;
@@ -98,6 +97,18 @@ public class WobblyBullet extends Bullet {
 	@Override
 	public Vector2f getPos() {
 		return pos;
+	}
+
+	@Override
+	public float getDamage() {
+		// TODO Auto-generated method stub
+		return 5;
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

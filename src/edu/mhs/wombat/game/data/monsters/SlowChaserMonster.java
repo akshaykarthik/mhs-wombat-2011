@@ -46,12 +46,15 @@ public class SlowChaserMonster extends Monster{
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
+		float moveScale = 1;
 		switch (state) {
 		case ALIVE:
+			moveScale = 1;
 			break;
 		case DEAD:
 			break;
 		case DYING:
+			moveScale = 2;
 			break;
 		case SPAWNING:
 			break;
@@ -60,10 +63,10 @@ public class SlowChaserMonster extends Monster{
 		default:
 			break;
 		}
-		vel = gs.player.pos.copy().sub(pos.copy()).normalise().scale(1);
-		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -.750 : .750)));
-		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -.750 : .750)));
-		pos.add(vel);
+		vel = gs.player.pos.copy().sub(pos.copy()).normalise();
+		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -.50 : .50)));
+		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -.50 : .50)));
+		pos.add(vel.copy().scale(moveScale));
 		
 	}
 	
@@ -74,7 +77,7 @@ public class SlowChaserMonster extends Monster{
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(health <= 10 ? Color.yellow : Color.white);
+		g.setColor(state == EntityState.DYING ? Color.red : Color.white);
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		g.draw(shape);
@@ -84,7 +87,7 @@ public class SlowChaserMonster extends Monster{
 	@Override
 	public void collideWith(Entity b) {
 		if(b instanceof Bullet){
-			this.takeDamage(1);
+			this.takeDamage(((Bullet) b).getDamage());
 		}
 		//this.setState(EntityState.DEAD);
 	}
@@ -97,6 +100,13 @@ public class SlowChaserMonster extends Monster{
 
 	@Override
 	public void playerCollide(Player a) {
+		
+	}
+
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
 		
 	}
 

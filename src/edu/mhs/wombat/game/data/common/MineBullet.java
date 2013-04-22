@@ -2,7 +2,7 @@ package edu.mhs.wombat.game.data.common;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,25 +12,27 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 
-public class CurveBullet extends Bullet {
+public class MineBullet extends Bullet {
 	private Vector2f pos;
-	private Vector2f vel;
 	private EntityState state;
 
-	private float time = 0;
-	private float wobble = 120;
-	private float reset = 240;
+	private static Image image;
+	private static Hitbox hitbox;
 
-	private Circle shape = new Circle(0, 0, 4);
-	private Hitbox hitbox = new Hitbox(8, 8);
+	public static float MaxMines = 10;
+	public static float CurrentMines = 0;
 
-	public CurveBullet(Vector2f source, Vector2f target, float velocity) {
+	public MineBullet(Vector2f source) {
+		if (image == null || hitbox == null) {
+			image = ResourceManager.getImage("weps_mine_1");
+			hitbox = new Hitbox(image.getWidth(), image.getHeight());
+			image.setCenterOfRotation((float) image.getWidth() / 2f,
+					(float) image.getHeight() / 2f);
+		}
 		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
-		vel.sub(49);
-		state = EntityState.ALIVE;
+		CurrentMines++;
 	}
 
 	@Override
@@ -46,37 +48,25 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public void init(GameStatus gs) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		time += delta;
-		pos = pos.add(vel);
-		
-		if(time < wobble){
-			vel = vel.add(15);			
-		}
-		else if(time < reset){
-			vel.sub(15);
-		}
-		else{
-			time = 0;
-		}
-
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
 		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
-				|| pos.y > Globals.HEIGHT)
+				|| pos.y > Globals.HEIGHT) {
 			state = EntityState.DEAD;
+		}
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		g.draw(shape);
+		image.rotate(0.5f);
+		if (Globals.isInField(pos))
+			image.drawCentered(pos.x, pos.y);
 		g.setColor(Color.white);
+
 	}
 
 	@Override
@@ -102,13 +92,12 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 5;
+		return 100;
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		CurrentMines--;
 	}
 
 }
