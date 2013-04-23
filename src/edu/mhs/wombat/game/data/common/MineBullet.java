@@ -3,13 +3,14 @@ package edu.mhs.wombat.game.data.common;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -19,18 +20,18 @@ public class MineBullet extends Bullet {
 	private EntityState state;
 
 	private static Image image;
-	private static Hitbox hitbox;
+	private Shape hitbox;
 
 	public static float MaxMines = 10;
 	public static float CurrentMines = 0;
 
 	public MineBullet(Vector2f source) {
-		if (image == null || hitbox == null) {
+		if (image == null) {
 			image = ResourceManager.getImage("weps_mine_1");
-			hitbox = new Hitbox(image.getWidth(), image.getHeight());
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
 					(float) image.getHeight() / 2f);
 		}
+		hitbox = new Rectangle(source.x, source.y, image.getWidth(), image.getHeight());
 		pos = source.copy();
 		CurrentMines++;
 	}
@@ -57,6 +58,9 @@ public class MineBullet extends Bullet {
 				|| pos.y > Globals.HEIGHT) {
 			state = EntityState.DEAD;
 		}
+
+		hitbox.setCenterX(pos.x);
+		hitbox.setCenterY(pos.y);
 	}
 
 	@Override
@@ -70,7 +74,7 @@ public class MineBullet extends Bullet {
 	}
 
 	@Override
-	public Hitbox getHitBox() {
+	public Shape getHitBox() {
 		return hitbox;
 	}
 

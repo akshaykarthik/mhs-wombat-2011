@@ -1,13 +1,13 @@
 package edu.mhs.wombat.game.data.powerups;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 
 public class PowerupDamage implements Entity {
@@ -65,8 +65,7 @@ public class PowerupDamage implements Entity {
 	}
 	
 	@Override
-	public Hitbox getHitBox() {
-		// TODO Auto-generated method stub
+	public Shape getHitBox() {
 		return null;
 	}
 

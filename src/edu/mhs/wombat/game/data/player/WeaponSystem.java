@@ -3,7 +3,7 @@ package edu.mhs.wombat.game.data.player;
 import edu.mhs.wombat.game.GameStatus;
 
 public class WeaponSystem {
-	private int current_weapon = 1;
+	private int current_weapon = 0;
 	
 	private Weapon[] weapons = new Weapon[]{
 		new Weapon_Basic(),

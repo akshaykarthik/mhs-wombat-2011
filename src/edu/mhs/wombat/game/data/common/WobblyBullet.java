@@ -3,13 +3,13 @@ package edu.mhs.wombat.game.data.common;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 
@@ -23,7 +23,6 @@ public class WobblyBullet extends Bullet {
 	private float reset = 1000;
 
 	private Circle shape = new Circle(0, 0, 4);
-	private Hitbox hitbox = new Hitbox(8, 8);
 
 	public WobblyBullet(Vector2f source, Vector2f target, float velocity) {
 		pos = source.copy();
@@ -79,8 +78,8 @@ public class WobblyBullet extends Bullet {
 	}
 
 	@Override
-	public Hitbox getHitBox() {
-		return hitbox;
+	public Shape getHitBox() {
+		return shape;
 	}
 
 	@Override

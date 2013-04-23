@@ -81,6 +81,9 @@ public class GameState extends BasicGameState {
 		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}
+		if (key == Input.KEY_F12) {
+			gs.entities.clear();
+		}
 		if (key == Input.KEY_Q) {
 			for (int i = 0; i < 100; i++) {
 

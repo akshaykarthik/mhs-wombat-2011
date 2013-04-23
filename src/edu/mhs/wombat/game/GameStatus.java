@@ -7,7 +7,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 
@@ -46,12 +45,12 @@ public class GameStatus {
 		// collision updates
 		for(Entity a: entities){
 			for(Entity b: entities){
-				if(a != b && Hitbox.collides(a, b)){
+				if(a != b && a.getHitBox().intersects(b.getHitBox())){
 					a.collideWith(b);
 				}
 			}
 			
-			if(Hitbox.collides(a, player)){
+			if(a.getHitBox().intersects(player.getHitBox())){
 				a.playerCollide(player);
 				player.collideWith(a);
 			}
@@ -64,13 +63,13 @@ public class GameStatus {
 		for(Entity e: entities){
 			e.render(game, g);
 			if(Globals.GAME_DEBUG){
-				Hitbox.renderHitbox(e, g);
+				g.draw(e.getHitBox());
 			}
 		}
 		player.render(game, g);
 		
 		if(Globals.GAME_DEBUG){
-			Hitbox.renderHitbox(player, g);
+			g.draw(player.getHitBox());
 		}
 	}
 }

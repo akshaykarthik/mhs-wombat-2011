@@ -5,6 +5,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,7 +13,6 @@ import edu.mhs.wombat.game.Camera;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
 
@@ -20,7 +20,6 @@ public class Player implements Entity {
 	public Vector2f pos;
 	public Vector2f vel;
 	public float health, energy;
-	public Hitbox hitbox;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 	public WeaponSystem weps = new WeaponSystem();
@@ -30,8 +29,6 @@ public class Player implements Entity {
 	public Player() {
 		pos = new Vector2f(250, 250);
 		vel = new Vector2f(0, 0);
-		hitbox = new Hitbox(28, 28);
-
 	}
 
 	public void init(GameStatus gs) {
@@ -68,8 +65,10 @@ public class Player implements Entity {
 
 		}
 
-		pos = pos.add(vel);
 
+		shape.setCenterX(pos.x);
+		shape.setCenterY(pos.y);
+		pos = pos.add(vel);
 		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
 		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
 	}
@@ -102,8 +101,8 @@ public class Player implements Entity {
 	}
 
 	@Override
-	public Hitbox getHitBox() {
-		return hitbox;
+	public Shape getHitBox() {
+		return shape;
 	}
 
 	@Override

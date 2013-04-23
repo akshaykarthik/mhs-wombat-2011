@@ -2,13 +2,13 @@ package edu.mhs.wombat.game.data.common;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.core.Hitbox;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 
@@ -17,10 +17,7 @@ public class AccelBullet extends Bullet {
 	private Vector2f vel;
 	private Vector2f accel;
 	private EntityState state;
-	
-
 	private Circle shape = new Circle(0, 0, 6);
-	private Hitbox hitbox = new Hitbox(11, 11);
 
 	public AccelBullet(Vector2f source, Vector2f target, float ivel,
 			float iaccel) {
@@ -68,8 +65,8 @@ public class AccelBullet extends Bullet {
 	}
 
 	@Override
-	public Hitbox getHitBox() {
-		return hitbox;
+	public Shape getHitBox() {
+		return shape;
 	}
 
 	@Override
