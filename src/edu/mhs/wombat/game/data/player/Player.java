@@ -19,6 +19,10 @@ import edu.mhs.wombat.utils.MathUtils;
 public class Player implements Entity {
 	public Vector2f pos;
 	public Vector2f vel;
+	
+	public float dv = 10;
+	public float mv = 10;
+	
 	public float health, energy;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
@@ -39,7 +43,7 @@ public class Player implements Entity {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		switch (state) {
 		case ALIVE:
-			handleMovementInput();
+			handleMovementInput(delta/1000f);
 			weps.update(delta);
 			if (Mouse.isButtonDown(0)) {
 				weps.fire(gs);
@@ -83,6 +87,8 @@ public class Player implements Entity {
 		float y2 = input.getAbsoluteMouseY();
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
 		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
+		g.setColor(Color.green);
+		g.drawLine(pos.x, pos.y, pos.x + vel.x*10, pos.y + vel.y*10);
 		g.setColor(Color.white);
 	}
 
@@ -116,29 +122,29 @@ public class Player implements Entity {
 		return pos;
 	}
 
-	private void handleMovementInput() {
+	private void handleMovementInput(float delta) {
 		boolean right = (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D));
 		boolean left = (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A));
 		boolean up = (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W));
 		boolean down = (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S));
 
 		if (left && !right)
-			vel.x = -10;
+			vel.x += -dv*delta;
 		else if (right && !left)
-			vel.x = 10;
-		else
-			vel.x = 0;
+			vel.x += dv*delta;
 
 		if (up && !down)
-			vel.y = -10;
+			vel.y += -dv*delta;
 		else if (down && !up)
-			vel.y = 10;
-		else
-			vel.y = 0;
+			vel.y += dv*delta;
 
+		
+		float velocity = vel.length();
+		if(velocity > mv)
+			vel.normalise().scale(mv);
+		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
-			vel.x = 0;
-			vel.y = 0;
+			vel.scale(0.95f);
 		}
 	}
 
