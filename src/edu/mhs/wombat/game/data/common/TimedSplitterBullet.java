@@ -15,22 +15,20 @@ import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class LinearBullet extends Bullet {
+public class TimedSplitterBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
+
+	private int bomb = 2000;
+	private int time = 0;
 	
-	private float damage = 1;
+	private float subDamage = 10;
 
 	private static Image image;
 	private Shape hitbox;;
 
-	public LinearBullet(Vector2f source, Vector2f target, float vel, float damage){
-		this(source, target, vel);
-		this.damage = damage;
-	}
-	
-	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
+	public TimedSplitterBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
@@ -63,13 +61,26 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pos = pos.add(vel);
+		time += delta;
+		if (time >= bomb) {
+			state = EntityState.DYING;
+		}
+
+		pos = pos.add(vel.copy().scale((bomb - time) / bomb));
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
 				|| pos.y > Globals.HEIGHT)
 			state = EntityState.DEAD;
+
+		if (state == EntityState.DYING) {
+			for(int i = 0; i < 360; i+=1){
+			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+					vel.copy().add(i)), 10, subDamage));
+			}
+			state = EntityState.DEAD;
+		}
 	}
 
 	@Override
@@ -89,8 +100,7 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public void collideWith(Entity b) {
-		if (!(b instanceof Bullet))
-			state = EntityState.DEAD;
+
 	}
 
 	@Override
@@ -105,7 +115,7 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return damage;
+		return 0;
 	}
 
 	@Override

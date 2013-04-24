@@ -50,7 +50,7 @@ public class AccelBullet extends Bullet {
 		vel = vel.add(accel);
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
-		float buffer = 1000;
+		float buffer = 100;
 		if (pos.x < -buffer || pos.x > Globals.WIDTH + buffer //
 				|| pos.y < -buffer || pos.y > Globals.HEIGHT + buffer)
 			state = EntityState.DEAD;

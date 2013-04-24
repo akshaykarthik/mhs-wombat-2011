@@ -19,15 +19,15 @@ import edu.mhs.wombat.utils.MathUtils;
 public class Player implements Entity {
 	public Vector2f pos;
 	public Vector2f vel;
-	
+
 	public float dv = 10;
 	public float mv = 10;
-	
+
 	public float health, energy;
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
 	public WeaponSystem weps = new WeaponSystem();
-	
+
 	private Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
@@ -43,7 +43,7 @@ public class Player implements Entity {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		switch (state) {
 		case ALIVE:
-			handleMovementInput(delta/1000f);
+			handleMovementInput(delta / 1000f);
 			weps.update(delta);
 			if (Mouse.isButtonDown(0)) {
 				weps.fire(gs);
@@ -69,7 +69,6 @@ public class Player implements Entity {
 
 		}
 
-
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		pos = pos.add(vel);
@@ -88,8 +87,14 @@ public class Player implements Entity {
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
 		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
 		g.setColor(Color.green);
-		g.drawLine(pos.x, pos.y, pos.x + vel.x*10, pos.y + vel.y*10);
+		g.drawLine(pos.x, pos.y, pos.x + vel.x * 10, pos.y + vel.y * 10);
 		g.setColor(Color.white);
+		g.fillRect(pos.x - shape.getWidth() / 2, pos.y + shape.getHeight(),
+				(float) (MathUtils.clamp((weps.getAttackTimer() / weps.getAttackCD()),
+						0, 1) * 30), 4);
+		g.drawRect(pos.x - shape.getWidth() / 2, pos.y + shape.getHeight(), 30,
+				4);
+
 	}
 
 	public void collideWith(Entity b) {
@@ -122,35 +127,52 @@ public class Player implements Entity {
 		return pos;
 	}
 
+	private boolean prevQ = false;
+	private boolean prevE = false;
+
 	private void handleMovementInput(float delta) {
-		boolean right = (input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D));
-		boolean left = (input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A));
-		boolean up = (input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W));
-		boolean down = (input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S));
+		boolean right = (input.isKeyDown(Input.KEY_RIGHT) || input
+				.isKeyDown(Input.KEY_D));
+		boolean left = (input.isKeyDown(Input.KEY_LEFT) || input
+				.isKeyDown(Input.KEY_A));
+		boolean up = (input.isKeyDown(Input.KEY_UP) || input
+				.isKeyDown(Input.KEY_W));
+		boolean down = (input.isKeyDown(Input.KEY_DOWN) || input
+				.isKeyDown(Input.KEY_S));
 
 		if (left && !right)
-			vel.x += -dv*delta;
+			vel.x += -dv * delta;
 		else if (right && !left)
-			vel.x += dv*delta;
+			vel.x += dv * delta;
 
 		if (up && !down)
-			vel.y += -dv*delta;
+			vel.y += -dv * delta;
 		else if (down && !up)
-			vel.y += dv*delta;
+			vel.y += dv * delta;
 
-		
 		float velocity = vel.length();
-		if(velocity > mv)
+		if (velocity > mv)
 			vel.normalise().scale(mv);
-		
+
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			vel.scale(0.95f);
 		}
+
+		if (!prevE && input.isKeyDown(Input.KEY_E)) {
+			weps.current_weapon = (int) MathUtils.loop(weps.current_weapon + 1,
+					0, weps.weapons.length - 1);
+		}
+		if (!prevQ && input.isKeyDown(Input.KEY_Q)) {
+			weps.current_weapon = (int) MathUtils.loop(weps.current_weapon - 1,
+					0, weps.weapons.length - 1);
+		}
+
+		prevQ = input.isKeyDown(Input.KEY_Q);
+		prevE = input.isKeyDown(Input.KEY_E);
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+
 	}
 }

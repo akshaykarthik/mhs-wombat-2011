@@ -50,6 +50,8 @@ public class GameState extends BasicGameState {
 			throws SlickException {
 		g.setAntiAlias(false);
 		g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
+		g.drawString("weapon : " + gs.player.weps.getName(), 10, 70);
+
 		Camera.preDraw(g, gs);
 		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		bg.render(g);
@@ -84,7 +86,7 @@ public class GameState extends BasicGameState {
 		if (key == Input.KEY_F12) {
 			gs.entities.clear();
 		}
-		if (key == Input.KEY_Q) {
+		if (key == Input.KEY_F11) {
 			for (int i = 0; i < 100; i++) {
 
 				if (Math.random() < 0.01)

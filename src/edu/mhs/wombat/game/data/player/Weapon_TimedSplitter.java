@@ -1,15 +1,16 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.LinearBullet;
+import edu.mhs.wombat.game.data.common.TimedSplitterBullet;
 
-public class Weapon_Basic extends Weapon {
+public class Weapon_TimedSplitter extends Weapon {
+
 	@Override
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntityInstance(new LinearBullet(gs.player.pos,
-					getMousePos(), 7.5f));
+			gs.addEntityInstance(new TimedSplitterBullet(gs.player.pos,
+					getMousePos(), 10f));
 	}
 
 	@Override
@@ -20,7 +21,7 @@ public class Weapon_Basic extends Weapon {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "basic weapon";
+		return "wtf mode";
 	}
 
 }

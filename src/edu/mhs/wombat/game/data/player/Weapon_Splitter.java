@@ -1,18 +1,16 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.MineBullet;
+import edu.mhs.wombat.game.data.common.SplitterBullet;
 
-public class Weapon_Mine extends Weapon {
-	public Weapon_Mine() {
-		super();
-	}
+public class Weapon_Splitter extends Weapon {
 
 	@Override
 	public void fire(GameStatus gs) {
 		super.fire(gs);
-		if (canFire && MineBullet.CurrentMines <= MineBullet.MaxMines)
-			gs.addEntityInstance(new MineBullet(gs.player.pos));
+		if (canFire)
+			gs.addEntityInstance(new SplitterBullet(gs.player.pos,
+					getMousePos(), 10f));
 	}
 
 	@Override
@@ -23,7 +21,7 @@ public class Weapon_Mine extends Weapon {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "mine";
+		return "splitter";
 	}
 
 }

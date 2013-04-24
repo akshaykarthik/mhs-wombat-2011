@@ -13,16 +13,18 @@ import edu.mhs.wombat.utils.Globals;
 public class GameStatus {
 	public Player player;
 	public ArrayList<Entity> entities;
+	private ArrayList<Entity> markForAdd;
 	
 
 	public GameStatus() {
 		player = new Player();
 		player.init(this);
 		entities = new ArrayList<Entity>();
+		markForAdd = new ArrayList<Entity>();
 	}
 	
 	public void addEntityInstance(Entity ei){
-		entities.add(ei);
+		markForAdd.add(ei);
 	}
 
 	public void update(StateBasedGame game, int delta) {
@@ -56,6 +58,8 @@ public class GameStatus {
 			}
 		}
 		
+		entities.addAll(markForAdd);
+		markForAdd.clear();
 		
 	}
 

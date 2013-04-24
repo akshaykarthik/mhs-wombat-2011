@@ -12,21 +12,24 @@ public abstract class Weapon {
 	protected float attackTimer = 0;
 	private static Input input = new Input(Globals.HEIGHT);
 
+	public abstract String getName();
 
 	public abstract float getAttackCD();
-	
+
 	public void update(int delta, float fireMod) {
-		attackTimer += delta*fireMod;
+		attackTimer += delta * fireMod;
 		canFire = false;
-		if(attackTimer >= getAttackCD()){
-			attackTimer = 0;
+		if (attackTimer >= getAttackCD()) {
 			canFire = true;
 		}
 	}
 
-	public abstract void fire(GameStatus gs);
-	
-	public Vector2f getMousePos(){
+	public void fire(GameStatus gs) {
+		if (canFire)
+			attackTimer = 0;
+	}
+
+	public Vector2f getMousePos() {
 		float x2 = input.getAbsoluteMouseX();
 		float y2 = input.getAbsoluteMouseY();
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
