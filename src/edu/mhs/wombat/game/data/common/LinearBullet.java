@@ -34,7 +34,7 @@ public class LinearBullet extends Bullet {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+					(float) image.getHeight() / 2f);	
 		}
 		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());

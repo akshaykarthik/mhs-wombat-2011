@@ -56,26 +56,11 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		switch (state) {
-		case ALIVE:
-			break;
-		case DEAD:
-			break;
-		case DYING:
-			break;
-		case SPAWNING:
-			break;
-		case STUNNED:
-			break;
-		default:
-			break;
-		}
-
 		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		pos = pos.add(vel);
-		pos.x = (float) MathU.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = (float) MathU.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = MathU.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = MathU.loop(pos.y, 0, Globals.HEIGHT);
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 
@@ -90,8 +75,11 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
+		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size)){
 			image.drawCentered(pos.x, pos.y);
+		}else{
+			System.out.println(pos);
+		}
 	}
 
 	@Override

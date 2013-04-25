@@ -8,6 +8,6 @@ public class VectorU {
 
 	
 	public static boolean inBounds(Vector2f pos, Vector2f tl, Vector2f br){
-		return MathU.inBounds(pos.x, tl.x, br.x) && MathU.inBounds(pos.y, tl.y, br.y);
+		return (pos.x >= tl.x && pos.x <= br.x) && (pos.y >= tl.y && pos.y <= br.y);
 	}
 }

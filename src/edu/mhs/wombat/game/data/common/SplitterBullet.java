@@ -61,7 +61,7 @@ public class SplitterBullet extends Bullet {
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
-		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
+		if (!VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
 			state = EntityState.DEAD;
 
 		if (state == EntityState.DYING) {
@@ -89,8 +89,7 @@ public class SplitterBullet extends Bullet {
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
 		image.setRotation((float) vel.getTheta());
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
+		image.drawCentered(pos.x, pos.y);
 
 		g.setColor(Color.white);
 	}
