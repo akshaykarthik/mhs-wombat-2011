@@ -12,6 +12,8 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.common.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
+import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.VectorU;
 
 public class SlowChaserMonster extends Monster {
 
@@ -66,6 +68,9 @@ public class SlowChaserMonster extends Monster {
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -.50 : .50)));
 		pos.add(vel.copy().scale(moveScale));
 
+		shape.setCenterX(pos.x);
+		shape.setCenterY(pos.y);
+
 	}
 
 	@Override
@@ -75,11 +80,9 @@ public class SlowChaserMonster extends Monster {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(state == EntityState.DYING ? Color.red : Color.white);
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
-		g.draw(shape);
-		g.setColor(Color.white);
+
+		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
+			g.draw(shape);
 	}
 
 	@Override
@@ -102,7 +105,6 @@ public class SlowChaserMonster extends Monster {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 
 	}
 

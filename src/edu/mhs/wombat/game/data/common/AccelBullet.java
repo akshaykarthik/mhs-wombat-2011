@@ -11,6 +11,7 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.VectorU;
 
 public class AccelBullet extends Bullet {
 	private Vector2f pos;
@@ -18,6 +19,10 @@ public class AccelBullet extends Bullet {
 	private Vector2f accel;
 	private EntityState state;
 	private Circle shape = new Circle(0, 0, 6);
+
+	private static final Vector2f bufferLBounds = new Vector2f(-100, -100);
+	private static final Vector2f bufferUBounds = new Vector2f(
+			Globals.WIDTH + 100, Globals.HEIGHT + 100);
 
 	public AccelBullet(Vector2f source, Vector2f target, float ivel,
 			float iaccel) {
@@ -40,7 +45,6 @@ public class AccelBullet extends Bullet {
 
 	@Override
 	public void init(GameStatus gs) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -51,8 +55,7 @@ public class AccelBullet extends Bullet {
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		float buffer = 100;
-		if (pos.x < -buffer || pos.x > Globals.WIDTH + buffer //
-				|| pos.y < -buffer || pos.y > Globals.HEIGHT + buffer)
+		if (VectorU.inBounds(pos, bufferLBounds, bufferUBounds))
 			state = EntityState.DEAD;
 
 	}
@@ -92,8 +95,7 @@ public class AccelBullet extends Bullet {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

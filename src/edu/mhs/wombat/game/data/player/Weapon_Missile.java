@@ -19,7 +19,6 @@ public class Weapon_Missile extends Weapon {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "missile";
 	}
 

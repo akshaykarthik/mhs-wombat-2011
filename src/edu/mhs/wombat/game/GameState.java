@@ -50,17 +50,15 @@ public class GameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setAntiAlias(false);
-		g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
-		g.drawString("weapon : " + gs.player.weps.getName(), 10, 70);
-
+		
+		// draw with camera
 		Camera.preDraw(g, gs);
-
 		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		bg.render(g);
 		gs.render(game, g);
 		hs.camRender(game, gs, g);
-
 		Camera.postDraw(g, gs);
+		// draw on screen
 		
 		hs.render(game, gs, g);
 		

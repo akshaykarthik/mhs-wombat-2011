@@ -41,6 +41,7 @@ public class PowerupDamage implements Entity {
 	
 	@Override
 	public void init(GameStatus gs) {
+		
 	}
 
 	@Override
@@ -60,8 +61,6 @@ public class PowerupDamage implements Entity {
 			break;
 		}
 		//Maybe needs a timer.  When it is up then powerup ends? Until then, adds damage to player...
-		
-
 	}
 	
 	@Override
@@ -91,7 +90,6 @@ public class PowerupDamage implements Entity {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 		
 	}
 }

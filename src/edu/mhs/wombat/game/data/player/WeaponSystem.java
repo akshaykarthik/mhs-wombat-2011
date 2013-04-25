@@ -30,7 +30,6 @@ public class WeaponSystem {
 	}
 
 	public String getName() {
-		// TODO Auto-generated method stub
 		return weapons[current_weapon].getName();
 	}
 }

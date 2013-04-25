@@ -9,10 +9,12 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.data.HighScoreSystem;
 
 public class GameStatus {
 	public Player player;
 	public ArrayList<Entity> entities;
+	public HighScoreSystem scores;
 	private ArrayList<Entity> markForAdd;
 	private ArrayList<Entity> markForRemove;
 

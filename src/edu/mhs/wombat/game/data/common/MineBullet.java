@@ -13,6 +13,7 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
 public class MineBullet extends Bullet {
@@ -31,7 +32,8 @@ public class MineBullet extends Bullet {
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
 					(float) image.getHeight() / 2f);
 		}
-		hitbox = new Rectangle(source.x, source.y, image.getWidth(), image.getHeight());
+		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
+				image.getHeight());
 		pos = source.copy();
 		CurrentMines++;
 	}
@@ -54,8 +56,8 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
-				|| pos.y > Globals.HEIGHT) {
+		if (!(MathU.inBounds(pos.x, 0, Globals.WIDTH) && MathU
+				.inBounds(pos.y, 0, Globals.HEIGHT))) {
 			state = EntityState.DEAD;
 		}
 

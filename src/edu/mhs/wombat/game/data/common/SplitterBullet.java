@@ -14,6 +14,7 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
+import edu.mhs.wombat.utils.VectorU;
 
 public class SplitterBullet extends Bullet {
 	private Vector2f pos;
@@ -60,8 +61,7 @@ public class SplitterBullet extends Bullet {
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
-		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
-				|| pos.y > Globals.HEIGHT)
+		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
 			state = EntityState.DEAD;
 
 		if (state == EntityState.DYING) {

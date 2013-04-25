@@ -22,7 +22,6 @@ public class Weapon_Mine extends Weapon {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "mine";
 	}
 

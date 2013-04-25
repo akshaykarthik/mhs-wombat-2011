@@ -36,6 +36,7 @@ public class EmptyMonster extends Monster {
 
 	@Override
 	public void init(GameStatus gs) {
+		
 	}
 
 	@Override
@@ -84,7 +85,6 @@ public class EmptyMonster extends Monster {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 
 	}
 }

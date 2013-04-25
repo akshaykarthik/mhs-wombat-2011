@@ -12,6 +12,7 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.VectorU;
 
 public class WobblyBullet extends Bullet {
 	private Vector2f pos;
@@ -45,7 +46,6 @@ public class WobblyBullet extends Bullet {
 
 	@Override
 	public void init(GameStatus gs) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -65,8 +65,7 @@ public class WobblyBullet extends Bullet {
 
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
-		if (pos.x < 0 || pos.x > Globals.WIDTH || pos.y < 0
-				|| pos.y > Globals.HEIGHT)
+		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
 			state = EntityState.DEAD;
 	}
 
@@ -100,13 +99,11 @@ public class WobblyBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		// TODO Auto-generated method stub
 		return 5;
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 		
 	}
 

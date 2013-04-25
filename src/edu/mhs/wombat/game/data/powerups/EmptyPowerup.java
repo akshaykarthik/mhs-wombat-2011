@@ -62,7 +62,6 @@ public class EmptyPowerup implements Entity {
 	
 	@Override
 	public Shape getHitBox() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -88,7 +87,6 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 		
 	}
 }

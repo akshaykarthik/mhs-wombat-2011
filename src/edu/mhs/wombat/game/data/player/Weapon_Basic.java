@@ -19,7 +19,6 @@ public class Weapon_Basic extends Weapon {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "basic weapon";
 	}
 

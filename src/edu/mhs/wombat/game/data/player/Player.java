@@ -15,7 +15,7 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.MathUtils;
+import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
 public class Player implements Entity {
@@ -78,8 +78,8 @@ public class Player implements Entity {
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		pos = pos.add(vel);
-		pos.x = MathUtils.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = MathUtils.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = MathU.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = MathU.loop(pos.y, 0, Globals.HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
@@ -169,11 +169,11 @@ public class Player implements Entity {
 		}
 
 		if (!prevE && input.isKeyDown(Input.KEY_E)) {
-			weps.current_weapon = (int) MathUtils.loop(weps.current_weapon + 1,
+			weps.current_weapon = (int) MathU.loop(weps.current_weapon + 1,
 					0, weps.weapons.length - 1);
 		}
 		if (!prevQ && input.isKeyDown(Input.KEY_Q)) {
-			weps.current_weapon = (int) MathUtils.loop(weps.current_weapon - 1,
+			weps.current_weapon = (int) MathU.loop(weps.current_weapon - 1,
 					0, weps.weapons.length - 1);
 		}
 

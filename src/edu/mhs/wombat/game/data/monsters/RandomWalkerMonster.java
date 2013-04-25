@@ -13,8 +13,9 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.common.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.MathUtils;
+import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
+import edu.mhs.wombat.utils.VectorU;
 
 public class RandomWalkerMonster extends Monster {
 	private static Image image;
@@ -73,8 +74,8 @@ public class RandomWalkerMonster extends Monster {
 		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		pos = pos.add(vel);
-		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = (float) MathU.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = (float) MathU.loop(pos.y, 0, Globals.HEIGHT);
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 
@@ -89,7 +90,8 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		image.drawCentered(pos.x, pos.y);
+		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
+			image.drawCentered(pos.x, pos.y);
 	}
 
 	@Override
