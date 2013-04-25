@@ -19,6 +19,7 @@ public class GameState extends BasicGameState {
 	private StateBasedGame gm;
 	private Starfield bg;
 	private GameStatus gs;
+	private HUDSystem hs = new HUDSystem();
 	private boolean paused = false;
 
 	@Override
@@ -34,9 +35,9 @@ public class GameState extends BasicGameState {
 		int NUMTEST = 100;
 		for (int i = 0; i < NUMTEST; i++) {
 			if (Math.random() < 0.5)
-				gs.addEntityInstance(new SlowChaserMonster(150, 150));
+				gs.addEntity(new SlowChaserMonster(150, 150));
 			else
-				gs.addEntityInstance(new RandomWalkerMonster(150, 150));
+				gs.addEntity(new RandomWalkerMonster(150, 150));
 		}
 
 	}
@@ -53,10 +54,16 @@ public class GameState extends BasicGameState {
 		g.drawString("weapon : " + gs.player.weps.getName(), 10, 70);
 
 		Camera.preDraw(g, gs);
+
 		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
 		bg.render(g);
 		gs.render(game, g);
+		hs.camRender(game, gs, g);
+
 		Camera.postDraw(g, gs);
+		
+		hs.render(game, gs, g);
+		
 		if (paused)
 			g.drawImage(ResourceManager.getImage("pause_screen"), 0, 0);
 
@@ -65,6 +72,7 @@ public class GameState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
+		hs.update(game, gs, delta);
 		if (!paused)
 			gs.update(game, delta);
 	}
@@ -88,11 +96,7 @@ public class GameState extends BasicGameState {
 		}
 		if (key == Input.KEY_F11) {
 			for (int i = 0; i < 100; i++) {
-
-				if (Math.random() < 0.01)
-					gs.addEntityInstance(new SlowChaserMonster(150, 150));
-				else
-					gs.addEntityInstance(new RandomWalkerMonster(150, 150));
+				gs.addEntity(new RandomWalkerMonster(150, 150));
 			}
 		}
 	}

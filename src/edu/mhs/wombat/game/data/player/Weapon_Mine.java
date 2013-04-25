@@ -12,7 +12,7 @@ public class Weapon_Mine extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire && MineBullet.CurrentMines <= MineBullet.MaxMines)
-			gs.addEntityInstance(new MineBullet(gs.player.pos));
+			gs.addEntity(new MineBullet(gs.player.pos));
 	}
 
 	@Override

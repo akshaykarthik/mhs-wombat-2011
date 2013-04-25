@@ -6,6 +6,8 @@
 	<!-- images -->
 	<image key="logo" file="logo_1.png"/>
 	<image key="background1" file="background_1.png"/>
+	<image key="player_1" file="player_1.png"/>
+	<image key="player_2" file="player_2.png"/>
 	<image key="background_victory" file="background_1.png"/>
 	<image key="background_defeat" file="background_1.png"/>
 	<image key="transition_door" file="transition_door_1.png"/>
@@ -27,7 +29,7 @@
 	<image key="monsters_yellow_swirly" file="monsters/yellow_swirly.png"/>
 	<image key="monsters_blue_swirly" file="monsters/blue_swirly.png"/>
 	<image key="monsters_green_swirly" file="monsters/green_swirly.png"/>
-	<image key="monsters_purple_swirly" file="monsters/purple_swirly.png"/>	
+	<image key="monsters_purple_swirly" file="monsters/purple_swirly.png"/>
 
 	<!-- sheets -->
 	<!-- fonts -->

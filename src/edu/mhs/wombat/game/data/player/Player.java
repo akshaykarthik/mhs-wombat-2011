@@ -3,6 +3,7 @@ package edu.mhs.wombat.game.data.player;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
@@ -15,6 +16,7 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathUtils;
+import edu.mhs.wombat.utils.ResourceManager;
 
 public class Player implements Entity {
 	public Vector2f pos;
@@ -24,11 +26,15 @@ public class Player implements Entity {
 	public float mv = 10;
 
 	public float health, energy;
+
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
+
 	public WeaponSystem weps = new WeaponSystem();
 
-	private Circle shape = new Circle(0, 0, 15, 15);
+	public Image image;
+	public Image image2;
+	public Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
 		pos = new Vector2f(250, 250);
@@ -72,29 +78,33 @@ public class Player implements Entity {
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		pos = pos.add(vel);
-		pos.x = (float) MathUtils.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = (float) MathUtils.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = MathUtils.loop(pos.x, 0, Globals.WIDTH);
+		pos.y = MathUtils.loop(pos.y, 0, Globals.HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
+		if (image == null) {
+			image = ResourceManager.getImage("player_1");
+			image2 = ResourceManager.getImage("player_2");
+		}
 		g.setColor(Color.magenta);
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
-		g.fill(shape);
+		image.setRotation((float) vel.getTheta());
+		image.drawCentered(pos.x, pos.y);
 		g.setColor(Color.cyan);
 		float x2 = input.getAbsoluteMouseX();
 		float y2 = input.getAbsoluteMouseY();
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
-		g.setColor(Color.green);
-		g.drawLine(pos.x, pos.y, pos.x + vel.x * 10, pos.y + vel.y * 10);
-		g.setColor(Color.white);
-		g.fillRect(pos.x - shape.getWidth() / 2, pos.y + shape.getHeight(),
-				(float) (MathUtils.clamp((weps.getAttackTimer() / weps.getAttackCD()),
-						0, 1) * 30), 4);
-		g.drawRect(pos.x - shape.getWidth() / 2, pos.y + shape.getHeight(), 30,
-				4);
 
+		double xDiff = mousepos.x - pos.x;
+		double yDiff = mousepos.y - pos.y;
+		float turretAngle = (float) Math.toDegrees(Math.atan2(yDiff, xDiff));
+
+		image2.setRotation(turretAngle);
+		image2.drawCentered(pos.x, pos.y);
+		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
+		g.setColor(Color.white);
 	}
 
 	public void collideWith(Entity b) {

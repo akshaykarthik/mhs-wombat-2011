@@ -9,7 +9,7 @@ public class Weapon_Splitter extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntityInstance(new SplitterBullet(gs.player.pos,
+			gs.addEntity(new SplitterBullet(gs.player.pos,
 					getMousePos(), 10f));
 	}
 

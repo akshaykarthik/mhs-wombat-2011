@@ -65,21 +65,21 @@ public class SplitterBullet extends Bullet {
 			state = EntityState.DEAD;
 
 		if (state == EntityState.DYING) {
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(10)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(-10)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(20)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(-20)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(30)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(-30)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(45)), 10));
-			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+			gs.addEntity(new LinearBullet(pos, pos.copy().add(
 					vel.copy().add(-45)), 10));
 			state = EntityState.DEAD;
 		}

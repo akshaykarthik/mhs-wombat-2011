@@ -9,7 +9,7 @@ public class Weapon_TimedSplitter extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntityInstance(new TimedSplitterBullet(gs.player.pos,
+			gs.addEntity(new TimedSplitterBullet(gs.player.pos,
 					getMousePos(), 10f));
 	}
 
@@ -20,7 +20,6 @@ public class Weapon_TimedSplitter extends Weapon {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "wtf mode";
 	}
 
