@@ -63,11 +63,16 @@ public class MineBullet extends Bullet {
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
+		if (state == EntityState.DYING) {
+			state = EntityState.DEAD;
+		}
+
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
+
 		image.rotate(0.5f);
 		if (Globals.isInField(pos))
 			image.drawCentered(pos.x, pos.y);
@@ -83,7 +88,7 @@ public class MineBullet extends Bullet {
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DEAD;
+			state = EntityState.DYING;
 	}
 
 	@Override

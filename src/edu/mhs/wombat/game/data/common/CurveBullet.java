@@ -18,7 +18,8 @@ public class CurveBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
-
+	
+	private float damage = 5;
 	private float time = 0;
 	private float wobble = 120;
 	private float reset = 240;
@@ -31,6 +32,16 @@ public class CurveBullet extends Bullet {
 		vel.sub(49);
 		state = EntityState.ALIVE;
 	}
+	
+	public CurveBullet(Vector2f source, Vector2f target, float velocity, float damage) {
+		pos = source.copy();
+		Vector2f norm = target.copy().sub(pos.copy());
+		vel = norm.normalise().scale(velocity);
+		vel.sub(49);
+		this.damage = damage;
+		state = EntityState.ALIVE;
+	}
+	
 
 	@Override
 	public EntityState getState() {
@@ -99,7 +110,7 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 5;
+		return damage;
 	}
 
 	@Override

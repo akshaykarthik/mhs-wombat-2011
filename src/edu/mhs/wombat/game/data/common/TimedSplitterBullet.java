@@ -24,10 +24,11 @@ public class TimedSplitterBullet extends Bullet {
 	private int time = 0;
 
 	private float subDamage = 10;
-
+	private int projectiles = 30;
+	
 	private static Image image;
 	private Shape hitbox;;
-
+	
 	public TimedSplitterBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
@@ -75,9 +76,15 @@ public class TimedSplitterBullet extends Bullet {
 			state = EntityState.DEAD;
 
 		if (state == EntityState.DYING) {
+<<<<<<< HEAD
 			for (float i = 0; i < 360; i += 20) {
 				gs.addEntity(new LinearBullet(pos, pos.copy().add(
 						vel.copy().add(i)), 10, subDamage));
+=======
+			for(int i = 0; i < projectiles; i+=1){
+			gs.addEntityInstance(new LinearBullet(pos, pos.copy().add(
+					vel.copy().add(360/projectiles * i)), 10, subDamage));
+>>>>>>> curve weapon
 			}
 			state = EntityState.DEAD;
 		}

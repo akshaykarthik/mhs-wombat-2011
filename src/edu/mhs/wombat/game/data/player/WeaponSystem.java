@@ -10,7 +10,8 @@ public class WeaponSystem {
 			new Weapon_Mine(), // mine
 			new Weapon_Splitter(), // splitter
 			new Weapon_TimedSplitter(), // timed god mine
-			new Weapon_Basic() // missile
+			new Weapon_Basic(), // missile
+			new Weapon_Curve()
 	};
 
 	public void update(int delta) {
