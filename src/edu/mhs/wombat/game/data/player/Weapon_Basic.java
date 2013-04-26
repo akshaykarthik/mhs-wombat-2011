@@ -1,7 +1,7 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.LinearBullet;
+import edu.mhs.wombat.game.data.bullets.LinearBullet;
 
 public class Weapon_Basic extends Weapon {
 	@Override

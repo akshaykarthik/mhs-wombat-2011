@@ -1,4 +1,4 @@
-package edu.mhs.wombat.game.data.common;
+package edu.mhs.wombat.game.data.bullets;
 
 import edu.mhs.wombat.game.core.Entity;
 

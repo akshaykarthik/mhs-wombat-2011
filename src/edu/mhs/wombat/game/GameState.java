@@ -1,5 +1,6 @@
 package edu.mhs.wombat.game;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -50,18 +51,20 @@ public class GameState extends BasicGameState {
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
 		g.setAntiAlias(false);
-		
+
 		// draw with camera
 		Camera.preDraw(g, gs);
+		g.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1f));
+		g.drawRect(0, 0, Globals.ARENA_WIDTH, Globals.ARENA_HEIGHT);
 		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
+		g.setColor(Color.white);
 		bg.render(g);
 		gs.render(game, g);
 		hs.camRender(game, gs, g);
 		Camera.postDraw(g, gs);
-		// draw on screen
-		
+
 		hs.render(game, gs, g);
-		
+
 		if (paused)
 			g.drawImage(ResourceManager.getImage("pause_screen"), 0, 0);
 
@@ -89,6 +92,14 @@ public class GameState extends BasicGameState {
 		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}
+
+		if (key == Input.KEY_F8) {
+			gs.player.health += 10;
+		}
+		if (key == Input.KEY_F7) {
+			gs.player.health -= 10;
+		}
+
 		if (key == Input.KEY_F12) {
 			gs.entities.clear();
 		}

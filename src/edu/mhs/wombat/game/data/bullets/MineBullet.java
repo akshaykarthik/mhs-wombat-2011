@@ -1,4 +1,4 @@
-package edu.mhs.wombat.game.data.common;
+package edu.mhs.wombat.game.data.bullets;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -13,30 +13,29 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
-import edu.mhs.wombat.utils.VectorU;
 
-public class SplitterBullet extends Bullet {
+public class MineBullet extends Bullet {
 	private Vector2f pos;
-	private Vector2f vel;
 	private EntityState state;
 
 	private static Image image;
-	private Shape hitbox;;
+	private Shape hitbox;
 
-	public SplitterBullet(Vector2f source, Vector2f target, float velocity) {
+	public static float MaxMines = 10;
+	public static float CurrentMines = 0;
+
+	public MineBullet(Vector2f source) {
 		if (image == null) {
-			image = ResourceManager.getImage("weps_tiny_bullet");
+			image = ResourceManager.getImage("weps_mine_1");
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
 					(float) image.getHeight() / 2f);
 		}
 		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());
 		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
-
-		state = EntityState.ALIVE;
+		CurrentMines++;
 	}
 
 	@Override
@@ -57,41 +56,26 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pos = pos.add(vel);
+		if (!Globals.isInField(pos))
+			state = EntityState.DEAD;
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
-		if (!VectorU.inBounds(pos, VectorU.Zero, Globals.Size))
-			state = EntityState.DEAD;
-
 		if (state == EntityState.DYING) {
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(10)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-10)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(20)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-20)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(30)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-30)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(45)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-45)), 10));
 			state = EntityState.DEAD;
 		}
+
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		image.setRotation((float) vel.getTheta());
-		image.drawCentered(pos.x, pos.y);
 
+		image.rotate(0.5f);
+		if (Globals.isInField(pos))
+			image.drawCentered(pos.x, pos.y);
 		g.setColor(Color.white);
+
 	}
 
 	@Override
@@ -101,9 +85,8 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public void collideWith(Entity b) {
-		if (!(b instanceof Bullet)) {
+		if (!(b instanceof Bullet))
 			state = EntityState.DYING;
-		}
 	}
 
 	@Override
@@ -118,12 +101,12 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 1;
+		return 100;
 	}
 
 	@Override
 	public void close(GameStatus gs) {
-
+		CurrentMines--;
 	}
 
 }

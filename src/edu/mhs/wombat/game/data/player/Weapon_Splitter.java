@@ -1,7 +1,7 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.SplitterBullet;
+import edu.mhs.wombat.game.data.bullets.SplitterBullet;
 
 public class Weapon_Splitter extends Weapon {
 

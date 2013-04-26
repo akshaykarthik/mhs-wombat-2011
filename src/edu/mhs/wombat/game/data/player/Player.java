@@ -25,7 +25,9 @@ public class Player implements Entity {
 	public float dv = 10;
 	public float mv = 10;
 
-	public float health, energy;
+	public float health = 75;
+	public float energy;
+	public float maxHealth = 100;
 
 	public PlayerState state;
 	private Input input = new Input(Globals.HEIGHT);
@@ -78,8 +80,8 @@ public class Player implements Entity {
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		pos = pos.add(vel);
-		pos.x = MathU.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = MathU.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = MathU.loop(pos.x, 0, Globals.ARENA_WIDTH);
+		pos.y = MathU.loop(pos.y, 0, Globals.ARENA_HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {

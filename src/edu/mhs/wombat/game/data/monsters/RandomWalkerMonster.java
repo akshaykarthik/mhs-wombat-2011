@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.data.common.Bullet;
+import edu.mhs.wombat.game.data.bullets.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
@@ -59,8 +59,8 @@ public class RandomWalkerMonster extends Monster {
 		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		pos = pos.add(vel);
-		pos.x = MathU.loop(pos.x, 0, Globals.WIDTH);
-		pos.y = MathU.loop(pos.y, 0, Globals.HEIGHT);
+		pos.x = MathU.loop(pos.x, 0, Globals.ARENA_WIDTH);
+		pos.y = MathU.loop(pos.y, 0, Globals.ARENA_WIDTH);
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 
@@ -75,11 +75,7 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		if (VectorU.inBounds(pos, VectorU.Zero, Globals.Size)){
-			image.drawCentered(pos.x, pos.y);
-		}else{
-			System.out.println(pos);
-		}
+		image.drawCentered(pos.x, pos.y);
 	}
 
 	@Override

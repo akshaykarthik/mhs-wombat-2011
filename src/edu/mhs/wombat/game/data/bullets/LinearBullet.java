@@ -1,4 +1,4 @@
-package edu.mhs.wombat.game.data.common;
+package edu.mhs.wombat.game.data.bullets;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -13,29 +13,36 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class MineBullet extends Bullet {
+public class LinearBullet extends Bullet {
 	private Vector2f pos;
+	private Vector2f vel;
 	private EntityState state;
+	
+	private float damage = 1;
 
 	private static Image image;
-	private Shape hitbox;
+	private Shape hitbox;;
 
-	public static float MaxMines = 10;
-	public static float CurrentMines = 0;
-
-	public MineBullet(Vector2f source) {
+	public LinearBullet(Vector2f source, Vector2f target, float vel, float damage){
+		this(source, target, vel);
+		this.damage = damage;
+	}
+	
+	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
-			image = ResourceManager.getImage("weps_mine_1");
+			image = ResourceManager.getImage("weps_tiny_bullet");
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+					(float) image.getHeight() / 2f);	
 		}
 		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());
 		pos = source.copy();
-		CurrentMines++;
+		Vector2f norm = target.copy().sub(pos.copy());
+		vel = norm.normalise().scale(velocity);
+
+		state = EntityState.ALIVE;
 	}
 
 	@Override
@@ -56,28 +63,22 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		if (!(MathU.inBounds(pos.x, 0, Globals.WIDTH) && MathU
-				.inBounds(pos.y, 0, Globals.HEIGHT))) {
-			state = EntityState.DEAD;
-		}
+		pos = pos.add(vel);
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
-		if (state == EntityState.DYING) {
+		if (!Globals.isInField(pos))
 			state = EntityState.DEAD;
-		}
-
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-
-		image.rotate(0.5f);
+		image.setRotation((float) vel.getTheta());
 		if (Globals.isInField(pos))
 			image.drawCentered(pos.x, pos.y);
-		g.setColor(Color.white);
 
+		g.setColor(Color.white);
 	}
 
 	@Override
@@ -88,7 +89,7 @@ public class MineBullet extends Bullet {
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DYING;
+			state = EntityState.DEAD;
 	}
 
 	@Override
@@ -103,12 +104,12 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 100;
+		return damage;
 	}
 
 	@Override
 	public void close(GameStatus gs) {
-		CurrentMines--;
+
 	}
 
 }

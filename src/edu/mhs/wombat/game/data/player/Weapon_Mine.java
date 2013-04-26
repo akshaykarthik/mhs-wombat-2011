@@ -1,7 +1,8 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.MineBullet;
+import edu.mhs.wombat.game.data.bullets.MineBullet;
+import edu.mhs.wombat.game.data.explosions.SmallExplosion;
 
 public class Weapon_Mine extends Weapon {
 	public Weapon_Mine() {
@@ -12,12 +13,12 @@ public class Weapon_Mine extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire && MineBullet.CurrentMines <= MineBullet.MaxMines)
-			gs.addEntity(new MineBullet(gs.player.pos));
+			gs.addEntity(new SmallExplosion(gs.player.pos));
 	}
 
 	@Override
 	public float getAttackCD() {
-		return 1000;
+		return 10;
 	}
 
 	@Override

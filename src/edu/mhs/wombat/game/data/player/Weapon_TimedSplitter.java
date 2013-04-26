@@ -1,7 +1,7 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.common.TimedSplitterBullet;
+import edu.mhs.wombat.game.data.bullets.TimedSplitterBullet;
 
 public class Weapon_TimedSplitter extends Weapon {
 
