@@ -1,6 +1,5 @@
 package edu.mhs.wombat.game.data.monsters;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Polygon;
 import org.newdawn.slick.geom.Shape;
@@ -104,8 +103,8 @@ public class SlowChaserMonster extends Monster {
 	}
 
 	@Override
-	public void close() {
-
+	public void close(GameStatus gs) {
+		gs.scores.addPoints(100);
 	}
 
 }

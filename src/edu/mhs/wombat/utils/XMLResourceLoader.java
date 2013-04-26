@@ -46,7 +46,6 @@ public class XMLResourceLoader {
 			Document document = builder.parse(in);
 			rootElement = document.getDocumentElement();
 			validateResourceFile();
-			//preProcess();
 			ArrayList<Element> elements = getElementsByTagName("basedir");
 			setBaseDirectory(elements.get(0).getAttribute("path"));
 
@@ -68,21 +67,6 @@ public class XMLResourceLoader {
 			Log.error(e);
 			throw new IOException("Unable to load resource configuration file",
 					e);
-		}
-	}
-
-	private void preProcess() {
-		NodeList nodes = rootElement.getElementsByTagName("group");
-		int nodeCount = nodes.getLength();
-
-		if (nodeCount != 0) {
-			for (int i = 0; i < nodeCount; i++) {
-				NodeList children = nodes.item(i).getChildNodes();
-				int childCount = nodes.getLength();
-				for (int j = 0; j < childCount; j++) {
-					rootElement.appendChild((Element) children.item(i));
-				}
-			}
 		}
 	}
 

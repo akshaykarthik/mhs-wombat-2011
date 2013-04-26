@@ -100,8 +100,8 @@ public class RandomWalkerMonster extends Monster {
 	}
 
 	@Override
-	public void close() {
-
+	public void close(GameStatus gs) {
+		gs.scores.addPoints(10);
 	}
 
 }

@@ -54,8 +54,7 @@ public class AccelBullet extends Bullet {
 		vel = vel.add(accel);
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
-		float buffer = 100;
-		if (VectorU.inBounds(pos, bufferLBounds, bufferUBounds))
+		if (!VectorU.inBounds(pos, bufferLBounds, bufferUBounds))
 			state = EntityState.DEAD;
 
 	}
@@ -94,8 +93,9 @@ public class AccelBullet extends Bullet {
 	}
 
 	@Override
-	public void close() {
+	public void close(GameStatus gs) {
 
 	}
+
 
 }

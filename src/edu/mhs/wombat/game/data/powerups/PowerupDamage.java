@@ -89,7 +89,7 @@ public class PowerupDamage implements Entity {
 	}
 
 	@Override
-	public void close() {
+	public void close(GameStatus gs) {
 		
 	}
 }

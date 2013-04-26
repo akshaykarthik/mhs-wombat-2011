@@ -103,7 +103,7 @@ public class WobblyBullet extends Bullet {
 	}
 
 	@Override
-	public void close() {
+	public void close(GameStatus gs) {
 		
 	}
 

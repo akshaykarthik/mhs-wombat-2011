@@ -119,7 +119,7 @@ public class TimedSplitterBullet extends Bullet {
 	}
 
 	@Override
-	public void close() {
+	public void close(GameStatus gs) {
 
 	}
 

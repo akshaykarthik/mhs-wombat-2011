@@ -19,7 +19,7 @@ public interface Entity {
 
 	public void render(StateBasedGame game, Graphics g);
 
-	public void close();
+	public void close(GameStatus gs);
 
 	public Shape getHitBox();
 
@@ -28,5 +28,4 @@ public interface Entity {
 	public void playerCollide(Player a);
 
 	public Vector2f getPos();
-
 }

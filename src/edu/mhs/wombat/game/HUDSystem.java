@@ -25,11 +25,11 @@ public class HUDSystem {
 	}
 
 	private void drawEnergyBarPlayer(GameStatus gs, Graphics g) {
-		
+
 	}
 
 	private void drawHealthBarPlayer(GameStatus gs, Graphics g) {
-		
+
 	}
 
 	private void drawAttackTimer(GameStatus gs, Graphics g) {
@@ -39,14 +39,16 @@ public class HUDSystem {
 				.getAttackCD());
 		float timerX = pos.x - shape.getWidth() / 2;
 		float timerY = pos.y - shape.getHeight();
-		g.fillRect(timerX, timerY, MathU.clamp(timer, 0, 1) * _timerWidth, _timerHeight);
+		g.fillRect(timerX, timerY, MathU.clamp(timer, 0, 1) * _timerWidth,
+				_timerHeight);
 		g.drawRect(timerX, timerY, _timerWidth, _timerHeight);
 	}
 
 	public void render(StateBasedGame game, GameStatus gs, Graphics g) {
 		g.setFont(ResourceManager.getFont("font20"));
-		g.drawString("weapon : " + gs.player.weps.getName(), 10, 70);
-		
+		g.drawString("score : " + gs.scores.getScore(), 10, 70);
+		g.drawString("weapon : " + gs.player.weps.getName(), 10, 90);
+
 		if (Globals.GAME_DEBUG) {
 			g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
 		}

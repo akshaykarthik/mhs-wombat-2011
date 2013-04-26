@@ -84,7 +84,7 @@ public class EmptyMonster extends Monster {
 	}
 
 	@Override
-	public void close() {
+	public void close(GameStatus gs) {
 
 	}
 }
