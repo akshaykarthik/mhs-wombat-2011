@@ -1,7 +1,7 @@
 package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
-import edu.mhs.wombat.game.data.bullets.TimedSplitterBullet;
+import edu.mhs.wombat.game.data.bullets.TimeBombBullet;
 
 public class Weapon_TimedSplitter extends Weapon {
 
@@ -9,7 +9,7 @@ public class Weapon_TimedSplitter extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntity(new TimedSplitterBullet(gs.player.pos,
+			gs.addEntity(new TimeBombBullet(gs.player.pos,
 					getMousePos(), 10f));
 	}
 

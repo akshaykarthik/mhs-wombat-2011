@@ -67,6 +67,7 @@ public class LinearBullet extends Bullet {
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
+		
 		if (!Globals.isInField(pos))
 			state = EntityState.DEAD;
 	}

@@ -14,7 +14,6 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
-import edu.mhs.wombat.utils.VectorU;
 
 public class SplitterBullet extends Bullet {
 	private Vector2f pos;

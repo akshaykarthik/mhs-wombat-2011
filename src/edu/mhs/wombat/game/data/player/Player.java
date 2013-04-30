@@ -80,8 +80,8 @@ public class Player implements Entity {
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		pos = pos.add(vel);
-		pos.x = MathU.loop(pos.x, 0, Globals.ARENA_WIDTH);
-		pos.y = MathU.loop(pos.y, 0, Globals.ARENA_HEIGHT);
+		pos.x = MathU.clamp(pos.x, 0, Globals.ARENA_WIDTH);
+		pos.y = MathU.clamp(pos.y, 0, Globals.ARENA_HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
@@ -89,23 +89,28 @@ public class Player implements Entity {
 			image = ResourceManager.getImage("player_1");
 			image2 = ResourceManager.getImage("player_2");
 		}
-		g.setColor(Color.magenta);
+		
+		// draw ship
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 		image.setRotation((float) vel.getTheta());
 		image.drawCentered(pos.x, pos.y);
-		g.setColor(Color.cyan);
+		
+		// draw turret
 		float x2 = input.getAbsoluteMouseX();
 		float y2 = input.getAbsoluteMouseY();
 		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-
 		double xDiff = mousepos.x - pos.x;
 		double yDiff = mousepos.y - pos.y;
 		float turretAngle = (float) Math.toDegrees(Math.atan2(yDiff, xDiff));
 
 		image2.setRotation(turretAngle);
 		image2.drawCentered(pos.x, pos.y);
-		g.drawLine(pos.x, pos.y, mousepos.x, mousepos.y);
+		float ch_size = 10;
+		g.drawLine(mousepos.x, mousepos.y - ch_size, mousepos.x, mousepos.y);
+		g.drawLine(mousepos.x, mousepos.y + ch_size, mousepos.x, mousepos.y);
+		g.drawLine(mousepos.x - ch_size, mousepos.y, mousepos.x, mousepos.y);
+		g.drawLine(mousepos.x + ch_size, mousepos.y, mousepos.x, mousepos.y);
 		g.setColor(Color.white);
 	}
 

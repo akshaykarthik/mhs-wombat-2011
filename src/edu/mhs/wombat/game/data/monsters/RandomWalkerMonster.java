@@ -15,7 +15,6 @@ import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
-import edu.mhs.wombat.utils.VectorU;
 
 public class RandomWalkerMonster extends Monster {
 	private static Image image;
@@ -59,8 +58,13 @@ public class RandomWalkerMonster extends Monster {
 		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		pos = pos.add(vel);
-		pos.x = MathU.loop(pos.x, 0, Globals.ARENA_WIDTH);
-		pos.y = MathU.loop(pos.y, 0, Globals.ARENA_WIDTH);
+		
+		if (!MathU.inBounds(pos.x, 0, Globals.ARENA_WIDTH))
+			vel.x *= -1;
+		
+		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
+			vel.y *= -1;
+		
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 

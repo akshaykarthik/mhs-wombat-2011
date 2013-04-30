@@ -15,7 +15,7 @@ import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class TimedSplitterBullet extends Bullet {
+public class TimeBombBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
@@ -27,13 +27,19 @@ public class TimedSplitterBullet extends Bullet {
 	private int projectiles = 30;
 
 	private static Image image;
+	private static Image image1;
+	private static Image image2;
+	private static Image image3;
+	private static Image image4;
 	private Shape hitbox;;
 
-	public TimedSplitterBullet(Vector2f source, Vector2f target, float velocity) {
+	public TimeBombBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
-			image = ResourceManager.getImage("weps_tiny_bullet");
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+			image = ResourceManager.getImage("weps_bomb_1");
+			image1 = ResourceManager.getImage("weps_bomb_1");
+			image2 = ResourceManager.getImage("weps_bomb_2");
+			image3 = ResourceManager.getImage("weps_bomb_3");
+			image4 = ResourceManager.getImage("weps_bomb_4");
 		}
 		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());
@@ -67,6 +73,17 @@ public class TimedSplitterBullet extends Bullet {
 			state = EntityState.DYING;
 		}
 
+		float fourth = bomb / 4;
+		if (time < fourth) {
+			image = image1;
+		} else if (time > fourth && time < 2 * fourth) {
+			image = image2;
+		} else if (time > 2 * fourth && time < 3 * fourth) {
+			image = image3;
+		} else {
+			image = image4;
+		}
+
 		pos = pos.add(vel.copy().scale((bomb - time) / bomb));
 
 		hitbox.setCenterX(pos.x);
@@ -87,7 +104,6 @@ public class TimedSplitterBullet extends Bullet {
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		image.setRotation((float) vel.getTheta());
 		if (Globals.isInField(pos))
 			image.drawCentered(pos.x, pos.y);
 
