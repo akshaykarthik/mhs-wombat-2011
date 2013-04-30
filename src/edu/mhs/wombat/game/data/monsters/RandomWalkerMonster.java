@@ -30,8 +30,8 @@ public class RandomWalkerMonster extends Monster {
 		pos = new Vector2f(ix, iy);
 		vel = new Vector2f(0, 0);
 		if (image == null) {
-			image = ResourceManager.getImage("monsters_red_swirly")
-					.getScaledCopy(0.5f);
+			image = ResourceManager.getSpriteSheet("monsters_circle")
+					.getSubImage(3, 0).getScaledCopy(0.5f);
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
 					(float) image.getHeight() / 2f);
 		}
@@ -58,13 +58,13 @@ public class RandomWalkerMonster extends Monster {
 		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
 		pos = pos.add(vel);
-		
+
 		if (!MathU.inBounds(pos.x, 0, Globals.ARENA_WIDTH))
 			vel.x *= -1;
-		
+
 		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
 			vel.y *= -1;
-		
+
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 

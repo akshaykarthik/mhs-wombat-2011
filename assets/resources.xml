@@ -16,29 +16,13 @@
 		<image key="player_2" file="player_2.png"/>
 	</group>
 	<group name="images/powerups">
-		<image key="powerup_health_up" file="powerups/health_up.png"/>
-		<image key="powerup_health_up2" file="powerups/health_up2.png"/>
-		<image key="powerup_health_up3" file="powerups/health_up3.png"/>
-		<image key="powerup_weapon_up" file="powerups/red_star_1.png"/>
-		<image key="powerup_damage_up" file="powerups/damage_up1.png"/>
-		<image key="powerup_damage_up2" file="powerups/damage_up2.png"/>
-		<image key="powerup_damage_up3" file="powerups/damage_up3.png"/>
-				
+		<image key="powerup_weapon_up" file="powerups/red_star_1.png"/>				
 	</group>
-	<group name="images/weapons">
-		<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>
-		<image key="weps_bomb_1" file="weps/bomb_1.png"/>
-		<image key="weps_bomb_2" file="weps/bomb_2.png"/>
-		<image key="weps_bomb_3" file="weps/bomb_3.png"/>
-		<image key="weps_bomb_4" file="weps/bomb_4.png"/>
-	</group>
-	<group name="images/monsters">
-		<image key="monsters_red_swirly" file="monsters/red_swirly.png"/>
-		<image key="monsters_yellow_swirly" file="monsters/yellow_swirly.png"/>
-		<image key="monsters_blue_swirly" file="monsters/blue_swirly.png"/>
-		<image key="monsters_green_swirly" file="monsters/green_swirly.png"/>
-		<image key="monsters_purple_swirly" file="monsters/purple_swirly.png"/>
-	</group>
+
+	<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>
+	<sheet key="weps_bomb" file="weps/bomb.png" width="32" height="32"/>
+	<sheet key="monsters_circle" file="monsters/circle_monster.png" width="32" height="32"/>
+
 	<group name="fonts">
 		<unicodefont key="font20" file="fonts/AliquamREG.ttf" fontSize="20" />
 		<unicodefont key="font40" file="fonts/AliquamREG.ttf" fontSize="40" />

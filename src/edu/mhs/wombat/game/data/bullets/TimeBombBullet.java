@@ -35,18 +35,16 @@ public class TimeBombBullet extends Bullet {
 
 	public TimeBombBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
-			image = ResourceManager.getImage("weps_bomb_1");
-			image1 = ResourceManager.getImage("weps_bomb_1");
-			image2 = ResourceManager.getImage("weps_bomb_2");
-			image3 = ResourceManager.getImage("weps_bomb_3");
-			image4 = ResourceManager.getImage("weps_bomb_4");
+			image1 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(0, 0);
+			image2 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(1, 0);
+			image3 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(2, 0);
+			image4 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(3, 0);
+			image = image1;
 		}
-		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
-				image.getHeight());
+		hitbox = new Rectangle(source.x, source.y, 15, 15);
 		pos = source.copy();
 		Vector2f norm = target.copy().sub(pos.copy());
 		vel = norm.normalise().scale(velocity);
-
 		state = EntityState.ALIVE;
 	}
 
