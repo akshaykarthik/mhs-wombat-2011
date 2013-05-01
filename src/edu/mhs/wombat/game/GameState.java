@@ -34,11 +34,11 @@ public class GameState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) {
 		bg = new Starfield(-10, -10);
 		int NUMTEST = 100;
-		for (int i = 0; i < NUMTEST; i++) {
-			if (Math.random() < 0.5)
-				gs.addEntity(new SlowChaserMonster(150, 150));
-			else
-				gs.addEntity(new RandomWalkerMonster(150, 150));
+		int sqrtNumTest = (int) Math.sqrt(NUMTEST);
+		for (int i = 0; i < sqrtNumTest; i++) {
+			for (int j = 0; j < sqrtNumTest; j++) {
+				gs.addEntity(new RandomWalkerMonster(i * Globals.ARENA_WIDTH/sqrtNumTest, j * Globals.ARENA_HEIGHT/sqrtNumTest));
+			}
 		}
 
 	}

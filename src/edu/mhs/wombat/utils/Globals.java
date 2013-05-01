@@ -23,6 +23,6 @@ public class Globals {
 
 	public static boolean isInField(Vector2f pos) {
 		return (pos.x >= 0 && pos.x <= ARENA_WIDTH)
-				&& (pos.y >= 0 && pos.y <= ARENA_WIDTH);
+				&& (pos.y >= 0 && pos.y <= ARENA_HEIGHT);
 	}
 }

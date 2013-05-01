@@ -26,7 +26,8 @@ public class Player implements Entity {
 	public float mv = 10;
 
 	public float health = 75;
-	public float energy;
+	public float energy = 75;
+	public float maxEnergy = 100;
 	public float maxHealth = 100;
 
 	public PlayerState state;
@@ -56,7 +57,9 @@ public class Player implements Entity {
 			if (Mouse.isButtonDown(0)) {
 				weps.fire(gs);
 			}
-
+			energy += 0.5f;
+			energy = MathU.clamp(energy, 0, maxEnergy);
+			health = MathU.clamp(health, 0, maxHealth);
 			break;
 		case DEAD:
 			vel.x = 0;

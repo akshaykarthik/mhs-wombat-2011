@@ -24,8 +24,19 @@ public class HUDSystem {
 	private static final float healthY = Globals.HEIGHT - healthH - 10;
 	private static final Shape healthBorder = new Rectangle(healthX, healthY,
 			healthW, healthH);
-	private static final ShapeFill gradient = new GradientFill(healthX, healthY, Color.green,
-			healthX + healthW, healthY + healthH, Color.red);
+	private static final ShapeFill Hgradient = new GradientFill(healthX,
+			healthY, Color.green, healthX + healthW, healthY + healthH,
+			Color.red);
+
+	private static final float energyW = 10;
+	private static final float energyH = 250;
+	private static final float energyX = Globals.WIDTH - energyW - 30;
+	private static final float energyY = Globals.HEIGHT - energyH - 10;
+	private static final Shape energyBorder = new Rectangle(energyX, energyY,
+			energyW, energyH);
+	private static final ShapeFill Egradient = new GradientFill(energyX,
+			energyY, Color.blue, energyX + energyW, energyY + energyH,
+			Color.cyan);
 
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 
@@ -36,15 +47,19 @@ public class HUDSystem {
 	}
 
 	private void drawEnergyBarPlayer(GameStatus gs, Graphics g) {
-
+		float percent = (gs.player.energy / gs.player.maxEnergy);
+		Shape energyFill = new Rectangle(energyX, 1 + energyY + (1 - percent)
+				* energyH, energyW - 1, energyH * percent - 1);
+		g.draw(energyBorder);
+		g.fill(energyFill, Egradient);
 	}
 
 	private void drawHealthBarPlayer(GameStatus gs, Graphics g) {
 		float percent = (gs.player.health / gs.player.maxHealth);
-		Shape healthFill = new Rectangle(healthX, healthY + (1 - percent)
-				* healthH, healthW - 1, healthH * percent);
+		Shape healthFill = new Rectangle(healthX, 1 + healthY + (1 - percent)
+				* healthH, healthW - 1, healthH * percent - 1);
 		g.draw(healthBorder);
-		g.fill(healthFill, gradient);
+		g.fill(healthFill, Hgradient);
 	}
 
 	private void drawAttackTimer(GameStatus gs, Graphics g) {
@@ -62,7 +77,8 @@ public class HUDSystem {
 	public void render(StateBasedGame game, GameStatus gs, Graphics g) {
 		g.setFont(ResourceManager.getFont("font20"));
 		g.drawString("score : " + gs.scores.getScore(), 10, 70);
-		g.drawString("weapon : " + gs.player.weps.getName(), 10, 90);
+		g.drawString("multiplier : " + gs.scores.getMultiplier(), 10, 90);
+		g.drawString("weapon : " + gs.player.weps.getName(), 10, 110);
 		drawHealthBarPlayer(gs, g);
 		drawEnergyBarPlayer(gs, g);
 		if (Globals.GAME_DEBUG) {
