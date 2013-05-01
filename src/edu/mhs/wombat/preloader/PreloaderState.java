@@ -2,6 +2,7 @@ package edu.mhs.wombat.preloader;
 
 import java.io.IOException;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -38,6 +39,7 @@ public class PreloaderState extends BasicGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		background = new Image("assets/background_1.png");
 		UnicodeFont unicodeFont = new UnicodeFont(
 				"assets/fonts/AliquamREG.ttf", 60, false, false);
@@ -64,19 +66,31 @@ public class PreloaderState extends BasicGameState {
 		g.drawString("Currently Loading ", 150, 250);
 		g.setFont(font2);
 		g.drawString(description, 250, 350);
-		g.drawRect(100, 500, Globals.WIDTH - 200, 10);
-		g.fillRect(100, 500, (Globals.WIDTH - 200) * percent, 10);
-	}
+		g.drawRoundRect(100, 500, Globals.WIDTH - 200, 10, 10);
+		g.fillRoundRect(100, 500, (Globals.WIDTH - 200) * percent, 10, 10);
+		g.setColor(Color.red);
+		g.fillArc(98, 450, 100, 100, 0, 360*percent);
+		g.setColor(Color.white);
+		g.drawArc(99, 450, 99, 99, 0, 360*percent);
 
+		
+	}
+	
+	private float timer = 0.0f;
+	
 	@Override
 	public void update(GameContainer gc, StateBasedGame gm, int delta)
 			throws SlickException {
-		isComplete = percent >= 1.0;
+		isComplete = percent >= 1.0 && timer > 500f;
+		
+		if(percent >= 1.0)
+			timer += delta;
+		
 		percent = (numResources - loader.remainingElements()) / numResources;
 
 		if (isComplete) {
 			StateUtils.switchToNoTransition(gm, States.MENU);
-		} else {
+		} else {	
 			description = loader.loadNext();
 		}
 	}

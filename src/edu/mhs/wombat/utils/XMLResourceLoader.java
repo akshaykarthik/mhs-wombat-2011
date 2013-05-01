@@ -114,6 +114,8 @@ public class XMLResourceLoader {
 			Element e = param.remove(0);
 			loadParameter(e);
 			name = e.getAttribute("key");
+		} else{
+			return "finalizing";
 		}
 		return name;
 	}

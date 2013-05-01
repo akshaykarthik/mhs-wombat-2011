@@ -53,14 +53,16 @@ public class SmallExplosion extends Bullet {
 		time += delta;
 		if (time > reset)
 			time = 0;
-		
-		hitbox = new Circle(pos.x, pos.y, (float) (Math.sin(time)*50 + 101));
+
+		hitbox = new Circle(pos.x, pos.y,
+				(float) (101 + 50 * Math.sin((2 * Math.PI * time) / (1000f))));
 		System.out.println(hitbox.radius);
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1f));
+		g.setColor(new Color((float) Math.random(), (float) Math.random(),
+				(float) Math.random(), 1f));
 		g.fill(hitbox);
 		g.setColor(Color.white);
 	}

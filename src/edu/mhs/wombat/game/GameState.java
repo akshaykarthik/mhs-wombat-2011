@@ -54,15 +54,11 @@ public class GameState extends BasicGameState {
 
 		// draw with camera
 		Camera.preDraw(g, gs);
-		g.setColor(new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), 1f));
 		g.drawRect(0, 0, Globals.ARENA_WIDTH, Globals.ARENA_HEIGHT);
-		g.drawRect(0, 0, Globals.WIDTH, Globals.HEIGHT);
-		g.setColor(Color.white);
 		bg.render(g);
 		gs.render(game, g);
 		hs.camRender(game, gs, g);
 		Camera.postDraw(g, gs);
-
 		hs.render(game, gs, g);
 
 		if (paused)
