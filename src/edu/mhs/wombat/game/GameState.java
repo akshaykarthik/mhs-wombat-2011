@@ -22,6 +22,7 @@ public class GameState extends BasicGameState {
 	private GameStatus gs;
 	private HUDSystem hs = new HUDSystem();
 	private boolean paused = false;
+	private boolean firstTime = true;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
@@ -32,13 +33,18 @@ public class GameState extends BasicGameState {
 	}
 
 	public void enter(GameContainer container, StateBasedGame game) {
-		bg = new Starfield(-10, -10);
-		int NUMTEST = 100;
-		int sqrtNumTest = (int) Math.sqrt(NUMTEST);
-		for (int i = 0; i < sqrtNumTest; i++) {
-			for (int j = 0; j < sqrtNumTest; j++) {
-				gs.addEntity(new RandomWalkerMonster(i * Globals.ARENA_WIDTH/sqrtNumTest, j * Globals.ARENA_HEIGHT/sqrtNumTest));
+		if (firstTime) {
+			bg = new Starfield(-10, -10);
+			int NUMTEST = 100;
+			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
+			for (int i = 0; i < sqrtNumTest; i++) {
+				for (int j = 0; j < sqrtNumTest; j++) {
+					gs.addEntity(new RandomWalkerMonster(i
+							* Globals.ARENA_WIDTH / sqrtNumTest, j
+							* Globals.ARENA_HEIGHT / sqrtNumTest));
+				}
 			}
+			firstTime = false;
 		}
 
 	}
@@ -54,6 +60,8 @@ public class GameState extends BasicGameState {
 
 		// draw with camera
 		Camera.preDraw(g, gs);
+		if (Globals.GAME_DEBUG)
+			g.drawImage(ResourceManager.getImage("debug_grid"), 0, 0);
 		g.drawRect(0, 0, Globals.ARENA_WIDTH, Globals.ARENA_HEIGHT);
 		bg.render(g);
 		gs.render(game, g);

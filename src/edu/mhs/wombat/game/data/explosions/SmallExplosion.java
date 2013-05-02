@@ -52,10 +52,10 @@ public class SmallExplosion extends Bullet {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		time += delta;
 		if (time > reset)
-			time = 0;
+			setState(EntityState.DEAD);
 
-		hitbox = new Circle(pos.x, pos.y,
-				(float) (101 + 50 * Math.sin((2 * Math.PI * time) / (1000f))));
+		hitbox = new Circle(pos.x, pos.y, (float) (100 * Math.sin((Math.PI
+				* time) / (1000f))));
 		System.out.println(hitbox.radius);
 	}
 

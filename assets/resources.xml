@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<basedir path="assets" />
+	<image key="debug_grid" file="debug/grid.png"/>
 	<group name="images/common">
 		<image key="logo" file="logo_1.png"/>
 		<image key="background1" file="background_1.png"/>
