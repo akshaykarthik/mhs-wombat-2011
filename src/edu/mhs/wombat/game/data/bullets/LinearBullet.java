@@ -19,25 +19,25 @@ public class LinearBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
-	
+
 	private float damage = 1;
 
 	private static Image image;
 	private Shape hitbox;;
 
-	public LinearBullet(Vector2f source, Vector2f target, float vel, float damage){
+	public LinearBullet(Vector2f source, Vector2f target, float vel,
+			float damage) {
 		this(source, target, vel);
 		this.damage = damage;
 	}
-	
+
 	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
 			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);	
+					(float) image.getHeight() / 2f);
 		}
-		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
-				image.getHeight());
+		hitbox = new Rectangle(source.x, source.y, 18, 10);
 		pos = source.copy();
 		Vector2f norm = target.copy().sub(pos.copy());
 		vel = norm.normalise().scale(velocity);
@@ -67,7 +67,7 @@ public class LinearBullet extends Bullet {
 
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
-		
+
 		if (!Globals.isInField(pos))
 			state = EntityState.DEAD;
 	}

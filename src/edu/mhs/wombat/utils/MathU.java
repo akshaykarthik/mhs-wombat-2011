@@ -12,8 +12,8 @@ public class MathU {
 				(val < min) ? max : // set to max if val < min
 						val; // otherwise return val
 	}
-	
-	public static boolean inBounds(float val, float min, float max){
+
+	public static boolean inBounds(float val, float min, float max) {
 		return (val >= min) && (val <= max);
 	}
 }

@@ -15,17 +15,16 @@ public class EmptyPowerup implements Entity {
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	
-	public EmptyPowerup(){
-		
+
+	public EmptyPowerup() {
+
 	}
-	
-	public EmptyPowerup(float ix, float iy){
+
+	public EmptyPowerup(float ix, float iy) {
 		state = EntityState.ALIVE;
 		pos = new Vector2f(ix, iy);
 		vel = new Vector2f(0, 0);
 	}
-
 
 	@Override
 	public EntityState getState() {
@@ -36,7 +35,7 @@ public class EmptyPowerup implements Entity {
 	public void setState(EntityState es) {
 		this.state = es;
 	}
-	
+
 	@Override
 	public void init(GameStatus gs) {
 	}
@@ -57,9 +56,9 @@ public class EmptyPowerup implements Entity {
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	@Override
 	public Shape getHitBox() {
 		return null;
@@ -82,11 +81,11 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public void playerCollide(Player a) {
-		
+
 	}
 
 	@Override
 	public void close(GameStatus gs) {
-		
+
 	}
 }

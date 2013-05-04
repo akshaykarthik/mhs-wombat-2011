@@ -8,8 +8,7 @@ public class Weapon_Basic extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntity(new LinearBullet(gs.player.pos,
-					getMousePos(), 7.5f));
+			gs.addEntity(new LinearBullet(gs.player.pos, getMousePos(), 7.5f));
 	}
 
 	@Override

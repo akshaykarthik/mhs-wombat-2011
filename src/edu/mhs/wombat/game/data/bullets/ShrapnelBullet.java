@@ -1,7 +1,10 @@
 package edu.mhs.wombat.game.data.bullets;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -11,20 +14,37 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 
-public class AccelBullet extends Bullet {
+public class ShrapnelBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
-	private Vector2f accel;
 	private EntityState state;
-	private Circle shape = new Circle(0, 0, 6);
 
-	public AccelBullet(Vector2f source, Vector2f target, float ivel,
-			float iaccel) {
+	private float damage = 1;
+
+	private static Image image;
+	private Shape hitbox;;
+
+	public ShrapnelBullet(Vector2f source, Vector2f target, float vel,
+			float damage) {
+		this(source, target, vel);
+		this.damage = damage;
+	}
+
+	public ShrapnelBullet(Vector2f source, Vector2f target, float velocity) {
+		if (image == null) {
+			image = ResourceManager.getImage("weps_tiny_circle").getScaledCopy(
+					0.5f);
+			image.setCenterOfRotation((float) image.getWidth() / 2f,
+					(float) image.getHeight() / 2f);
+		}
+		hitbox = new Circle(source.x, source.y, 4);
 		pos = source.copy();
-		Vector2f target_vel = target.copy().sub(pos.copy()).normalise();
-		vel = target_vel.copy().normalise().scale(ivel);
-		accel = target_vel.scale(iaccel);
+		Vector2f norm = target.copy().sub(pos.copy());
+		vel = norm.normalise().scale(velocity);
+
+		state = EntityState.ALIVE;
 	}
 
 	@Override
@@ -46,24 +66,27 @@ public class AccelBullet extends Bullet {
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		pos = pos.add(vel);
-		vel = vel.add(accel);
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
+
+		hitbox.setCenterX(pos.x);
+		hitbox.setCenterY(pos.y);
+
 		if (!Globals.isInField(pos))
 			state = EntityState.DEAD;
-
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
+		g.setColor(Color.red);
+		image.setRotation((float) vel.getTheta());
 		if (Globals.isInField(pos))
-			g.draw(shape);
+			image.drawCentered(pos.x, pos.y);
 
+		g.setColor(Color.white);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return shape;
+		return hitbox;
 	}
 
 	@Override
@@ -84,13 +107,12 @@ public class AccelBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 10;
+		return damage;
 	}
 
 	@Override
 	public void close(GameStatus gs) {
 
 	}
-
 
 }

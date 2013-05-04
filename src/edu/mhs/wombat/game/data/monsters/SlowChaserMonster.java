@@ -67,13 +67,12 @@ public class SlowChaserMonster extends Monster {
 		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -.50 : .50)));
 		if (!MathU.inBounds(pos.x, 0, Globals.ARENA_WIDTH))
 			vel.x *= -1;
-		
+
 		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
 			vel.y *= -1;
-		
+
 		pos.add(vel.copy().scale(moveScale));
-		
-		
+
 		shape.setCenterX(pos.x);
 		shape.setCenterY(pos.y);
 
@@ -87,8 +86,9 @@ public class SlowChaserMonster extends Monster {
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 
-		if (Globals.isInField(pos));
-			g.draw(shape);
+		if (Globals.isInField(pos))
+			;
+		g.draw(shape);
 	}
 
 	@Override

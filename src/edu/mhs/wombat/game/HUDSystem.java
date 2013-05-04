@@ -15,6 +15,7 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class HUDSystem {
 
+	// #constants
 	private static final int _timerWidth = 30;
 	private static final int _timerHeight = 4;
 
@@ -38,12 +39,22 @@ public class HUDSystem {
 			energyY, Color.blue, energyX + energyW, energyY + energyH,
 			Color.cyan);
 
+	// #end constants
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 
 	}
 
 	public void camRender(StateBasedGame game, GameStatus gs, Graphics g) {
-		drawAttackTimer(gs, g);
+		this.drawAttackTimer(gs, g);
+		if (Globals.GAME_DEBUG) {
+			Shape shape = gs.player.shape;
+			Vector2f pos = gs.player.pos;
+			Vector2f vel = gs.player.vel;
+			g.setColor(Color.red);
+			g.drawLine(pos.x, pos.y, pos.x + vel.x * 10, pos.y + vel.y * 10);
+			g.setColor(Color.white);
+		}
+
 	}
 
 	private void drawEnergyBarPlayer(GameStatus gs, Graphics g) {
@@ -79,8 +90,8 @@ public class HUDSystem {
 		g.drawString("score : " + gs.scores.getScore(), 10, 70);
 		g.drawString("multiplier : " + gs.scores.getMultiplier(), 10, 90);
 		g.drawString("weapon : " + gs.player.weps.getName(), 10, 110);
-		drawHealthBarPlayer(gs, g);
-		drawEnergyBarPlayer(gs, g);
+		this.drawHealthBarPlayer(gs, g);
+		this.drawEnergyBarPlayer(gs, g);
 		if (Globals.GAME_DEBUG) {
 			g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
 		}

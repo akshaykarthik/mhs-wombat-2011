@@ -33,7 +33,7 @@ public class DoorOpenTransition implements Transition {
 	}
 
 	public boolean isComplete() {
-		return finish > 1;//Globals.TRANSITION_FACTOR3;
+		return finish > 1;// Globals.TRANSITION_FACTOR3;
 	}
 
 	public void postRender(StateBasedGame game, GameContainer container,

@@ -64,11 +64,10 @@ public class RandomWalkerMonster extends Monster {
 
 		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
 			vel.y *= -1;
-		
-		if(!Globals.isInField(pos))
+
+		if (!Globals.isInField(pos))
 			this.state = EntityState.DEAD;
 
-		
 		hitbox.setCenterX(pos.x);
 		hitbox.setCenterY(pos.y);
 

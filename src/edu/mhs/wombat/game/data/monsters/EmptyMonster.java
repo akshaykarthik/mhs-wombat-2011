@@ -36,7 +36,7 @@ public class EmptyMonster extends Monster {
 
 	@Override
 	public void init(GameStatus gs) {
-		
+
 	}
 
 	@Override

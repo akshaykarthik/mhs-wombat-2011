@@ -19,7 +19,7 @@ public class HighScoreSystem {
 	public void addPoints(int i) {
 		current_score += multiplier * i;
 	}
-	
+
 	public void reset() {
 		current_score = 0;
 		multiplier = 1;

@@ -30,9 +30,7 @@ public class DoorCloseTransition implements Transition {
 
 	public void init(GameState firstState, GameState secondState) {
 
-		
 	}
-	
 
 	public boolean isComplete() {
 		return finish > Globals.TRANSITION_FACTOR3;

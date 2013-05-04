@@ -35,10 +35,14 @@ public class TimeBombBullet extends Bullet {
 
 	public TimeBombBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
-			image1 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(0, 0);
-			image2 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(1, 0);
-			image3 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(2, 0);
-			image4 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(3, 0);
+			image1 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(0,
+					0);
+			image2 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(1,
+					0);
+			image3 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(2,
+					0);
+			image4 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(3,
+					0);
 			image = image1;
 		}
 		hitbox = new Rectangle(source.x, source.y, 15, 15);
@@ -91,7 +95,7 @@ public class TimeBombBullet extends Bullet {
 
 		if (state == EntityState.DYING) {
 			for (int i = 0; i < projectiles; i += 1) {
-				gs.addEntity(new LinearBullet(pos, pos.copy().add(
+				gs.addEntity(new ShrapnelBullet(pos, pos.copy().add(
 						vel.copy().add(360 / projectiles * i)), 12.5f,
 						subDamage));
 			}

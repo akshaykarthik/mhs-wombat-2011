@@ -67,8 +67,8 @@ public class Starfield {
 	public void pause() {
 		pause = true;
 	}
-	
-	public void resume(){
+
+	public void resume() {
 		pause = false;
 	}
 

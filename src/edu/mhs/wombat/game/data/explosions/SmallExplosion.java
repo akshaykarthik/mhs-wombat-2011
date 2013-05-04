@@ -54,8 +54,8 @@ public class SmallExplosion extends Bullet {
 		if (time > reset)
 			setState(EntityState.DEAD);
 
-		hitbox = new Circle(pos.x, pos.y, (float) (100 * Math.sin((Math.PI
-				* time) / (1000f))));
+		hitbox = new Circle(pos.x, pos.y,
+				(float) (100 * Math.sin((Math.PI * time) / (1000f))));
 		System.out.println(hitbox.radius);
 	}
 

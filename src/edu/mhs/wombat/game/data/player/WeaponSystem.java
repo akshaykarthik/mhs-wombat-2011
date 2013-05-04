@@ -11,8 +11,7 @@ public class WeaponSystem {
 			new Weapon_Splitter(), // splitter
 			new Weapon_TimedSplitter(), // timed god mine
 			new Weapon_Basic(), // missile
-			new Weapon_Curve()
-	};
+			new Weapon_Curve() };
 
 	public void update(int delta) {
 		weapons[current_weapon].update(delta, 1);

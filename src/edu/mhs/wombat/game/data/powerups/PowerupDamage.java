@@ -11,23 +11,24 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 
 public class PowerupDamage implements Entity {
-	
+
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	
-	public PowerupDamage(){
+
+	public PowerupDamage() {
 		state = EntityState.ALIVE;
 		pos = new Vector2f(0, 0);
-		vel = new Vector2f(10*(float)(Math.random() - 0.5), 10*(float)(Math.random()- 0.5));
-	}
-	
-	public PowerupDamage(float ix, float iy){
-		state = EntityState.ALIVE;
-		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(10*(float)(Math.random() - 0.5), 10*(float)(Math.random()- 0.5));
+		vel = new Vector2f(10 * (float) (Math.random() - 0.5),
+				10 * (float) (Math.random() - 0.5));
 	}
 
+	public PowerupDamage(float ix, float iy) {
+		state = EntityState.ALIVE;
+		pos = new Vector2f(ix, iy);
+		vel = new Vector2f(10 * (float) (Math.random() - 0.5),
+				10 * (float) (Math.random() - 0.5));
+	}
 
 	@Override
 	public EntityState getState() {
@@ -38,10 +39,10 @@ public class PowerupDamage implements Entity {
 	public void setState(EntityState es) {
 		this.state = es;
 	}
-	
+
 	@Override
 	public void init(GameStatus gs) {
-		
+
 	}
 
 	@Override
@@ -60,9 +61,10 @@ public class PowerupDamage implements Entity {
 		default:
 			break;
 		}
-		//Maybe needs a timer.  When it is up then powerup ends? Until then, adds damage to player...
+		// Maybe needs a timer. When it is up then powerup ends? Until then,
+		// adds damage to player...
 	}
-	
+
 	@Override
 	public Shape getHitBox() {
 		return null;
@@ -90,7 +92,6 @@ public class PowerupDamage implements Entity {
 
 	@Override
 	public void close(GameStatus gs) {
-		
+
 	}
 }
-	

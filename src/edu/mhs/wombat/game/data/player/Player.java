@@ -31,7 +31,7 @@ public class Player implements Entity {
 	public float maxHealth = 100;
 
 	public PlayerState state;
-	private Input input = new Input(Globals.HEIGHT);
+	private final Input input = new Input(Globals.HEIGHT);
 
 	public WeaponSystem weps = new WeaponSystem();
 
@@ -40,75 +40,61 @@ public class Player implements Entity {
 	public Circle shape = new Circle(0, 0, 15, 15);
 
 	public Player() {
-		pos = new Vector2f(250, 250);
-		vel = new Vector2f(0, 0);
+		this.pos = new Vector2f(250, 250);
+		this.vel = new Vector2f(0, 0);
 	}
 
 	public void init(GameStatus gs) {
-		state = PlayerState.ALIVE;
+		this.state = PlayerState.ALIVE;
 
 	}
 
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		switch (state) {
+		switch (this.state) {
 		case ALIVE:
-			handleMovementInput(delta / 1000f);
-			weps.update(delta);
+			this.handleMovementInput(delta / 1000f);
+			this.weps.update(delta);
 			if (Mouse.isButtonDown(0)) {
-				weps.fire(gs);
+				this.weps.fire(gs);
 			}
-			energy += 0.5f;
-			energy = MathU.clamp(energy, 0, maxEnergy);
-			health = MathU.clamp(health, 0, maxHealth);
+			float eps = 5;
+			this.energy += eps * (delta / 1000f);
+			this.energy = MathU.clamp(this.energy, 0, this.maxEnergy);
+			this.health = MathU.clamp(this.health, 0, this.maxHealth);
 			break;
-		case DEAD:
-			vel.x = 0;
-			vel.y = 0;
-			break;
-		case DYING:
-			vel.x = 0;
-			vel.y = 0;
-			break;
-		case SPAWNING:
-			vel.x = 0;
-			vel.y = 0;
-			break;
-		case STUNNED:
-			vel.x = 0;
-			vel.y = 0;
-			break;
-
+		default:
+			this.vel.x = 0;
+			this.vel.y = 0;
 		}
 
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
-		pos = pos.add(vel);
-		pos.x = MathU.clamp(pos.x, 0, Globals.ARENA_WIDTH);
-		pos.y = MathU.clamp(pos.y, 0, Globals.ARENA_HEIGHT);
+		this.shape.setCenterX(this.pos.x);
+		this.shape.setCenterY(this.pos.y);
+		this.pos = this.pos.add(this.vel);
+		this.pos.x = MathU.clamp(this.pos.x, 0, Globals.ARENA_WIDTH);
+		this.pos.y = MathU.clamp(this.pos.y, 0, Globals.ARENA_HEIGHT);
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
-		if (image == null) {
-			image = ResourceManager.getImage("player_1");
-			image2 = ResourceManager.getImage("player_2");
+		if (this.image == null) {
+			this.image = ResourceManager.getImage("player_1");
+			this.image2 = ResourceManager.getImage("player_2");
 		}
-		
-		// draw ship
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
-		image.setRotation((float) vel.getTheta());
-		image.drawCentered(pos.x, pos.y);
-		
-		// draw turret
-		float x2 = input.getAbsoluteMouseX();
-		float y2 = input.getAbsoluteMouseY();
-		Vector2f mousepos = Camera.worldToScreen(new Vector2f(x2, y2));
-		double xDiff = mousepos.x - pos.x;
-		double yDiff = mousepos.y - pos.y;
-		float turretAngle = (float) Math.toDegrees(Math.atan2(yDiff, xDiff));
 
-		image2.setRotation(turretAngle);
-		image2.drawCentered(pos.x, pos.y);
+		// draw ship
+		this.shape.setCenterX(this.pos.x);
+		this.shape.setCenterY(this.pos.y);
+		this.image.setRotation((float) this.vel.getTheta());
+		this.image.drawCentered(this.pos.x, this.pos.y);
+
+		// draw turret
+		Vector2f mousepos = Camera.worldToScreen(new Vector2f(this.input
+				.getAbsoluteMouseX(), this.input.getAbsoluteMouseY()));
+		float turretAngle = (float) Math.toDegrees(Math.atan2(mousepos.y
+				- this.pos.y, mousepos.x - this.pos.x));
+		this.image2.setRotation(turretAngle);
+		this.image2.drawCentered(this.pos.x, this.pos.y);
+
+		// draw crosshair
 		float ch_size = 10;
 		g.drawLine(mousepos.x, mousepos.y - ch_size, mousepos.x, mousepos.y);
 		g.drawLine(mousepos.x, mousepos.y + ch_size, mousepos.x, mousepos.y);
@@ -133,7 +119,7 @@ public class Player implements Entity {
 
 	@Override
 	public Shape getHitBox() {
-		return shape;
+		return this.shape;
 	}
 
 	@Override
@@ -144,51 +130,53 @@ public class Player implements Entity {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	private boolean prevQ = false;
 	private boolean prevE = false;
 
 	private void handleMovementInput(float delta) {
-		boolean right = (input.isKeyDown(Input.KEY_RIGHT) || input
+		boolean right = (this.input.isKeyDown(Input.KEY_RIGHT) || this.input
 				.isKeyDown(Input.KEY_D));
-		boolean left = (input.isKeyDown(Input.KEY_LEFT) || input
+		boolean left = (this.input.isKeyDown(Input.KEY_LEFT) || this.input
 				.isKeyDown(Input.KEY_A));
-		boolean up = (input.isKeyDown(Input.KEY_UP) || input
+		boolean up = (this.input.isKeyDown(Input.KEY_UP) || this.input
 				.isKeyDown(Input.KEY_W));
-		boolean down = (input.isKeyDown(Input.KEY_DOWN) || input
+		boolean down = (this.input.isKeyDown(Input.KEY_DOWN) || this.input
 				.isKeyDown(Input.KEY_S));
 
 		if (left && !right)
-			vel.x += -dv * delta;
+			this.vel.x += -this.dv * delta;
 		else if (right && !left)
-			vel.x += dv * delta;
+			this.vel.x += this.dv * delta;
 
 		if (up && !down)
-			vel.y += -dv * delta;
+			this.vel.y += -this.dv * delta;
 		else if (down && !up)
-			vel.y += dv * delta;
+			this.vel.y += this.dv * delta;
 
-		float velocity = vel.length();
-		if (velocity > mv)
-			vel.normalise().scale(mv);
+		float velocity = this.vel.length();
+		if (velocity > this.mv)
+			this.vel.normalise().scale(this.mv);
 
-		if (input.isKeyDown(Input.KEY_SPACE)) {
-			vel.scale(0.95f);
+		if (this.input.isKeyDown(Input.KEY_SPACE)) {
+			this.vel.scale(0.95f);
 		}
 
-		if (!prevE && input.isKeyDown(Input.KEY_E)) {
-			weps.current_weapon = (int) MathU.loop(weps.current_weapon + 1,
-					0, weps.weapons.length - 1);
+		if (!this.prevE && this.input.isKeyDown(Input.KEY_E)) {
+			this.weps.current_weapon = (int) MathU.loop(
+					this.weps.current_weapon + 1, 0,
+					this.weps.weapons.length - 1);
 		}
-		if (!prevQ && input.isKeyDown(Input.KEY_Q)) {
-			weps.current_weapon = (int) MathU.loop(weps.current_weapon - 1,
-					0, weps.weapons.length - 1);
+		if (!this.prevQ && this.input.isKeyDown(Input.KEY_Q)) {
+			this.weps.current_weapon = (int) MathU.loop(
+					this.weps.current_weapon - 1, 0,
+					this.weps.weapons.length - 1);
 		}
 
-		prevQ = input.isKeyDown(Input.KEY_Q);
-		prevE = input.isKeyDown(Input.KEY_E);
+		this.prevQ = this.input.isKeyDown(Input.KEY_Q);
+		this.prevE = this.input.isKeyDown(Input.KEY_E);
 	}
 
 	@Override

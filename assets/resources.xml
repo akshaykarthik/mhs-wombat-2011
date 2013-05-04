@@ -17,13 +17,13 @@
 		<image key="player_2" file="player_2.png"/>
 	</group>
 	<group name="images/powerups">
-		<image key="powerup_weapon_up" file="powerups/red_star_1.png"/>				
+		<image key="powerup_weapon_up" file="powerups/red_star_1.png"/>
 	</group>
-
 	<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>
+	<image key="weps_missile" file="weps/missile.png"/>
+	<image key="weps_tiny_circle" file="weps/tiny_circle.png"/>
 	<sheet key="weps_bomb" file="weps/bomb.png" width="32" height="32"/>
 	<sheet key="monsters_circle" file="monsters/circle_monster.png" width="32" height="32"/>
-
 	<group name="fonts">
 		<unicodefont key="font20" file="fonts/AliquamREG.ttf" fontSize="20" />
 		<unicodefont key="font40" file="fonts/AliquamREG.ttf" fontSize="40" />

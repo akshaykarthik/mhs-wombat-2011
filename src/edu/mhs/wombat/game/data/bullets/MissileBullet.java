@@ -1,9 +1,10 @@
 package edu.mhs.wombat.game.data.bullets;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
+import org.newdawn.slick.geom.Transform;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,24 +13,30 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 
-public class WobblyBullet extends Bullet {
+public class MissileBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
+	private Vector2f accel;
 	private EntityState state;
-	//
-	private float time = 0;
-	private float wobble = 500;
-	private float reset = 1000;
+	private static Image image;
+	private Rectangle shape;
 
-	private Circle shape = new Circle(0, 0, 4);
+	public MissileBullet(Vector2f source, Vector2f target, float ivel,
+			float iaccel) {
+		if (image == null) {
+			image = ResourceManager.getImage("weps_missile");
+			image.setCenterOfRotation(image.getWidth() / 2,
+					image.getHeight() / 2);
+		}
 
-	public WobblyBullet(Vector2f source, Vector2f target, float velocity) {
+		shape = new Rectangle(source.x, source.y, 28, 14);
+
 		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
-		vel.add(10);
-		state = EntityState.ALIVE;
+		Vector2f target_vel = target.copy().sub(pos.copy()).normalise();
+		vel = target_vel.copy().normalise().scale(ivel);
+		accel = target_vel.scale(iaccel);
 	}
 
 	@Override
@@ -50,29 +57,21 @@ public class WobblyBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		time += 1000 / delta;
-
 		pos = pos.add(vel);
-		if (time < wobble) {
-			vel = vel.add(delta/100);
-		} else if (time < reset) {
-			vel.sub(delta/100);
-		} else {
-			time = 0;
-		}
-		
-
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
+		vel = vel.add(accel);
 		if (!Globals.isInField(pos))
 			state = EntityState.DEAD;
+
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(Color.red);
-		g.draw(shape);
-		g.setColor(Color.white);
+		image.setRotation((float) vel.getTheta());
+		shape.setCenterX(pos.x);
+		shape.setCenterY(pos.y);
+		if (Globals.isInField(pos))
+			image.drawCentered(pos.x, pos.y);
+
 	}
 
 	@Override
@@ -98,12 +97,12 @@ public class WobblyBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 5;
+		return 10;
 	}
 
 	@Override
 	public void close(GameStatus gs) {
-		
+
 	}
 
 }

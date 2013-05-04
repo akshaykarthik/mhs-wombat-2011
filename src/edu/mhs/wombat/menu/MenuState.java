@@ -21,11 +21,11 @@ public class MenuState extends BasicGameState {
 
 	private int current_selection = 0;
 	private MenuOption[] options = { // Menu options
-			new MenuOption("Play", 160, 200), //0
-			new MenuOption("Options", 160, 300),//1
-			new MenuOption("Credits", 160, 400),//2
-			new MenuOption("High Scores", 160, 500),//3
-			new MenuOption("Quit", 160, 600) };//4
+	new MenuOption("Play", 160, 200), // 0
+			new MenuOption("Options", 160, 300),// 1
+			new MenuOption("Credits", 160, 400),// 2
+			new MenuOption("High Scores", 160, 500),// 3
+			new MenuOption("Quit", 160, 600) };// 4
 
 	private class MenuOption {
 		public String name;
@@ -95,11 +95,11 @@ public class MenuState extends BasicGameState {
 		if (key == Input.KEY_5) {
 			StateUtils.switchTo(gm, States.VICTORY);
 		}
-		
+
 		if (key == Input.KEY_6) {
 			StateUtils.switchTo(gm, States.HIGHSCORE);
 		}
-		
+
 		if (key == Input.KEY_RIGHT || key == Input.KEY_DOWN) {
 			current_selection++;
 		}
@@ -116,7 +116,7 @@ public class MenuState extends BasicGameState {
 		if (key == Input.KEY_ENTER) {
 			switch (current_selection) {
 			case 0:
-				StateUtils.switchTo(gm,  States.GAME);
+				StateUtils.switchTo(gm, States.GAME);
 				break;
 			case 1:
 				StateUtils.switchTo(gm, States.OPTIONS);
@@ -125,7 +125,7 @@ public class MenuState extends BasicGameState {
 				StateUtils.switchTo(gm, States.CREDITS);
 				break;
 			case 3:
-				StateUtils.switchTo(gm,  States.HIGHSCORE);
+				StateUtils.switchTo(gm, States.HIGHSCORE);
 				break;
 			case 4:
 				gc.exit();

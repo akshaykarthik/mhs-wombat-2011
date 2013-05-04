@@ -9,8 +9,7 @@ public class Weapon_TimedSplitter extends Weapon {
 	public void fire(GameStatus gs) {
 		super.fire(gs);
 		if (canFire)
-			gs.addEntity(new TimeBombBullet(gs.player.pos,
-					getMousePos(), 10f));
+			gs.addEntity(new TimeBombBullet(gs.player.pos, getMousePos(), 10f));
 	}
 
 	@Override

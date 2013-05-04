@@ -28,7 +28,5 @@ public class Camera {
 	public static void postDraw(Graphics g, GameStatus gs) {
 		g.translate(-x, -y);
 	}
-	
-	
 
 }

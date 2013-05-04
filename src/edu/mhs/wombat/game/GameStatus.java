@@ -21,7 +21,7 @@ public class GameStatus {
 	public GameStatus() {
 		player = new Player();
 		player.init(this);
-		
+
 		scores = new HighScoreSystem();
 		entities = new ArrayList<Entity>();
 		markForAdd = new ArrayList<Entity>();
@@ -63,7 +63,6 @@ public class GameStatus {
 		}
 		markForRemove.clear();
 
-		
 	}
 
 	public void render(StateBasedGame game, Graphics g) {

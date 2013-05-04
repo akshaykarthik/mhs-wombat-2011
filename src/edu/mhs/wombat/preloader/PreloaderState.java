@@ -39,7 +39,7 @@ public class PreloaderState extends BasicGameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		background = new Image("assets/background_1.png");
 		UnicodeFont unicodeFont = new UnicodeFont(
 				"assets/fonts/AliquamREG.ttf", 60, false, false);
@@ -49,8 +49,8 @@ public class PreloaderState extends BasicGameState {
 		unicodeFont.setDisplayListCaching(true);
 
 		font = unicodeFont;
-		unicodeFont = new UnicodeFont(
-				"assets/fonts/AliquamREG.ttf", 40, false, false);
+		unicodeFont = new UnicodeFont("assets/fonts/AliquamREG.ttf", 40, false,
+				false);
 		unicodeFont.getEffects().add(new ColorEffect());
 		unicodeFont.addAsciiGlyphs();
 		unicodeFont.loadGlyphs();
@@ -69,28 +69,27 @@ public class PreloaderState extends BasicGameState {
 		g.drawRoundRect(100, 500, Globals.WIDTH - 200, 10, 10);
 		g.fillRoundRect(100, 500, (Globals.WIDTH - 200) * percent, 10, 10);
 		g.setColor(Color.red);
-		g.fillArc(98, 450, 100, 100, 0, 360*percent);
+		g.fillArc(98, 450, 100, 100, 0, 360 * percent);
 		g.setColor(Color.white);
-		g.drawArc(99, 450, 99, 99, 0, 360*percent);
+		g.drawArc(99, 450, 99, 99, 0, 360 * percent);
 
-		
 	}
-	
+
 	private float timer = 0.0f;
-	
+
 	@Override
 	public void update(GameContainer gc, StateBasedGame gm, int delta)
 			throws SlickException {
 		isComplete = percent >= 1.0 && timer > 500f;
-		
-		if(percent >= 1.0)
+
+		if (percent >= 1.0)
 			timer += delta;
-		
+
 		percent = (numResources - loader.remainingElements()) / numResources;
 
 		if (isComplete) {
 			StateUtils.switchToNoTransition(gm, States.MENU);
-		} else {	
+		} else {
 			description = loader.loadNext();
 		}
 	}

@@ -22,18 +22,20 @@ public class ResourceManager {
 	private static final Map<String, Font> fonts = new HashMap<String, Font>();
 	private static final Map<String, String> parameters = new HashMap<String, String>();
 
-    public static XMLResourceLoader loadResources(String ref) throws IOException {
-        return loadResources(ResourceLoader.getResourceAsStream(ref));
-    }
+	public static XMLResourceLoader loadResources(String ref)
+			throws IOException {
+		return loadResources(ResourceLoader.getResourceAsStream(ref));
+	}
 
-    /**
-     * @see it.marteEngine.XMLResourceLoader
-     */
-    public static XMLResourceLoader loadResources(InputStream in) throws IOException {
-        XMLResourceLoader resourceLoader = new XMLResourceLoader();
-        resourceLoader.load(in);
-        return resourceLoader;
-    }
+	/**
+	 * @see it.marteEngine.XMLResourceLoader
+	 */
+	public static XMLResourceLoader loadResources(InputStream in)
+			throws IOException {
+		XMLResourceLoader resourceLoader = new XMLResourceLoader();
+		resourceLoader.load(in);
+		return resourceLoader;
+	}
 
 	public static void addImage(String key, Image image) {
 		if (hasImage(key)) {
