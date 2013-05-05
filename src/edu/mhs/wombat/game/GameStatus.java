@@ -9,6 +9,7 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.QuadGrid;
 import edu.mhs.wombat.utils.data.HighScoreSystem;
 
 public class GameStatus {
@@ -17,6 +18,8 @@ public class GameStatus {
 	public HighScoreSystem scores;
 	private ArrayList<Entity> markForAdd;
 	private ArrayList<Entity> markForRemove;
+	private QuadGrid baseGrid;
+	private ArrayList<QuadGrid> grids;
 
 	public GameStatus() {
 		player = new Player();
@@ -26,6 +29,8 @@ public class GameStatus {
 		entities = new ArrayList<Entity>();
 		markForAdd = new ArrayList<Entity>();
 		markForRemove = new ArrayList<Entity>();
+		
+		QuadGrid baseGrid = new QuadGrid(Globals.Arena_Size, this);
 	}
 
 	public void addEntity(Entity ei) {
@@ -36,11 +41,24 @@ public class GameStatus {
 		player.update(game, this, delta);
 
 		// collision updates
+		
+		
+		//grids.addAll(baseGrid.subdivideN(4));
+		
 		for (Entity a : entities) {
 			a.update(game, this, delta);
 			if (a.getState() == EntityState.DEAD) {
 				markForRemove.add(a);
 			}
+		/*	for(QuadGrid aGrid: grids){
+				aGrid.addEntities(entities);
+				for(Entity b: aGrid.getEntities()){
+					if(a != b && a.getHitBox().intersects(b.getHitBox())){
+						a.collideWith(b);
+					}
+				}
+			}*/
+			
 
 			for (Entity b : entities) {
 				if (a != b && a.getHitBox().intersects(b.getHitBox())) {

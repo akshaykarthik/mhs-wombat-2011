@@ -28,7 +28,7 @@ public class CurveBullet extends Bullet {
 		pos = source.copy();
 		Vector2f norm = target.copy().sub(pos.copy());
 		vel = norm.normalise().scale(velocity);
-		vel.sub(49);
+		vel.sub(83);
 		state = EntityState.ALIVE;
 	}
 

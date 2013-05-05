@@ -18,7 +18,7 @@ public class Weapon_Mine extends Weapon {
 
 	@Override
 	public float getAttackCD() {
-		return 10;
+		return 500;
 	}
 
 	@Override
