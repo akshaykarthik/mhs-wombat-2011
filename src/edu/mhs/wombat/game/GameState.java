@@ -1,6 +1,5 @@
 package edu.mhs.wombat.game;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,45 +9,43 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
-import edu.mhs.wombat.game.data.monsters.SlowChaserMonster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
-import edu.mhs.wombat.utils.effects.Starfield;
 
 public class GameState extends BasicGameState {
 	private StateBasedGame gm;
-	private Starfield bg;
 	private GameStatus gs;
-	private HUDSystem hs = new HUDSystem();
+	private final HUDSystem hs = new HUDSystem();
 	private boolean paused = false;
 	private boolean firstTime = true;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		gm = game;
-		gs = new GameStatus();
+		this.gm = game;
+		this.gs = new GameStatus();
 
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		if (firstTime) {
-			bg = new Starfield(-10, -10);
+		if (this.firstTime) {
 			int NUMTEST = 100;
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
 				for (int j = 0; j < sqrtNumTest; j++) {
-					gs.addEntity(new RandomWalkerMonster(i
+					this.gs.addEntity(new RandomWalkerMonster(i
 							* Globals.ARENA_WIDTH / sqrtNumTest, j
 							* Globals.ARENA_HEIGHT / sqrtNumTest));
 				}
 			}
-			firstTime = false;
+			this.firstTime = false;
 		}
 
 	}
 
+	@Override
 	public void leave(GameContainer container, StateBasedGame game) {
 
 	}
@@ -56,20 +53,29 @@ public class GameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setAntiAlias(false);
+		g.setAntiAlias(!Globals.GAME_DEBUG);
 
 		// draw with camera
-		Camera.preDraw(g, gs);
-		if (Globals.GAME_DEBUG)
-			g.drawImage(ResourceManager.getImage("debug_grid"), 0, 0);
-		g.drawRect(0, 0, Globals.ARENA_WIDTH, Globals.ARENA_HEIGHT);
-		bg.render(g);
-		gs.render(game, g);
-		hs.camRender(game, gs, g);
-		Camera.postDraw(g, gs);
-		hs.render(game, gs, g);
+		Camera.preDraw(g, this.gs);
 
-		if (paused)
+		g.drawImage(ResourceManager.getImage("background2"), -25, -15);
+
+		// camera debugging
+		if (Globals.GAME_DEBUG)
+			this.hs.debugCamRender(game, this.gs, g);
+
+		this.gs.render(game, g);
+		this.hs.camRender(game, this.gs, g);
+
+		Camera.postDraw(g, this.gs);
+		this.hs.render(game, this.gs, g);
+
+		// non-camera debugging
+		if (Globals.GAME_DEBUG)
+			this.hs.debugRender(game, this.gs, g);
+
+		// pause screen
+		if (this.paused)
 			g.drawImage(ResourceManager.getImage("pause_screen"), 0, 0);
 
 	}
@@ -77,51 +83,54 @@ public class GameState extends BasicGameState {
 	@Override
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
-		hs.update(game, gs, delta);
-		if (!paused)
-			gs.update(game, delta);
+		this.hs.update(game, this.gs, delta);
+		if (!this.paused)
+			this.gs.update(game, delta);
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			if (paused)
-				StateUtils.switchTo(gm, States.MENU);
+			if (this.paused)
+				StateUtils.switchTo(this.gm, States.MENU);
 			else
-				pause();
+				this.pause();
 		}
-		if (paused && key != Input.KEY_ESCAPE) {
-			resume();
+		if (this.paused && key != Input.KEY_ESCAPE) {
+			this.resume();
 		}
 
 		if (key == Input.KEY_F1) {
 			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
 		}
 
+		if (key == Input.KEY_F6) {
+			this.gs.player.energy -= 10;
+		}
+
 		if (key == Input.KEY_F8) {
-			gs.player.health += 10;
+			this.gs.player.health += 10;
 		}
 		if (key == Input.KEY_F7) {
-			gs.player.health -= 10;
+			this.gs.player.health -= 10;
 		}
 
 		if (key == Input.KEY_F12) {
-			gs.entities.clear();
+			this.gs.entities.clear();
 		}
 		if (key == Input.KEY_F11) {
 			for (int i = 0; i < 100; i++) {
-				gs.addEntity(new RandomWalkerMonster(150, 150));
+				this.gs.addEntity(new RandomWalkerMonster(150, 150));
 			}
 		}
 	}
 
 	public void pause() {
-		paused = true;
-		bg.pause();
+		this.paused = true;
 	}
 
 	public void resume() {
-		paused = false;
-		bg.resume();
+		this.paused = false;
 	}
 
 	@Override

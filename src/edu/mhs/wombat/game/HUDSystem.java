@@ -15,7 +15,6 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class HUDSystem {
 
-	// #constants
 	private static final int _timerWidth = 30;
 	private static final int _timerHeight = 4;
 
@@ -44,23 +43,10 @@ public class HUDSystem {
 
 	}
 
-	public void camRender(StateBasedGame game, GameStatus gs, Graphics g) {
-		this.drawAttackTimer(gs, g);
-		if (Globals.GAME_DEBUG) {
-			Shape shape = gs.player.shape;
-			Vector2f pos = gs.player.pos;
-			Vector2f vel = gs.player.vel;
-			g.setColor(Color.red);
-			g.drawLine(pos.x, pos.y, pos.x + vel.x * 10, pos.y + vel.y * 10);
-			g.setColor(Color.white);
-		}
-
-	}
-
 	private void drawEnergyBarPlayer(GameStatus gs, Graphics g) {
 		float percent = (gs.player.energy / gs.player.maxEnergy);
-		Shape energyFill = new Rectangle(energyX, 1 + energyY + (1 - percent)
-				* energyH, energyW - 1, energyH * percent - 1);
+		Rectangle energyFill = new Rectangle(energyX, 1 + energyY
+				+ (1 - percent) * energyH, energyW - 1, energyH * percent - 1);
 		g.draw(energyBorder);
 		g.fill(energyFill, Egradient);
 	}
@@ -85,6 +71,25 @@ public class HUDSystem {
 		g.drawRect(timerX, timerY, _timerWidth, _timerHeight);
 	}
 
+	public void debugRender(StateBasedGame game, GameStatus gs, Graphics g) {
+		g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
+	}
+
+	public void debugCamRender(StateBasedGame game, GameStatus gs, Graphics g) {
+		// draw debug grid and arena border
+		g.drawImage(ResourceManager.getImage("debug_grid"), 0, 0);
+		g.drawRect(0, 0, Globals.ARENA_WIDTH, Globals.ARENA_HEIGHT);
+
+		// draw player velocity
+		Vector2f pos = gs.player.pos;
+		Vector2f vel = gs.player.vel;
+		g.setColor(Color.red);
+		g.drawLine(pos.x, pos.y, pos.x + vel.x * 10, pos.y + vel.y * 10);
+		g.setColor(Color.white);
+
+		// draw horiz/vert lines\
+	}
+
 	public void render(StateBasedGame game, GameStatus gs, Graphics g) {
 		g.setFont(ResourceManager.getFont("font20"));
 		g.drawString("score : " + gs.scores.getScore(), 10, 70);
@@ -92,9 +97,12 @@ public class HUDSystem {
 		g.drawString("weapon : " + gs.player.weps.getName(), 10, 110);
 		this.drawHealthBarPlayer(gs, g);
 		this.drawEnergyBarPlayer(gs, g);
-		if (Globals.GAME_DEBUG) {
-			g.drawString("EntityCount : " + gs.entities.size(), 10, 50);
-		}
+
+	}
+
+	public void camRender(StateBasedGame game, GameStatus gs, Graphics g) {
+		this.drawAttackTimer(gs, g);
+
 	}
 
 	public void close() {

@@ -5,6 +5,7 @@
 	<group name="images/common">
 		<image key="logo" file="logo_1.png"/>
 		<image key="background1" file="background_1.png"/>
+		<image key="background2" file="background_2.png"/>
 		<image key="background_victory" file="background_1.png"/>
 		<image key="background_defeat" file="background_1.png"/>
 		<image key="transition_door" file="transition_door_1.png"/>
@@ -23,6 +24,7 @@
 	<image key="weps_missile" file="weps/missile.png"/>
 	<image key="weps_tiny_circle" file="weps/tiny_circle.png"/>
 	<sheet key="weps_bomb" file="weps/bomb.png" width="32" height="32"/>
+	<image key="weps_piercing" file="weps/piercing.png"/>
 	<sheet key="monsters_circle" file="monsters/circle_monster.png" width="32" height="32"/>
 	<group name="fonts">
 		<unicodefont key="font20" file="fonts/AliquamREG.ttf" fontSize="20" />

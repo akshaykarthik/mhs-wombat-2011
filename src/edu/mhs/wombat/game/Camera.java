@@ -7,6 +7,7 @@ import edu.mhs.wombat.utils.Globals;
 
 public class Camera {
 
+	private static final float velsf = 12.5f;
 	private static float x = 0;
 	private static float y = 0;
 
@@ -19,8 +20,11 @@ public class Camera {
 	}
 
 	public static void preDraw(Graphics g, GameStatus gs) {
-		x = -gs.player.pos.x + Globals.WIDTH / 2; // player is now center
-		y = -gs.player.pos.y + Globals.HEIGHT / 2;
+		x = (-gs.player.pos.x - gs.player.vel.x * velsf) + Globals.WIDTH / 2; // player
+		// is
+		// now
+		// center
+		y = (-gs.player.pos.y - gs.player.vel.y * velsf) + Globals.HEIGHT / 2;
 		g.translate(x, y);
 
 	}
