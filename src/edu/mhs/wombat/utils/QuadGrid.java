@@ -96,6 +96,7 @@ public class QuadGrid {
 		} else if (n == 0) {
 			this.subdivide();
 			grids.addAll(getSubdivisions());
+			return grids;
 		}
 		return grids;
 
