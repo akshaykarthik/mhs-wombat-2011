@@ -13,6 +13,8 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.bullets.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
+import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 
 public class SmallExplosion extends Bullet {
 
@@ -25,10 +27,21 @@ public class SmallExplosion extends Bullet {
 	private Circle hitbox;
 
 	private float time = 0;
-	private final float wobble = 500;
-	private final float reset = 1000;
+
+	private float wobble = 500;
+	private float reset = 1000;
+	
+	private static Image[] images = new Image[10];
+
 
 	public SmallExplosion(Vector2f pos) {
+		
+		if(images[0] == null){
+			for(int i = 0; i < images.length; i++){
+				images[i] = ResourceManager.getSpriteSheet("expl_mine").getSubImage(i, 0);
+			}
+		}
+		
 		this.pos = pos.copy();
 		this.hitbox = new Circle(pos.x, pos.y, 10);
 	}
@@ -50,20 +63,37 @@ public class SmallExplosion extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.time += delta;
-		if (this.time > this.reset)
-			this.setState(EntityState.DEAD);
 
-		this.hitbox = new Circle(this.pos.x, this.pos.y,
-				(float) (100 * Math.sin((Math.PI * this.time) / (1000f))));
-		System.out.println(this.hitbox.radius);
+		time += delta;
+		float tenth = reset / images.length;
+		if (time > reset){
+			setState(EntityState.DEAD);
+		} 
+		
+		for(int i = 0; i < images.length; i++){
+			if(time > (i+1)*tenth && i+1 < images.length){
+				image = images[i+1];
+			} else if (time < tenth){
+				image = images[0];
+			}
+		}
+		
+		hitbox = new Circle(pos.x, pos.y,
+				(float) (100 * Math.sin((Math.PI * time) / (1000f))));
+		System.out.println(hitbox.radius);
+
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(new Color((float) Math.random(), (float) Math.random(),
-				(float) Math.random(), 1f));
-		g.fill(this.hitbox);
+
+//		g.setColor(new Color((float) Math.random(), (float) Math.random(),
+//				(float) Math.random(), 1f));
+//		g.fill(hitbox);
+		if(Globals.isInField(pos)){
+			image.drawCentered(pos.x, pos.y);
+		}
+
 		g.setColor(Color.white);
 	}
 
