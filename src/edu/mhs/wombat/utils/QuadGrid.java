@@ -9,7 +9,7 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 
 public class QuadGrid {
-	
+
 	private GameStatus gs;
 	private Rectangle bounds;
 
@@ -37,6 +37,11 @@ public class QuadGrid {
 		}
 	}
 
+	public void removeEntities() {
+		entities.clear();
+
+	}
+
 	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
@@ -49,17 +54,17 @@ public class QuadGrid {
 		grids.add(botR);
 		return grids;
 	}
-	
-	public ArrayList<QuadGrid> getPlayerGrid(){
+
+	public ArrayList<QuadGrid> getPlayerGrid() {
 		ArrayList<QuadGrid> grids = new ArrayList<QuadGrid>();
-		for(QuadGrid a : getSubdivisions()){
-			if(a.bounds.intersects(gs.player.getHitBox())){
+		for (QuadGrid a : getSubdivisions()) {
+			if (a.bounds.intersects(gs.player.getHitBox())) {
 				grids.add(a);
 			}
 		}
 		return grids;
 	}
-	
+
 	public void subdivide() {
 		Vector2f halfSize = new Vector2f(
 				(bounds.getMaxX() - bounds.getMinX()) / 2,
@@ -80,7 +85,7 @@ public class QuadGrid {
 				(bounds.getMaxX() - bounds.getMinX()) / 2,
 				(bounds.getMaxY() - bounds.getMinY()) / 2);
 		Vector2f minXY = new Vector2f(bounds.getMinX(), bounds.getMinY());
-		
+
 		topL = new QuadGrid(minXY, halfSize, gs);
 		topR = new QuadGrid(new Vector2f(minXY.x + halfSize.x, minXY.y),
 				halfSize, gs);
@@ -88,12 +93,12 @@ public class QuadGrid {
 				halfSize, gs);
 		botR = new QuadGrid(minXY.add(halfSize), halfSize, gs);
 
-		if (n > 0) {
+		if (n > 1) {
 			topL.subdivideN(n - 1);
 			topR.subdivideN(n - 1);
 			botL.subdivideN(n - 1);
 			botR.subdivideN(n - 1);
-		} else if (n == 0) {
+		} else if (n == 1) {
 			this.subdivide();
 			grids.addAll(getSubdivisions());
 			return grids;
