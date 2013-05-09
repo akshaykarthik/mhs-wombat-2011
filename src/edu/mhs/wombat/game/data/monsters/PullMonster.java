@@ -1,5 +1,6 @@
 package edu.mhs.wombat.game.data.monsters;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
@@ -19,6 +20,7 @@ import edu.mhs.wombat.utils.ResourceManager;
 public class PullMonster extends Monster {
 	private static Image image;
 	private final Shape hitbox;
+	private final Circle pullCircle;
 
 	public Vector2f pos;
 	public Vector2f vel;
@@ -27,8 +29,12 @@ public class PullMonster extends Monster {
 
 	public float playerDist;
 	public float pullSpeed = .15f;
-	public final float scalePullRadius = 3f;
-	public float pullRadius;
+	public float pullRadius = 100f;
+	public float basePullRadius = 50f;
+
+	private Vector2f scaling = new Vector2f(0, 0);
+	private Vector2f playerPos = new Vector2f(0, 0);
+	private boolean player_in_range;
 
 	public PullMonster(float ix, float iy) {
 
@@ -42,15 +48,15 @@ public class PullMonster extends Monster {
 		this.health = 30;
 
 		if (image == null) {
-			image = ResourceManager.getSpriteSheet("monsters_circle") // CHANGE
-																		// THIS
+			image = ResourceManager.getSpriteSheet("monsters_circle")
 					.getSubImage(4, 0).getScaledCopy(1.25f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
 
-		pullRadius = maxHealth / scalePullRadius + 100;
+		this.pullCircle = new Circle(this.pos.x, this.pos.y, this.pullRadius
+				+ this.basePullRadius);
 	}
 
 	@Override
@@ -70,11 +76,27 @@ public class PullMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pullRadius = this.health / scalePullRadius + 100;
+		this.playerPos = gs.player.pos.copy();
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+		this.pullCircle.setCenterX(this.pos.x);
+		this.pullCircle.setCenterY(this.pos.y);
+
+		this.pullCircle.setRadius(this.pullRadius
+				* (this.health / this.maxHealth) + this.basePullRadius);
+
+		this.pullSpeed = 0.15f * (gs.player.pos.distance(this.pos) / this.pullRadius);
 		Vector2f distance = gs.player.pos.copy().sub(this.pos.copy());
-		playerDist = (float) Math.sqrt(Math.pow(distance.x, 2)
-				+ Math.pow(distance.y, 2));
-		Vector2f scaling = distance.normalise().scale(pullSpeed);
+		this.scaling = distance.normalise().scale(this.pullSpeed);
+
+		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise()
+				.scale(0.2f);
+
+		this.player_in_range = gs.player.shape.intersects(this.pullCircle);
+
+		if (this.player_in_range) {
+			gs.player.vel = gs.player.vel.copy().sub(this.scaling);
+		}
 
 		switch (this.state) {
 		case ALIVE:
@@ -82,7 +104,7 @@ public class PullMonster extends Monster {
 		case DEAD:
 			break;
 		case DYING:
-			pullSpeed = pullSpeed / 2;
+			this.pullSpeed = this.pullSpeed / 2;
 			break;
 		case SPAWNING:
 			break;
@@ -90,11 +112,6 @@ public class PullMonster extends Monster {
 			break;
 		default:
 			break;
-		}
-
-		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise().scale(0.2f);
-		if (playerDist < pullRadius) {
-			gs.player.vel = gs.player.vel.copy().sub(scaling);
 		}
 
 		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
@@ -108,9 +125,6 @@ public class PullMonster extends Monster {
 
 		this.pos = this.pos.add(this.vel);
 
-		this.hitbox.setCenterX(this.pos.x);
-		this.hitbox.setCenterY(this.pos.y);
-
 		if (this.vel.length() > this.maxvel)
 			this.vel.normalise().scale(this.maxvel);
 	}
@@ -123,6 +137,12 @@ public class PullMonster extends Monster {
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		image.drawCentered(this.pos.x, this.pos.y);
+		g.setColor(new Color(1f, 1f, 1f, 0.4f));
+		g.draw(this.pullCircle);
+		if (this.player_in_range)
+			g.drawLine(this.pos.x, this.pos.y, this.playerPos.x,
+					this.playerPos.y);
+		g.setColor(Color.white);
 	}
 
 	@Override
