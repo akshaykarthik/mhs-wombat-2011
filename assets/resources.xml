@@ -21,6 +21,7 @@
 		<image key="powerup_weapon_up" file="powerups/red_star_1.png"/>
 	</group>
 	<image key="weps_tiny_bullet" file="weps/tiny_bullet.png"/>
+	<image key="weps_mine" file="weps/tiny_bullet.png"/>
 	<image key="weps_missile" file="weps/missile.png"/>
 	<image key="weps_tiny_circle" file="weps/tiny_circle.png"/>
 	<sheet key="weps_bomb" file="weps/bomb.png" width="32" height="32"/>

@@ -11,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.explosions.SmallExplosion;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -27,7 +28,7 @@ public class MineBullet extends Bullet {
 
 	public MineBullet(Vector2f source) {
 		if (image == null) {
-			image = ResourceManager.getImage("weps_mine_1");
+			image = ResourceManager.getImage("weps_mine");
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
@@ -61,6 +62,7 @@ public class MineBullet extends Bullet {
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);
 		if (this.state == EntityState.DYING) {
+			gs.addEntity(new SmallExplosion(this.pos));
 			this.state = EntityState.DEAD;
 		}
 
@@ -84,8 +86,9 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public void collideWith(Entity b) {
-		if (!(b instanceof Bullet))
+		if (!(b instanceof Bullet)){
 			this.state = EntityState.DYING;
+		}
 	}
 
 	@Override
