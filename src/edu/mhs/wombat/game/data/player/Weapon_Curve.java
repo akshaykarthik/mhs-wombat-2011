@@ -14,7 +14,7 @@ public class Weapon_Curve extends Weapon {
 
 	@Override
 	public float getAttackCD() {
-		return 50;
+		return 150;
 	}
 
 	@Override

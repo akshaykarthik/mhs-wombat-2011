@@ -76,9 +76,9 @@ public class LinearBullet extends Bullet {
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
 		image.setRotation((float) this.vel.getTheta());
-		if (Globals.isInField(this.pos))
+		if (Globals.isInField(this.pos)){
 			image.drawCentered(this.pos.x, this.pos.y);
-
+		}
 		g.setColor(Color.white);
 	}
 

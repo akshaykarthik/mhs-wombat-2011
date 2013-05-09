@@ -1,8 +1,8 @@
 package edu.mhs.wombat.game.data.bullets;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -12,20 +12,30 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.ResourceManager;
 
 public class CurveBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
 	private EntityState state;
 
+	private static Image image;
+	private final Shape hitbox;
+
 	private float damage = 5;
 	private float time = 0;
 	private final float wobble = 500;
 	private final float reset = 1000;
-	private final Circle shape = new Circle(0, 0, 4);
 
 	public CurveBullet(Vector2f source, Vector2f target, float velocity) {
+		if (image == null) {
+			image = ResourceManager.getImage("weps_curve_bullet");
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
+		}
+		this.hitbox = new Rectangle(source.x, source.y, 30, 10);
 		this.pos = source.copy();
+
 		Vector2f norm = target.copy().sub(this.pos.copy());
 		this.vel = norm.normalise().scale(velocity);
 		this.vel.sub(83);
@@ -68,22 +78,23 @@ public class CurveBullet extends Bullet {
 			this.time = 0;
 		}
 
-		this.shape.setCenterX(this.pos.x);
-		this.shape.setCenterY(this.pos.y);
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(Color.red);
-		g.draw(this.shape);
-		g.setColor(Color.white);
+		image.setRotation((float) this.vel.getTheta());
+		if (Globals.isInField(this.pos)) {
+			this.image.drawCentered(this.pos.x, this.pos.y);
+		}
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return this.shape;
+		return this.hitbox;
 	}
 
 	@Override
