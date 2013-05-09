@@ -18,7 +18,7 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class RandomWalkerMonster extends Monster {
 	private static Image image;
-	private Shape hitbox;
+	private final Shape hitbox;
 
 	public Vector2f pos;
 	public Vector2f vel;
@@ -26,16 +26,20 @@ public class RandomWalkerMonster extends Monster {
 	public float maxvel = 2;
 
 	public RandomWalkerMonster(float ix, float iy) {
-		state = EntityState.ALIVE;
-		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(0, 0);
+
+		this.collideDoDamage = 0.5f;
+		this.collideTakeDamage = this.health;
+
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(ix, iy);
+		this.vel = new Vector2f(0, 0);
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
 					.getSubImage(3, 0).getScaledCopy(0.5f);
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
 		}
-		hitbox = new Circle(pos.x, pos.y, image.getWidth() / 2f);
+		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
 	}
 
 	@Override
@@ -55,34 +59,34 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
-		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
-		pos = pos.add(vel);
+		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -1.0 : 1.0)));
+		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -1.0 : 1.0)));
+		this.pos = this.pos.add(this.vel);
 
-		if (!MathU.inBounds(pos.x, 0, Globals.ARENA_WIDTH))
-			vel.x *= -1;
+		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
+			this.vel.x *= -1;
 
-		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
-			vel.y *= -1;
+		if (!MathU.inBounds(this.pos.y, 0, Globals.ARENA_WIDTH))
+			this.vel.y *= -1;
 
-		if (!Globals.isInField(pos))
+		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
 
-		hitbox.setCenterX(pos.x);
-		hitbox.setCenterY(pos.y);
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
 
-		if (vel.length() > maxvel)
-			vel.normalise().scale(maxvel);
+		if (this.vel.length() > this.maxvel)
+			this.vel.normalise().scale(this.maxvel);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		image.drawCentered(pos.x, pos.y);
+		image.drawCentered(this.pos.x, this.pos.y);
 	}
 
 	@Override
@@ -94,12 +98,12 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override
 	public void playerCollide(Player a) {
-		this.setState(EntityState.ALIVE);
+		this.takeDamage(this.collideTakeDamage);
 	}
 
 	@Override

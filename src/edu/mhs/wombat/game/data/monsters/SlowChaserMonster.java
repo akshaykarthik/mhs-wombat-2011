@@ -19,12 +19,12 @@ public class SlowChaserMonster extends Monster {
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	private Shape shape = new Polygon(new float[] { 0, 0, 4, 8, 8, 0 });
+	private final Shape shape = new Polygon(new float[] { 0, 0, 4, 8, 8, 0 });
 
 	public SlowChaserMonster(float ix, float iy) {
-		state = EntityState.ALIVE;
-		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(0, 0);
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(ix, iy);
+		this.vel = new Vector2f(0, 0);
 		this.maxHealth = 20;
 		this.health = 20;
 	}
@@ -46,7 +46,7 @@ public class SlowChaserMonster extends Monster {
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		float moveScale = 1;
-		switch (state) {
+		switch (this.state) {
 		case ALIVE:
 			moveScale = 1;
 			break;
@@ -62,33 +62,33 @@ public class SlowChaserMonster extends Monster {
 		default:
 			break;
 		}
-		vel = gs.player.pos.copy().sub(pos.copy()).normalise();
-		vel.x = ((float) (vel.x + (Math.random() < 0.5 ? -.50 : .50)));
-		vel.y = ((float) (vel.y + (Math.random() < 0.5 ? -.50 : .50)));
-		if (!MathU.inBounds(pos.x, 0, Globals.ARENA_WIDTH))
-			vel.x *= -1;
+		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise();
+		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.50 : .50)));
+		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.50 : .50)));
+		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
+			this.vel.x *= -1;
 
-		if (!MathU.inBounds(pos.y, 0, Globals.ARENA_WIDTH))
-			vel.y *= -1;
+		if (!MathU.inBounds(this.pos.y, 0, Globals.ARENA_WIDTH))
+			this.vel.y *= -1;
 
-		pos.add(vel.copy().scale(moveScale));
+		this.pos.add(this.vel.copy().scale(moveScale));
 
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
+		this.shape.setCenterX(this.pos.x);
+		this.shape.setCenterY(this.pos.y);
 
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return shape;
+		return this.shape;
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 
-		if (Globals.isInField(pos))
+		if (Globals.isInField(this.pos))
 			;
-		g.draw(shape);
+		g.draw(this.shape);
 	}
 
 	@Override
@@ -96,17 +96,16 @@ public class SlowChaserMonster extends Monster {
 		if (b instanceof Bullet) {
 			this.takeDamage(((Bullet) b).getDamage());
 		}
-		// this.setState(EntityState.DEAD);
 	}
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override
 	public void playerCollide(Player a) {
-
+		this.takeDamage(this.collideTakeDamage);
 	}
 
 	@Override

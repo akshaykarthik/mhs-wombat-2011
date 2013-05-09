@@ -14,6 +14,7 @@ import edu.mhs.wombat.game.Camera;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.monsters.Monster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -58,7 +59,9 @@ public class Player implements Entity {
 				this.weps.fire(gs);
 			}
 			float eps = 5;
+			float hps = 1;
 			this.energy += eps * (delta / 1000f);
+			this.health += hps * (delta / 1000f);
 			this.energy = MathU.clamp(this.energy, 0, this.maxEnergy);
 			this.health = MathU.clamp(this.health, 0, this.maxHealth);
 			break;
@@ -104,7 +107,9 @@ public class Player implements Entity {
 	}
 
 	public void collideWith(Entity b) {
-
+		if (b instanceof Monster) {
+			this.health -= ((Monster) b).collideDoDamage;
+		}
 	}
 
 	@Override

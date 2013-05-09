@@ -12,11 +12,13 @@ import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.data.HighScoreSystem;
 
 public class GameStatus {
+
 	public Player player;
 	public ArrayList<Entity> entities;
 	public HighScoreSystem scores;
 	private final ArrayList<Entity> markForAdd;
 	private final ArrayList<Entity> markForRemove;
+	private final LevelManager levelManager;
 
 	public GameStatus() {
 		this.player = new Player();
@@ -26,7 +28,7 @@ public class GameStatus {
 		this.entities = new ArrayList<Entity>();
 		this.markForAdd = new ArrayList<Entity>();
 		this.markForRemove = new ArrayList<Entity>();
-
+		this.levelManager = new LevelManager(this);
 	}
 
 	public void addEntity(Entity ei) {
@@ -35,6 +37,7 @@ public class GameStatus {
 
 	public void update(StateBasedGame game, int delta) {
 		this.player.update(game, this, delta);
+		this.levelManager.update(game, this, delta);
 		for (Entity a : this.entities) {
 			a.update(game, this, delta);
 			if (a.getState() == EntityState.DEAD) {
