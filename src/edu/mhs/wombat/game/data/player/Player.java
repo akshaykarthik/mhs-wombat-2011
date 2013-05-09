@@ -14,6 +14,7 @@ import edu.mhs.wombat.game.Camera;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.bullets.MonsterBullet;
 import edu.mhs.wombat.game.data.monsters.Monster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
@@ -109,6 +110,9 @@ public class Player implements Entity {
 	public void collideWith(Entity b) {
 		if (b instanceof Monster) {
 			this.health -= ((Monster) b).collideDoDamage;
+		}
+		if (b instanceof MonsterBullet) {
+			this.health -= ((MonsterBullet) b).getDamage();
 		}
 	}
 
