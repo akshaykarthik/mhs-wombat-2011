@@ -9,91 +9,72 @@ import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
-import edu.mhs.wombat.utils.QuadGrid;
 import edu.mhs.wombat.utils.data.HighScoreSystem;
 
 public class GameStatus {
 	public Player player;
 	public ArrayList<Entity> entities;
 	public HighScoreSystem scores;
-	private ArrayList<Entity> markForAdd;
-	private ArrayList<Entity> markForRemove;
-	private QuadGrid baseGrid;
-	private ArrayList<QuadGrid> grids;
+	private final ArrayList<Entity> markForAdd;
+	private final ArrayList<Entity> markForRemove;
 
 	public GameStatus() {
-		player = new Player();
-		player.init(this);
+		this.player = new Player();
+		this.player.init(this);
 
-		scores = new HighScoreSystem();
-		entities = new ArrayList<Entity>();
-		markForAdd = new ArrayList<Entity>();
-		markForRemove = new ArrayList<Entity>();
-		
-		QuadGrid baseGrid = new QuadGrid(Globals.Arena_Size, this);
+		this.scores = new HighScoreSystem();
+		this.entities = new ArrayList<Entity>();
+		this.markForAdd = new ArrayList<Entity>();
+		this.markForRemove = new ArrayList<Entity>();
+
 	}
 
 	public void addEntity(Entity ei) {
-		markForAdd.add(ei);
+		this.markForAdd.add(ei);
 	}
 
 	public void update(StateBasedGame game, int delta) {
-		player.update(game, this, delta);
-
-		// collision updates
-		
-		
-		//grids.addAll(baseGrid.subdivideN(4));
-		
-		for (Entity a : entities) {
+		this.player.update(game, this, delta);
+		for (Entity a : this.entities) {
 			a.update(game, this, delta);
 			if (a.getState() == EntityState.DEAD) {
-				markForRemove.add(a);
+				this.markForRemove.add(a);
 			}
-		/*	for(QuadGrid aGrid: grids){
-				aGrid.addEntities(entities);
-				for(Entity b: aGrid.getEntities()){
-					if(a != b && a.getHitBox().intersects(b.getHitBox())){
-						a.collideWith(b);
-					}
-				}
-			}*/
-			
 
-			for (Entity b : entities) {
+			for (Entity b : this.entities) {
 				if (a != b && a.getHitBox().intersects(b.getHitBox())) {
 					a.collideWith(b);
 				}
 			}
 
-			if (a.getHitBox().intersects(player.getHitBox())) {
-				a.playerCollide(player);
-				player.collideWith(a);
+			if (a.getHitBox().intersects(this.player.getHitBox())) {
+				a.playerCollide(this.player);
+				this.player.collideWith(a);
 			}
 		}
 
-		entities.addAll(markForAdd);
-		markForAdd.clear();
+		this.entities.addAll(this.markForAdd);
+		this.markForAdd.clear();
 
-		for (Entity e : markForRemove) {
+		for (Entity e : this.markForRemove) {
 			e.close(this);
-			entities.remove(e);
+			this.entities.remove(e);
 		}
-		markForRemove.clear();
+		this.markForRemove.clear();
 
 	}
 
 	public void render(StateBasedGame game, Graphics g) {
-		for (Entity e : entities) {
+		for (Entity e : this.entities) {
 			e.render(game, g);
 			if (Globals.GAME_DEBUG) {
 				g.draw(e.getHitBox());
 			}
 		}
-		player.render(game, g);
+		this.player.render(game, g);
 
 		if (Globals.GAME_DEBUG) {
-			g.draw(player.getHitBox());
+			g.draw(this.player.getHitBox());
 		}
 	}
 }

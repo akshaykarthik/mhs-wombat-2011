@@ -20,16 +20,16 @@ public class CurveBullet extends Bullet {
 
 	private float damage = 5;
 	private float time = 0;
-	private float wobble = 500;
-	private float reset = 1000;
-	private Circle shape = new Circle(0, 0, 4);
+	private final float wobble = 500;
+	private final float reset = 1000;
+	private final Circle shape = new Circle(0, 0, 4);
 
 	public CurveBullet(Vector2f source, Vector2f target, float velocity) {
-		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
-		vel.sub(83);
-		state = EntityState.ALIVE;
+		this.pos = source.copy();
+		Vector2f norm = target.copy().sub(this.pos.copy());
+		this.vel = norm.normalise().scale(velocity);
+		this.vel.sub(83);
+		this.state = EntityState.ALIVE;
 	}
 
 	public CurveBullet(Vector2f source, Vector2f target, float velocity,
@@ -40,12 +40,12 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -56,40 +56,40 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		time += delta;
-		pos = pos.add(vel);
+		this.time += delta;
+		this.pos = this.pos.add(this.vel);
 		float angle = 360f;
 		System.out.println(delta);
-		if (time < wobble) {
-			vel = vel.add(angle * (delta / 1000f));
-		} else if (time < reset) {
-			vel.sub(angle * (delta / 1000f));
+		if (this.time < this.wobble) {
+			this.vel = this.vel.add(angle * (delta / 1000f));
+		} else if (this.time < this.reset) {
+			this.vel.sub(angle * (delta / 1000f));
 		} else {
-			time = 0;
+			this.time = 0;
 		}
 
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		this.shape.setCenterX(this.pos.x);
+		this.shape.setCenterY(this.pos.y);
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		g.draw(shape);
+		g.draw(this.shape);
 		g.setColor(Color.white);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return shape;
+		return this.shape;
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DEAD;
+			this.state = EntityState.DEAD;
 	}
 
 	@Override
@@ -99,12 +99,12 @@ public class CurveBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override
 	public float getDamage() {
-		return damage;
+		return this.damage;
 	}
 
 	@Override
