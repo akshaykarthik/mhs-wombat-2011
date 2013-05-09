@@ -28,20 +28,19 @@ public class SmallExplosion extends Bullet {
 
 	private float time = 0;
 
-	private float wobble = 500;
-	private float reset = 1000;
-	
+	private final float reset = 500;
+
 	private static Image[] images = new Image[10];
 
-
 	public SmallExplosion(Vector2f pos) {
-		
-		if(images[0] == null){
-			for(int i = 0; i < images.length; i++){
-				images[i] = ResourceManager.getSpriteSheet("expl_mine").getSubImage(i, 0);
+		if (images[0] == null) {
+			for (int i = 0; i < images.length; i++) {
+				images[i] = ResourceManager.getSpriteSheet("expl_mine")
+						.getSubImage(i, 0).getScaledCopy(0.5f);
 			}
+			image = images[0];
 		}
-		
+
 		this.pos = pos.copy();
 		this.hitbox = new Circle(pos.x, pos.y, 10);
 	}
@@ -64,34 +63,35 @@ public class SmallExplosion extends Bullet {
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 
-		time += delta;
-		float tenth = reset / images.length;
-		if (time > reset){
-			setState(EntityState.DEAD);
-		} 
-		
-		for(int i = 0; i < images.length; i++){
-			if(time > (i+1)*tenth && i+1 < images.length){
-				image = images[i+1];
-			} else if (time < tenth){
+		this.time += delta;
+		float tenth = this.reset / images.length;
+		if (this.time > this.reset) {
+			this.setState(EntityState.DEAD);
+		}
+
+		for (int i = 0; i < images.length; i++) {
+			if (this.time > (i + 1) * tenth && i + 1 < images.length) {
+				image = images[i + 1];
+			} else if (this.time < tenth) {
 				image = images[0];
 			}
 		}
-		
-		hitbox = new Circle(pos.x, pos.y,
-				(float) (100 * Math.sin((Math.PI * time) / (1000f))));
-		System.out.println(hitbox.radius);
+
+		this.hitbox = new Circle(this.pos.x, this.pos.y,
+				(float) (100 / 2f * Math.sin((Math.PI * this.time)
+						/ (this.reset))));
+		System.out.println(this.hitbox.radius);
 
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 
-//		g.setColor(new Color((float) Math.random(), (float) Math.random(),
-//				(float) Math.random(), 1f));
-//		g.fill(hitbox);
-		if(Globals.isInField(pos)){
-			image.drawCentered(pos.x, pos.y);
+		// g.setColor(new Color((float) Math.random(), (float) Math.random(),
+		// (float) Math.random(), 1f));
+		// g.fill(hitbox);
+		if (Globals.isInField(this.pos)) {
+			image.drawCentered(this.pos.x, this.pos.y);
 		}
 
 		g.setColor(Color.white);

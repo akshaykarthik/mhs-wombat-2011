@@ -33,5 +33,5 @@
 		<unicodefont key="font80" file="fonts/AliquamREG.ttf" fontSize="80" />
 		<unicodefont key="font100" file="fonts/AliquamREG.ttf" fontSize="100" />
 	</group>
-	<sheet key="expl_mine" file="weps/Explosion.png" width="2560" height="256"></sheet>
+	<sheet key="expl_mine" file="weps/Explosion.png" width="256" height="256"></sheet>
 </resources>
