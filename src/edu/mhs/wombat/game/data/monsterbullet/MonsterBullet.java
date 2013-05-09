@@ -1,4 +1,4 @@
-package edu.mhs.wombat.game.data.bullets;
+package edu.mhs.wombat.game.data.monsterbullet;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -11,11 +11,12 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.bullets.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class MonsterBullet extends Bullet {
+public class MonsterBullet implements Entity {
 	private Vector2f pos;
 	private final Vector2f vel;
 	private EntityState state;
@@ -89,7 +90,9 @@ public class MonsterBullet extends Bullet {
 
 	@Override
 	public void collideWith(Entity b) {
-
+		if (b instanceof Bullet) {
+			this.state = EntityState.DEAD;
+		}
 	}
 
 	@Override
@@ -102,7 +105,6 @@ public class MonsterBullet extends Bullet {
 		return this.pos;
 	}
 
-	@Override
 	public float getDamage() {
 		return this.damage;
 	}

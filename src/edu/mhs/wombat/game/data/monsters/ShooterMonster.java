@@ -11,7 +11,7 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.bullets.Bullet;
-import edu.mhs.wombat.game.data.bullets.MonsterBullet;
+import edu.mhs.wombat.game.data.monsterbullet.MonsterBullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
@@ -28,19 +28,18 @@ public class ShooterMonster extends Monster {
 	public float maxvel = 2;
 
 	private float time = 0;
-	private final float reset = 1000;
+	private final float reset = 5000;
 
 	public ShooterMonster(float ix, float iy) {
 
-		this.collideDoDamage = 0.5f;
+		this.collideDoDamage = 5f;
 		this.collideTakeDamage = this.health;
 
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
 		if (image == null) {
-			image = ResourceManager.getSpriteSheet("monsters_circle") // CHANGE
-																		// THIS
+			image = ResourceManager.getSpriteSheet("monsters_circle")
 					.getSubImage(1, 0).getScaledCopy(0.75f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
@@ -67,10 +66,10 @@ public class ShooterMonster extends Monster {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.pos = this.pos.add(this.vel);
 
-		time += delta;
-		if (time >= reset) {
-			time = 0;
-			gs.addEntity(new MonsterBullet(pos, gs.player.pos, 3.5f));
+		this.time += delta;
+		if (this.time >= this.reset) {
+			this.time = 0;
+			gs.addEntity(new MonsterBullet(this.pos, gs.player.pos, 3.5f));
 		}
 
 		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))

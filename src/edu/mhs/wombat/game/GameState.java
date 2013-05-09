@@ -32,7 +32,7 @@ public class GameState extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		if (this.firstTime) {
-			int NUMTEST = 100;
+			int NUMTEST = 10;
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
 				for (int j = 0; j < sqrtNumTest; j++) {

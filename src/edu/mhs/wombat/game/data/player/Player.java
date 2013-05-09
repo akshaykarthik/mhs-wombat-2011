@@ -14,7 +14,7 @@ import edu.mhs.wombat.game.Camera;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
-import edu.mhs.wombat.game.data.bullets.MonsterBullet;
+import edu.mhs.wombat.game.data.monsterbullet.MonsterBullet;
 import edu.mhs.wombat.game.data.monsters.Monster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
@@ -60,7 +60,7 @@ public class Player implements Entity {
 				this.weps.fire(gs);
 			}
 			float eps = 5;
-			float hps = 1;
+			float hps = 0.5f;
 			this.energy += eps * (delta / 1000f);
 			this.health += hps * (delta / 1000f);
 			this.energy = MathU.clamp(this.energy, 0, this.maxEnergy);
@@ -99,7 +99,7 @@ public class Player implements Entity {
 		this.image2.drawCentered(this.pos.x, this.pos.y);
 
 		// draw crosshair
-		float ch_size = 10;
+		float ch_size = this.vel.length();
 		g.drawLine(mousepos.x, mousepos.y - ch_size, mousepos.x, mousepos.y);
 		g.drawLine(mousepos.x, mousepos.y + ch_size, mousepos.x, mousepos.y);
 		g.drawLine(mousepos.x - ch_size, mousepos.y, mousepos.x, mousepos.y);
