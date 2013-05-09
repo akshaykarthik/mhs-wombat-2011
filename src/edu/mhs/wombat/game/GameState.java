@@ -8,7 +8,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.game.data.monsters.PullMonster;
+import edu.mhs.wombat.game.data.monsters.Portal;
 import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -36,9 +36,9 @@ public class GameState extends BasicGameState {
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
 				for (int j = 0; j < sqrtNumTest; j++) {
-					this.gs.addEntity(new PullMonster(i * Globals.ARENA_WIDTH
-							/ sqrtNumTest, j * Globals.ARENA_HEIGHT
-							/ sqrtNumTest));
+					float posx = 10 + i * Globals.ARENA_WIDTH / sqrtNumTest;
+					float posy = 10 + j * Globals.ARENA_HEIGHT / sqrtNumTest;
+					this.gs.addEntity(new Portal(posx, posy, 2500f));
 				}
 			}
 			this.firstTime = false;
