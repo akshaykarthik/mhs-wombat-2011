@@ -9,6 +9,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
 import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
+import edu.mhs.wombat.game.data.monsters.ShooterMonster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.StateUtils;
@@ -35,7 +36,7 @@ public class GameState extends BasicGameState {
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
 				for (int j = 0; j < sqrtNumTest; j++) {
-					this.gs.addEntity(new RandomWalkerMonster(i
+					this.gs.addEntity(new ShooterMonster(i
 							* Globals.ARENA_WIDTH / sqrtNumTest, j
 							* Globals.ARENA_HEIGHT / sqrtNumTest));
 				}

@@ -1,6 +1,8 @@
 package edu.mhs.wombat.game.data.monsters;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -8,68 +10,115 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.bullets.Bullet;
+import edu.mhs.wombat.game.data.bullets.MonsterBullet;
 import edu.mhs.wombat.game.data.player.Player;
+import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.MathU;
+import edu.mhs.wombat.utils.ResourceManager;
 
 public class ShooterMonster extends Monster {
 
+	private static Image image;
+	private final Shape hitbox;
+
+	public Vector2f pos;
+	public Vector2f vel;
+	public EntityState state;
+	public float maxvel = 2;
+
+	private float time = 0;
+	private final float reset = 1000;
+
+	public ShooterMonster(float ix, float iy) {
+
+		this.collideDoDamage = 0.5f;
+		this.collideTakeDamage = this.health;
+
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(ix, iy);
+		this.vel = new Vector2f(0, 0);
+		if (image == null) {
+			image = ResourceManager.getSpriteSheet("monsters_circle") // CHANGE
+																		// THIS
+					.getSubImage(1, 0).getScaledCopy(0.75f);
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
+		}
+		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+	}
+
 	@Override
 	public EntityState getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		// TODO Auto-generated method stub
-
+		this.state = es;
 	}
 
 	@Override
 	public void init(GameStatus gs) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		// TODO Auto-generated method stub
+		this.pos = this.pos.add(this.vel);
 
-	}
+		time += delta;
+		if (time >= reset) {
+			time = 0;
+			gs.addEntity(new MonsterBullet(pos, gs.player.pos, 3.5f));
+		}
 
-	@Override
-	public void render(StateBasedGame game, Graphics g) {
-		// TODO Auto-generated method stub
+		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
+			this.vel.x *= -1;
 
-	}
+		if (!MathU.inBounds(this.pos.y, 0, Globals.ARENA_WIDTH))
+			this.vel.y *= -1;
 
-	@Override
-	public void close(GameStatus gs) {
-		// TODO Auto-generated method stub
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+
+		if (this.vel.length() > this.maxvel)
+			this.vel.normalise().scale(this.maxvel);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.hitbox;
+	}
+
+	@Override
+	public void render(StateBasedGame game, Graphics g) {
+		image.drawCentered(this.pos.x, this.pos.y);
 	}
 
 	@Override
 	public void collideWith(Entity b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void playerCollide(Player a) {
-		// TODO Auto-generated method stub
-
+		if (b instanceof Bullet) {
+			this.takeDamage(((Bullet) b).getDamage());
+		}
 	}
 
 	@Override
 	public Vector2f getPos() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.pos;
+	}
+
+	@Override
+	public void playerCollide(Player a) {
+		this.takeDamage(this.collideTakeDamage);
+	}
+
+	@Override
+	public void close(GameStatus gs) {
+		gs.scores.addPoints(10);
 	}
 
 }
