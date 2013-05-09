@@ -10,6 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.explosions.SmallExplosion;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -61,6 +62,11 @@ public class MissileBullet extends Bullet {
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
 
+		if (this.state == EntityState.DYING) {
+			this.state = EntityState.DEAD;
+			gs.addEntity(new SmallExplosion(this.pos, 300));
+		}
+
 	}
 
 	@Override
@@ -81,7 +87,7 @@ public class MissileBullet extends Bullet {
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			this.state = EntityState.DEAD;
+			this.state = EntityState.DYING;
 	}
 
 	@Override

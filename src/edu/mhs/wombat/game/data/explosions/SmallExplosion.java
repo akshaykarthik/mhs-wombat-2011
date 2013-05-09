@@ -29,11 +29,12 @@ public class SmallExplosion extends Bullet {
 
 	private float time = 0;
 
-	private final float reset = 500;
+	private final float reset;
 
 	private static Image[] images = new Image[10];
 
-	public SmallExplosion(Vector2f pos) {
+	public SmallExplosion(Vector2f pos, float rtime) {
+		this.reset = rtime;
 		if (images[0] == null) {
 			for (int i = 0; i < images.length; i++) {
 				images[i] = ResourceManager.getSpriteSheet("expl_mine")
@@ -44,6 +45,10 @@ public class SmallExplosion extends Bullet {
 
 		this.pos = pos.copy();
 		this.hitbox = new Circle(pos.x, pos.y, 10);
+	}
+
+	public SmallExplosion(Vector2f pos) {
+		this(pos, 1000);
 	}
 
 	@Override
