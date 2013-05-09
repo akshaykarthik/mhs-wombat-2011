@@ -19,6 +19,7 @@ public class GameStatus {
 	private final ArrayList<Entity> markForRemove;
 
 	public GameStatus() {
+<<<<<<< HEAD
 		this.player = new Player();
 		this.player.init(this);
 
@@ -27,6 +28,18 @@ public class GameStatus {
 		this.markForAdd = new ArrayList<Entity>();
 		this.markForRemove = new ArrayList<Entity>();
 
+=======
+		player = new Player();
+		player.init(this);
+
+		scores = new HighScoreSystem();
+		entities = new ArrayList<Entity>();
+		markForAdd = new ArrayList<Entity>();
+		markForRemove = new ArrayList<Entity>();
+		
+		QuadGrid baseGrid = new QuadGrid(Globals.Arena_Size, this);
+		grids.addAll(baseGrid.subdivideN(4));
+>>>>>>> tset
 	}
 
 	public void addEntity(Entity ei) {
@@ -34,12 +47,36 @@ public class GameStatus {
 	}
 
 	public void update(StateBasedGame game, int delta) {
+<<<<<<< HEAD
 		this.player.update(game, this, delta);
 		for (Entity a : this.entities) {
+=======
+		player.update(game, this, delta);
+		
+		// collision updates
+		
+		
+		//grids.addAll(baseGrid.subdivideN(4));
+		
+		for (Entity a : entities) {
+>>>>>>> tset
 			a.update(game, this, delta);
 			if (a.getState() == EntityState.DEAD) {
 				this.markForRemove.add(a);
 			}
+<<<<<<< HEAD
+=======
+			for(QuadGrid aGrid: grids){
+				aGrid.removeEntities();
+				aGrid.addEntities(entities);
+				for(Entity b: aGrid.getEntities()){
+					if(a != b && a.getHitBox().intersects(b.getHitBox())){
+						a.collideWith(b);
+					}
+				}
+			}
+			
+>>>>>>> tset
 
 			for (Entity b : this.entities) {
 				if (a != b && a.getHitBox().intersects(b.getHitBox())) {
