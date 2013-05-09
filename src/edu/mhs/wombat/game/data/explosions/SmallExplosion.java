@@ -14,6 +14,7 @@ import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.bullets.Bullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
+import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
 public class SmallExplosion extends Bullet {
@@ -69,17 +70,14 @@ public class SmallExplosion extends Bullet {
 			this.setState(EntityState.DEAD);
 		}
 
-		for (int i = 0; i < images.length; i++) {
-			if (this.time > (i + 1) * tenth && i + 1 < images.length) {
-				image = images[i + 1];
-			} else if (this.time < tenth) {
-				image = images[0];
-			}
-		}
+		image = images[(int) MathU.loop((float) Math.floor(this.time / tenth),
+				0, images.length - 1)];
+
+		float maxRadius = 50;
 
 		this.hitbox = new Circle(this.pos.x, this.pos.y,
-				(float) (100 / 2f * Math.sin((Math.PI * this.time)
-						/ (this.reset))));
+				(float) (maxRadius * Math.sin((Math.PI * this.time)
+						/ this.reset)));
 		System.out.println(this.hitbox.radius);
 
 	}
