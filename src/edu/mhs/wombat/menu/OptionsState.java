@@ -24,14 +24,16 @@ public class OptionsState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
-		gm = game;
+		this.gm = game;
 
 	}
 
+	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		bg = new Starfield(0, 10);
+		this.bg = new Starfield(0, 10);
 	}
 
+	@Override
 	public void leave(GameContainer container, StateBasedGame game) {
 
 	}
@@ -39,7 +41,7 @@ public class OptionsState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		bg.render(g);
+		this.bg.render(g);
 		// Options Data
 		Object[] opts = Options.getOptions().keySet().toArray();
 		// **********************
@@ -58,9 +60,10 @@ public class OptionsState extends BasicGameState {
 
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			StateUtils.switchTo(gm, States.MENU);
+			StateUtils.switchTo(this.gm, States.MENU);
 		}
 
 	}

@@ -31,9 +31,10 @@ public class HighState extends BasicGameState {
 
 	}
 
+	@Override
 	public void keyReleased(int key, char c) {
 		if (key == Input.KEY_ESCAPE) {
-			StateUtils.switchTo(gm, States.MENU);
+			StateUtils.switchTo(this.gm, States.MENU);
 		}
 	}
 

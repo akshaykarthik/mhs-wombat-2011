@@ -16,11 +16,11 @@ import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
 
 public class MineBullet extends Bullet {
-	private Vector2f pos;
+	private final Vector2f pos;
 	private EntityState state;
 
 	private static Image image;
-	private Shape hitbox;
+	private final Shape hitbox;
 
 	public static float MaxMines = 10;
 	public static float CurrentMines = 0;
@@ -28,23 +28,23 @@ public class MineBullet extends Bullet {
 	public MineBullet(Vector2f source) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_mine_1");
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
 		}
-		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
+		this.hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());
-		pos = source.copy();
+		this.pos = source.copy();
 		CurrentMines++;
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -55,13 +55,13 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 
-		hitbox.setCenterX(pos.x);
-		hitbox.setCenterY(pos.y);
-		if (state == EntityState.DYING) {
-			state = EntityState.DEAD;
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+		if (this.state == EntityState.DYING) {
+			this.state = EntityState.DEAD;
 		}
 
 	}
@@ -71,21 +71,21 @@ public class MineBullet extends Bullet {
 		g.setColor(Color.red);
 
 		image.rotate(0.5f);
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
+		if (Globals.isInField(this.pos))
+			image.drawCentered(this.pos.x, this.pos.y);
 		g.setColor(Color.white);
 
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DYING;
+			this.state = EntityState.DYING;
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

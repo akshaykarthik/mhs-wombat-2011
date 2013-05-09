@@ -17,13 +17,13 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class LinearBullet extends Bullet {
 	private Vector2f pos;
-	private Vector2f vel;
+	private final Vector2f vel;
 	private EntityState state;
 
 	private float damage = 1;
 
 	private static Image image;
-	private Shape hitbox;;
+	private final Shape hitbox;;
 
 	public LinearBullet(Vector2f source, Vector2f target, float vel,
 			float damage) {
@@ -34,25 +34,25 @@ public class LinearBullet extends Bullet {
 	public LinearBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
 		}
-		hitbox = new Rectangle(source.x, source.y, 18, 10);
-		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
+		this.hitbox = new Rectangle(source.x, source.y, 18, 10);
+		this.pos = source.copy();
+		Vector2f norm = target.copy().sub(this.pos.copy());
+		this.vel = norm.normalise().scale(velocity);
 
-		state = EntityState.ALIVE;
+		this.state = EntityState.ALIVE;
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -63,34 +63,34 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pos = pos.add(vel);
+		this.pos = this.pos.add(this.vel);
 
-		hitbox.setCenterX(pos.x);
-		hitbox.setCenterY(pos.y);
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
 
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		image.setRotation((float) vel.getTheta());
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
+		image.setRotation((float) this.vel.getTheta());
+		if (Globals.isInField(this.pos))
+			image.drawCentered(this.pos.x, this.pos.y);
 
 		g.setColor(Color.white);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DEAD;
+			this.state = EntityState.DEAD;
 	}
 
 	@Override
@@ -100,12 +100,12 @@ public class LinearBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override
 	public float getDamage() {
-		return damage;
+		return this.damage;
 	}
 
 	@Override

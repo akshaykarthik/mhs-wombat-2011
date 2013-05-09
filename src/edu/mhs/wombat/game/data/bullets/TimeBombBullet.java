@@ -3,6 +3,7 @@ package edu.mhs.wombat.game.data.bullets;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
@@ -17,49 +18,46 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class TimeBombBullet extends Bullet {
 	private Vector2f pos;
-	private Vector2f vel;
+	private final Vector2f vel;
 	private EntityState state;
 
-	private int bomb = 2000;
+	private final int bomb = 2000;
 	private int time = 0;
 
-	private float subDamage = 10;
-	private int projectiles = 30;
+	private final float subDamage = 10;
+	private final int projectiles = 30;
 
 	private static Image image;
 	private static Image image1;
 	private static Image image2;
 	private static Image image3;
 	private static Image image4;
-	private Shape hitbox;;
+	private final Shape hitbox;;
 
 	public TimeBombBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
-			image1 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(0,
-					0);
-			image2 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(1,
-					0);
-			image3 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(2,
-					0);
-			image4 = ResourceManager.getSpriteSheet("weps_bomb").getSubImage(3,
-					0);
+			SpriteSheet bomb = ResourceManager.getSpriteSheet("weps_bomb");
+			image1 = bomb.getSubImage(0, 0);
+			image2 = bomb.getSubImage(1, 0);
+			image3 = bomb.getSubImage(2, 0);
+			image4 = bomb.getSubImage(3, 0);
 			image = image1;
 		}
-		hitbox = new Rectangle(source.x, source.y, 15, 15);
-		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
-		state = EntityState.ALIVE;
+		this.hitbox = new Rectangle(source.x, source.y, 15, 15);
+		this.pos = source.copy();
+		Vector2f norm = target.copy().sub(this.pos.copy());
+		this.vel = norm.normalise().scale(velocity);
+		this.state = EntityState.ALIVE;
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -70,51 +68,52 @@ public class TimeBombBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		time += delta;
-		if (time >= bomb) {
-			state = EntityState.DYING;
+		this.time += delta;
+		if (this.time >= this.bomb) {
+			this.state = EntityState.DYING;
 		}
 
-		float fourth = bomb / 4;
-		if (time < fourth) {
+		float fourth = this.bomb / 4;
+		if (this.time < fourth) {
 			image = image1;
-		} else if (time > fourth && time < 2 * fourth) {
+		} else if (this.time > fourth && this.time < 2 * fourth) {
 			image = image2;
-		} else if (time > 2 * fourth && time < 3 * fourth) {
+		} else if (this.time > 2 * fourth && this.time < 3 * fourth) {
 			image = image3;
 		} else {
 			image = image4;
 		}
 
-		pos = pos.add(vel.copy().scale((bomb - time) / bomb));
+		this.pos = this.pos.add(this.vel.copy().scale(
+				(this.bomb - this.time) / this.bomb));
 
-		hitbox.setCenterX(pos.x);
-		hitbox.setCenterY(pos.y);
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 
-		if (state == EntityState.DYING) {
-			for (int i = 0; i < projectiles; i += 1) {
-				gs.addEntity(new ShrapnelBullet(pos, pos.copy().add(
-						vel.copy().add(360 / projectiles * i)), 12.5f,
-						subDamage));
+		if (this.state == EntityState.DYING) {
+			for (int i = 0; i < this.projectiles; i += 1) {
+				gs.addEntity(new ShrapnelBullet(this.pos, this.pos.copy().add(
+						this.vel.copy().add(360 / this.projectiles * i)),
+						12.5f, this.subDamage));
 			}
-			state = EntityState.DEAD;
+			this.state = EntityState.DEAD;
 		}
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
+		if (Globals.isInField(this.pos))
+			image.drawCentered(this.pos.x, this.pos.y);
 
 		g.setColor(Color.white);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
@@ -129,7 +128,7 @@ public class TimeBombBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

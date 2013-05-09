@@ -20,12 +20,12 @@ public class DoorOpenTransition implements Transition {
 	private float offset2 = 0;
 	private float finish;
 
-	private Image door;
-	private Image door2;
+	private final Image door;
+	private final Image door2;
 
 	public DoorOpenTransition() {
-		door = ResourceManager.getImage("transition_door");
-		door2 = ResourceManager.getImage("transition_door2");
+		this.door = ResourceManager.getImage("transition_door");
+		this.door2 = ResourceManager.getImage("transition_door2");
 	}
 
 	public void init(GameState firstState, GameState secondState) {
@@ -33,18 +33,18 @@ public class DoorOpenTransition implements Transition {
 	}
 
 	public boolean isComplete() {
-		return finish > 1;// Globals.TRANSITION_FACTOR3;
+		return this.finish > 1;// Globals.TRANSITION_FACTOR3;
 	}
 
 	public void postRender(StateBasedGame game, GameContainer container,
 			Graphics g) throws SlickException {
-		g.drawImage(door2, -offset, 0);
-		g.drawImage(door2.getFlippedCopy(true, false), Globals.WIDTH / 2
-				+ offset, 0);
+		g.drawImage(this.door2, -this.offset, 0);
+		g.drawImage(this.door2.getFlippedCopy(true, false), Globals.WIDTH / 2
+				+ this.offset, 0);
 
-		g.drawImage(door, -offset2, 0);
-		g.drawImage(door.getFlippedCopy(true, false), Globals.WIDTH / 2
-				+ offset2, 0);
+		g.drawImage(this.door, -this.offset2, 0);
+		g.drawImage(this.door.getFlippedCopy(true, false), Globals.WIDTH / 2
+				+ this.offset2, 0);
 	}
 
 	public void preRender(StateBasedGame game, GameContainer container,
@@ -54,16 +54,16 @@ public class DoorOpenTransition implements Transition {
 	public void update(StateBasedGame game, GameContainer container, int delta)
 			throws SlickException {
 
-		if (offset >= container.getWidth() / 2) {
-			offset = container.getWidth() / 2;
-			if (offset2 >= container.getWidth() / 2) {
-				offset2 = container.getWidth() / 2;
-				finish += delta;
+		if (this.offset >= container.getWidth() / 2) {
+			this.offset = container.getWidth() / 2;
+			if (this.offset2 >= container.getWidth() / 2) {
+				this.offset2 = container.getWidth() / 2;
+				this.finish += delta;
 			} else {
-				offset2 += delta * Globals.TRANSITION_FACTOR2;
+				this.offset2 += delta * Globals.TRANSITION_FACTOR2;
 			}
 		} else {
-			offset += delta * Globals.TRANSITION_FACTOR;
+			this.offset += delta * Globals.TRANSITION_FACTOR;
 		}
 	}
 }

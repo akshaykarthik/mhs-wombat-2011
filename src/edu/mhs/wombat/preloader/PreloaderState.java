@@ -34,13 +34,13 @@ public class PreloaderState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame gm) throws SlickException {
 		try {
-			loader = ResourceManager.loadResources("assets/resources.xml");
-			numResources = loader.remainingElements();
+			this.loader = ResourceManager.loadResources("assets/resources.xml");
+			this.numResources = this.loader.remainingElements();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		background = new Image("assets/background_1.png");
+		this.background = new Image("assets/background_1.png");
 		UnicodeFont unicodeFont = new UnicodeFont(
 				"assets/fonts/AliquamREG.ttf", 60, false, false);
 		unicodeFont.getEffects().add(new ColorEffect());
@@ -48,30 +48,30 @@ public class PreloaderState extends BasicGameState {
 		unicodeFont.loadGlyphs();
 		unicodeFont.setDisplayListCaching(true);
 
-		font = unicodeFont;
+		this.font = unicodeFont;
 		unicodeFont = new UnicodeFont("assets/fonts/AliquamREG.ttf", 40, false,
 				false);
 		unicodeFont.getEffects().add(new ColorEffect());
 		unicodeFont.addAsciiGlyphs();
 		unicodeFont.loadGlyphs();
 		unicodeFont.setDisplayListCaching(true);
-		font2 = unicodeFont;
+		this.font2 = unicodeFont;
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame gm, Graphics g)
 			throws SlickException {
-		g.drawImage(background, 0, 0);
-		g.setFont(font);
+		g.drawImage(this.background, 0, 0);
+		g.setFont(this.font);
 		g.drawString("Currently Loading ", 150, 250);
-		g.setFont(font2);
-		g.drawString(description, 250, 350);
+		g.setFont(this.font2);
+		g.drawString(this.description, 250, 350);
 		g.drawRoundRect(100, 500, Globals.WIDTH - 200, 10, 10);
-		g.fillRoundRect(100, 500, (Globals.WIDTH - 200) * percent, 10, 10);
+		g.fillRoundRect(100, 500, (Globals.WIDTH - 200) * this.percent, 10, 10);
 		g.setColor(Color.red);
-		g.fillArc(98, 450, 100, 100, 0, 360 * percent);
+		g.fillArc(98, 450, 100, 100, 0, 360 * this.percent);
 		g.setColor(Color.white);
-		g.drawArc(99, 450, 99, 99, 0, 360 * percent);
+		g.drawArc(99, 450, 99, 99, 0, 360 * this.percent);
 
 	}
 
@@ -80,17 +80,18 @@ public class PreloaderState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame gm, int delta)
 			throws SlickException {
-		isComplete = percent >= 1.0 && timer > 500f;
+		this.isComplete = this.percent >= 1.0 && this.timer > 500f;
 
-		if (percent >= 1.0)
-			timer += delta;
+		if (this.percent >= 1.0)
+			this.timer += delta;
 
-		percent = (numResources - loader.remainingElements()) / numResources;
+		this.percent = (this.numResources - this.loader.remainingElements())
+				/ this.numResources;
 
-		if (isComplete) {
+		if (this.isComplete) {
 			StateUtils.switchToNoTransition(gm, States.MENU);
 		} else {
-			description = loader.loadNext();
+			this.description = this.loader.loadNext();
 		}
 	}
 

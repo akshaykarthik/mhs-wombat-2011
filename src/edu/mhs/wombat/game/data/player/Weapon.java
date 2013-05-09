@@ -17,16 +17,16 @@ public abstract class Weapon {
 	public abstract float getAttackCD();
 
 	public void update(int delta, float fireMod) {
-		attackTimer += delta * fireMod;
-		canFire = false;
-		if (attackTimer >= getAttackCD()) {
-			canFire = true;
+		this.attackTimer += delta * fireMod;
+		this.canFire = false;
+		if (this.attackTimer >= this.getAttackCD()) {
+			this.canFire = true;
 		}
 	}
 
 	public void fire(GameStatus gs) {
-		if (canFire)
-			attackTimer = 0;
+		if (this.canFire)
+			this.attackTimer = 0;
 	}
 
 	public Vector2f getMousePos() {

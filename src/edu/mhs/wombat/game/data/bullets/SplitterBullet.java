@@ -17,35 +17,35 @@ import edu.mhs.wombat.utils.ResourceManager;
 
 public class SplitterBullet extends Bullet {
 	private Vector2f pos;
-	private Vector2f vel;
+	private final Vector2f vel;
 	private EntityState state;
 
 	private static Image image;
-	private Shape hitbox;;
+	private final Shape hitbox;;
 
 	public SplitterBullet(Vector2f source, Vector2f target, float velocity) {
 		if (image == null) {
 			image = ResourceManager.getImage("weps_tiny_bullet");
-			image.setCenterOfRotation((float) image.getWidth() / 2f,
-					(float) image.getHeight() / 2f);
+			image.setCenterOfRotation(image.getWidth() / 2f,
+					image.getHeight() / 2f);
 		}
-		hitbox = new Rectangle(source.x, source.y, image.getWidth(),
+		this.hitbox = new Rectangle(source.x, source.y, image.getWidth(),
 				image.getHeight());
-		pos = source.copy();
-		Vector2f norm = target.copy().sub(pos.copy());
-		vel = norm.normalise().scale(velocity);
+		this.pos = source.copy();
+		Vector2f norm = target.copy().sub(this.pos.copy());
+		this.vel = norm.normalise().scale(velocity);
 
-		state = EntityState.ALIVE;
+		this.state = EntityState.ALIVE;
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -56,52 +56,52 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pos = pos.add(vel);
+		this.pos = this.pos.add(this.vel);
 
-		hitbox.setCenterX(pos.x);
-		hitbox.setCenterY(pos.y);
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 
-		if (state == EntityState.DYING) {
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(10)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-10)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(20)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-20)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(30)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-30)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(45)), 10));
-			gs.addEntity(new LinearBullet(pos, pos.copy().add(
-					vel.copy().add(-45)), 10));
-			state = EntityState.DEAD;
+		if (this.state == EntityState.DYING) {
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(10)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(-10)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(20)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(-20)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(30)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(-30)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(45)), 10));
+			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+					this.vel.copy().add(-45)), 10));
+			this.state = EntityState.DEAD;
 		}
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
-		image.setRotation((float) vel.getTheta());
-		image.drawCentered(pos.x, pos.y);
+		image.setRotation((float) this.vel.getTheta());
+		image.drawCentered(this.pos.x, this.pos.y);
 
 		g.setColor(Color.white);
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet)) {
-			state = EntityState.DYING;
+			this.state = EntityState.DYING;
 		}
 	}
 
@@ -112,7 +112,7 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

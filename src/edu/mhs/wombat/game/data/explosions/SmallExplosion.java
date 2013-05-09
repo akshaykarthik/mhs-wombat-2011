@@ -16,31 +16,31 @@ import edu.mhs.wombat.game.data.player.Player;
 
 public class SmallExplosion extends Bullet {
 
-	private Vector2f pos;
+	private final Vector2f pos;
 	private EntityState state;
 
-	private float damage = 100f / 60f;
+	private final float damage = 100f / 60f;
 
 	private static Image image;
 	private Circle hitbox;
 
 	private float time = 0;
-	private float wobble = 500;
-	private float reset = 1000;
+	private final float wobble = 500;
+	private final float reset = 1000;
 
 	public SmallExplosion(Vector2f pos) {
 		this.pos = pos.copy();
-		hitbox = new Circle(pos.x, pos.y, 10);
+		this.hitbox = new Circle(pos.x, pos.y, 10);
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 	}
 
 	@Override
@@ -50,20 +50,20 @@ public class SmallExplosion extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		time += delta;
-		if (time > reset)
-			setState(EntityState.DEAD);
+		this.time += delta;
+		if (this.time > this.reset)
+			this.setState(EntityState.DEAD);
 
-		hitbox = new Circle(pos.x, pos.y,
-				(float) (100 * Math.sin((Math.PI * time) / (1000f))));
-		System.out.println(hitbox.radius);
+		this.hitbox = new Circle(this.pos.x, this.pos.y,
+				(float) (100 * Math.sin((Math.PI * this.time) / (1000f))));
+		System.out.println(this.hitbox.radius);
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(new Color((float) Math.random(), (float) Math.random(),
 				(float) Math.random(), 1f));
-		g.fill(hitbox);
+		g.fill(this.hitbox);
 		g.setColor(Color.white);
 	}
 
@@ -74,7 +74,7 @@ public class SmallExplosion extends Bullet {
 
 	@Override
 	public Shape getHitBox() {
-		return hitbox;
+		return this.hitbox;
 	}
 
 	@Override
@@ -89,12 +89,12 @@ public class SmallExplosion extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override
 	public float getDamage() {
-		return damage;
+		return this.damage;
 	}
 
 }

@@ -21,26 +21,26 @@ public class Timer {
 	}
 
 	public void update(int delta) {
-		if (started) {
-			current += delta;
+		if (this.started) {
+			this.current += delta;
 
-			if (repeat && current > target) {
-				current = 0;
+			if (this.repeat && this.current > this.target) {
+				this.current = 0;
 			}
 		}
 	}
 
 	public boolean isComplete() {
-		return current > target;
+		return this.current > this.target;
 	}
 
 	public void reset() {
-		current = 0;
-		target = 0;
+		this.current = 0;
+		this.target = 0;
 	}
 
 	public boolean isRepeat() {
-		return repeat;
+		return this.repeat;
 	}
 
 	public void setRepeat(boolean repeat) {
@@ -48,7 +48,7 @@ public class Timer {
 	}
 
 	public boolean isStarted() {
-		return started;
+		return this.started;
 	}
 
 	public void setStarted(boolean started) {
@@ -56,7 +56,7 @@ public class Timer {
 	}
 
 	public float getTarget() {
-		return target;
+		return this.target;
 	}
 
 	public void setTarget(float target) {

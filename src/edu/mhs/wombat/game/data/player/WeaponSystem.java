@@ -14,22 +14,22 @@ public class WeaponSystem {
 			new Weapon_Curve() };
 
 	public void update(int delta) {
-		weapons[current_weapon].update(delta, 1);
+		this.weapons[this.current_weapon].update(delta, 1);
 	}
 
 	public float getAttackTimer() {
-		return weapons[current_weapon].attackTimer;
+		return this.weapons[this.current_weapon].attackTimer;
 	}
 
 	public float getAttackCD() {
-		return weapons[current_weapon].getAttackCD();
+		return this.weapons[this.current_weapon].getAttackCD();
 	}
 
 	public void fire(GameStatus gs) {
-		weapons[current_weapon].fire(gs);
+		this.weapons[this.current_weapon].fire(gs);
 	}
 
 	public String getName() {
-		return weapons[current_weapon].getName();
+		return this.weapons[this.current_weapon].getName();
 	}
 }

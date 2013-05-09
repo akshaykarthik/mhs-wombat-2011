@@ -44,24 +44,24 @@ public class XMLResourceLoader {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
 					.newDocumentBuilder();
 			Document document = builder.parse(in);
-			rootElement = document.getDocumentElement();
-			validateResourceFile();
-			ArrayList<Element> elements = getElementsByTagName("basedir");
-			setBaseDirectory(elements.get(0).getAttribute("path"));
+			this.rootElement = document.getDocumentElement();
+			this.validateResourceFile();
+			ArrayList<Element> elements = this.getElementsByTagName("basedir");
+			this.setBaseDirectory(elements.get(0).getAttribute("path"));
 
-			sound = getElementsByTagName("sound");
-			music = getElementsByTagName("music");
-			image = getElementsByTagName("image");
-			sheet = getElementsByTagName("sheet");
-			anim = getElementsByTagName("anim");
+			this.sound = this.getElementsByTagName("sound");
+			this.music = this.getElementsByTagName("music");
+			this.image = this.getElementsByTagName("image");
+			this.sheet = this.getElementsByTagName("sheet");
+			this.anim = this.getElementsByTagName("anim");
 
-			angelcodefont = getElementsByTagName("angelcodefont");
+			this.angelcodefont = this.getElementsByTagName("angelcodefont");
 
-			unicodefont = getElementsByTagName("unicodefont");
+			this.unicodefont = this.getElementsByTagName("unicodefont");
 
-			spritesheetfont = getElementsByTagName("spritesheetfont");
+			this.spritesheetfont = this.getElementsByTagName("spritesheetfont");
 
-			param = getElementsByTagName("param");
+			this.param = this.getElementsByTagName("param");
 
 		} catch (Exception e) {
 			Log.error(e);
@@ -71,48 +71,49 @@ public class XMLResourceLoader {
 	}
 
 	public int remainingElements() {
-		return sound.size() + music.size() + image.size() + sheet.size()
-				+ anim.size() + angelcodefont.size() + unicodefont.size()
-				+ spritesheetfont.size() + param.size();
+		return this.sound.size() + this.music.size() + this.image.size()
+				+ this.sheet.size() + this.anim.size()
+				+ this.angelcodefont.size() + this.unicodefont.size()
+				+ this.spritesheetfont.size() + this.param.size();
 	}
 
 	public String loadNext() throws SlickException {
 		String name = "";
-		if (sound.size() > 0) {
-			Element e = sound.remove(0);
-			loadSound(e);
+		if (this.sound.size() > 0) {
+			Element e = this.sound.remove(0);
+			this.loadSound(e);
 			name = e.getAttribute("key");
-		} else if (music.size() > 0) {
-			Element e = music.remove(0);
-			loadMusic(e);
+		} else if (this.music.size() > 0) {
+			Element e = this.music.remove(0);
+			this.loadMusic(e);
 			name = e.getAttribute("key");
-		} else if (image.size() > 0) {
-			Element e = image.remove(0);
-			loadImage(e);
+		} else if (this.image.size() > 0) {
+			Element e = this.image.remove(0);
+			this.loadImage(e);
 			name = e.getAttribute("key");
-		} else if (unicodefont.size() > 0) {
-			Element e = unicodefont.remove(0);
-			loadUnicodeFont(e);
+		} else if (this.unicodefont.size() > 0) {
+			Element e = this.unicodefont.remove(0);
+			this.loadUnicodeFont(e);
 			name = e.getAttribute("key");
-		} else if (sheet.size() > 0) {
-			Element e = sheet.remove(0);
-			loadSpriteSheet(e);
+		} else if (this.sheet.size() > 0) {
+			Element e = this.sheet.remove(0);
+			this.loadSpriteSheet(e);
 			name = e.getAttribute("key");
-		} else if (anim.size() > 0) {
-			Element e = anim.remove(0);
-			loadAnimation(e);
+		} else if (this.anim.size() > 0) {
+			Element e = this.anim.remove(0);
+			this.loadAnimation(e);
 			name = e.getAttribute("key");
-		} else if (angelcodefont.size() > 0) {
-			Element e = angelcodefont.remove(0);
-			loadAngelCodeFont(e);
+		} else if (this.angelcodefont.size() > 0) {
+			Element e = this.angelcodefont.remove(0);
+			this.loadAngelCodeFont(e);
 			name = e.getAttribute("key");
-		} else if (spritesheetfont.size() > 0) {
-			Element e = spritesheetfont.remove(0);
-			loadSpriteSheetFont(e);
+		} else if (this.spritesheetfont.size() > 0) {
+			Element e = this.spritesheetfont.remove(0);
+			this.loadSpriteSheetFont(e);
 			name = e.getAttribute("key");
-		} else if (param.size() > 0) {
-			Element e = param.remove(0);
-			loadParameter(e);
+		} else if (this.param.size() > 0) {
+			Element e = this.param.remove(0);
+			this.loadParameter(e);
 			name = e.getAttribute("key");
 		} else {
 			return "finalizing";
@@ -121,13 +122,13 @@ public class XMLResourceLoader {
 	}
 
 	private void validateResourceFile() throws IOException {
-		if (!rootElement.getNodeName().equals("resources")) {
+		if (!this.rootElement.getNodeName().equals("resources")) {
 			throw new IOException("Not a resource configuration file");
 		}
 	}
 
 	private ArrayList<Element> getElementsByTagName(String elementName) {
-		NodeList nodes = rootElement.getElementsByTagName(elementName);
+		NodeList nodes = this.rootElement.getElementsByTagName(elementName);
 		int nodeCount = nodes.getLength();
 
 		if (nodeCount != 0) {
@@ -147,67 +148,67 @@ public class XMLResourceLoader {
 		if (baseDirectory == null || baseDirectory.isEmpty()) {
 			throw new SlickException("Could not find required BaseDir element.");
 		}
-		baseDir = baseDirectory;
-		if (!baseDir.endsWith("/")) {
-			baseDir += "/";
+		this.baseDir = baseDirectory;
+		if (!this.baseDir.endsWith("/")) {
+			this.baseDir += "/";
 		}
 	}
 
 	private void loadSound(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "file");
+		this.checkRequiredAttributes(element, "key", "file");
 		String key = element.getAttribute("key");
 		String file = element.getAttribute("file");
-		Log.debug(formatLoadMsg("sound", key, file));
-		ResourceManager.addSound(key, new Sound(baseDir + file));
+		Log.debug(this.formatLoadMsg("sound", key, file));
+		ResourceManager.addSound(key, new Sound(this.baseDir + file));
 	}
 
 	private void loadMusic(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "file");
+		this.checkRequiredAttributes(element, "key", "file");
 		String key = element.getAttribute("key");
 		String file = element.getAttribute("file");
-		Log.debug(formatLoadMsg("music", key, file));
-		ResourceManager.addMusic(key, new Music(baseDir + file));
+		Log.debug(this.formatLoadMsg("music", key, file));
+		ResourceManager.addMusic(key, new Music(this.baseDir + file));
 	}
 
 	private void loadImage(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "file");
+		this.checkRequiredAttributes(element, "key", "file");
 		String key = element.getAttribute("key");
 		String file = element.getAttribute("file");
 		Color transparentColor = null;
 
 		if (element.hasAttribute("transparentColor")) {
-			transparentColor = decodeColor(element);
+			transparentColor = this.decodeColor(element);
 		}
 
 		Image image;
 		try {
-			image = new Image(baseDir + file, transparentColor);
+			image = new Image(this.baseDir + file, transparentColor);
 		} catch (SlickException ex) {
 			// To support large textures on older graphic cards
 			Log.info("Using BigImage.");
-			image = new BigImage(baseDir + file);
+			image = new BigImage(this.baseDir + file);
 		}
-		Log.debug(formatLoadMsg("image", key, file));
+		Log.debug(this.formatLoadMsg("image", key, file));
 		ResourceManager.addImage(key, image);
 	}
 
 	private void loadSpriteSheet(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "file", "width", "height");
+		this.checkRequiredAttributes(element, "key", "file", "width", "height");
 		String key = element.getAttribute("key");
 		String file = element.getAttribute("file");
-		int width = parseIntAttribute(element, "width");
-		int height = parseIntAttribute(element, "height");
+		int width = this.parseIntAttribute(element, "width");
+		int height = this.parseIntAttribute(element, "height");
 		Color transparentColor = null;
 
 		if (element.hasAttribute("transparentColor")) {
-			transparentColor = decodeColor(element);
+			transparentColor = this.decodeColor(element);
 		}
 
 		Log.debug(String.format(
 				"Loading spritesheet key=%s file=%s width=%s height=%s", key,
 				file, width, height));
-		ResourceManager.addSpriteSheet(key, new SpriteSheet(baseDir + file,
-				width, height, transparentColor));
+		ResourceManager.addSpriteSheet(key, new SpriteSheet(
+				this.baseDir + file, width, height, transparentColor));
 	}
 
 	private Color decodeColor(Element element) {
@@ -221,10 +222,10 @@ public class XMLResourceLoader {
 	}
 
 	private void loadAnimation(Element element) {
-		checkRequiredAttributes(element, "key", "imgName", "frameDuration");
+		this.checkRequiredAttributes(element, "key", "imgName", "frameDuration");
 		String key = element.getAttribute("key");
 		String imgName = element.getAttribute("imgName");
-		int frameDuration = parseIntAttribute(element, "frameDuration");
+		int frameDuration = this.parseIntAttribute(element, "frameDuration");
 		boolean flipHorizontal = false, flipVertical = false;
 		int[] frames;
 		int row = 0;
@@ -239,7 +240,7 @@ public class XMLResourceLoader {
 
 		if (element.hasAttribute("frames")) {
 			String framesAsText = element.getAttribute("frames");
-			frames = readFrameIndexes(framesAsText);
+			frames = this.readFrameIndexes(framesAsText);
 		} else {
 			frames = new int[sheet.getHorizontalCount()];
 			for (int i = 0; i < sheet.getHorizontalCount(); i++) {
@@ -247,22 +248,23 @@ public class XMLResourceLoader {
 			}
 		}
 		if (element.hasAttribute("flipHorizontal")) {
-			flipHorizontal = parseBooleanAttribute(element, "flipHorizontal");
+			flipHorizontal = this.parseBooleanAttribute(element,
+					"flipHorizontal");
 		}
 		if (element.hasAttribute("flipVertical")) {
-			flipVertical = parseBooleanAttribute(element, "flipVertical");
+			flipVertical = this.parseBooleanAttribute(element, "flipVertical");
 		}
 		if (element.hasAttribute("row")) {
-			row = parseIntAttribute(element, "row");
+			row = this.parseIntAttribute(element, "row");
 		}
 		if (element.hasAttribute("loop")) {
-			loop = parseBooleanAttribute(element, "loop");
+			loop = this.parseBooleanAttribute(element, "loop");
 		}
 
-		Animation anim = buildAnimationFromFrames(sheet, row, frames,
+		Animation anim = this.buildAnimationFromFrames(sheet, row, frames,
 				frameDuration, flipHorizontal, flipVertical);
 		anim.setLooping(loop);
-		Log.debug(formatLoadMsg("animation", key, "spritesheet", imgName));
+		Log.debug(this.formatLoadMsg("animation", key, "spritesheet", imgName));
 		ResourceManager.addAnimation(key, anim);
 	}
 
@@ -311,7 +313,7 @@ public class XMLResourceLoader {
 	}
 
 	private void loadAngelCodeFont(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "fontFile", "imageFile");
+		this.checkRequiredAttributes(element, "key", "fontFile", "imageFile");
 		String key = element.getAttribute("key");
 		String fontFile = element.getAttribute("fontFile");
 		String imageFile = element.getAttribute("imageFile");
@@ -319,25 +321,25 @@ public class XMLResourceLoader {
 		Log.debug(String.format(
 				"Loading Angelcode font key=%s imagefile=%s fontfile=%s", key,
 				imageFile, fontFile));
-		AngelCodeFont font = new AngelCodeFont(baseDir + fontFile, baseDir
-				+ imageFile, true);
+		AngelCodeFont font = new AngelCodeFont(this.baseDir + fontFile,
+				this.baseDir + imageFile, true);
 		ResourceManager.addFont(key, font);
 	}
 
 	@SuppressWarnings("unchecked")
 	private void loadUnicodeFont(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "file");
+		this.checkRequiredAttributes(element, "key", "file");
 		String key = element.getAttribute("key");
 		String ttfFile = element.getAttribute("file");
 		int fontSize = 12;
 
 		if (element.hasAttribute("fontSize")) {
-			fontSize = parseIntAttribute(element, "fontSize");
+			fontSize = this.parseIntAttribute(element, "fontSize");
 		}
 
-		Log.debug(formatLoadMsg("Unicode font", key, ttfFile));
-		UnicodeFont unicodeFont = new UnicodeFont(baseDir + ttfFile, fontSize,
-				false, false);
+		Log.debug(this.formatLoadMsg("Unicode font", key, ttfFile));
+		UnicodeFont unicodeFont = new UnicodeFont(this.baseDir + ttfFile,
+				fontSize, false, false);
 		unicodeFont.getEffects().add(new ColorEffect());
 		unicodeFont.addAsciiGlyphs();
 		unicodeFont.loadGlyphs();
@@ -346,7 +348,7 @@ public class XMLResourceLoader {
 	}
 
 	private void loadSpriteSheetFont(Element element) {
-		checkRequiredAttributes(element, "key", "file", "firstchar");
+		this.checkRequiredAttributes(element, "key", "file", "firstchar");
 		String key = element.getAttribute("key");
 		String imgName = element.getAttribute("file");
 		char startingChar = element.getAttribute("firstchar").charAt(0);
@@ -358,17 +360,17 @@ public class XMLResourceLoader {
 		}
 		SpriteSheet sheet = ResourceManager.getSpriteSheet(imgName);
 
-		Log.debug(formatLoadMsg("SpriteSheet font", key, imgName));
+		Log.debug(this.formatLoadMsg("SpriteSheet font", key, imgName));
 		SpriteSheetFont font = new SpriteSheetFont(sheet, startingChar);
 		ResourceManager.addFont(key, font);
 	}
 
 	private void loadParameter(Element element) throws SlickException {
-		checkRequiredAttributes(element, "key", "value");
+		this.checkRequiredAttributes(element, "key", "value");
 		String key = element.getAttribute("key");
 		String value = element.getAttribute("value");
 
-		Log.debug(formatLoadMsg("Parameter", key, "value", value));
+		Log.debug(this.formatLoadMsg("Parameter", key, "value", value));
 		ResourceManager.setParameter(key, value);
 	}
 
@@ -408,7 +410,7 @@ public class XMLResourceLoader {
 	}
 
 	private String formatLoadMsg(String type, String key, String value) {
-		return formatLoadMsg(type, key, "file", value);
+		return this.formatLoadMsg(type, key, "file", value);
 	}
 
 	private String formatLoadMsg(String type, String key, String valueName,

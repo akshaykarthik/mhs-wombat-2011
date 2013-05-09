@@ -5,7 +5,7 @@ public class HighScoreSystem {
 	private int multiplier = 1;
 
 	public int getMultiplier() {
-		return multiplier;
+		return this.multiplier;
 	}
 
 	public void setMultiplier(int multiplier) {
@@ -13,16 +13,16 @@ public class HighScoreSystem {
 	}
 
 	public int getScore() {
-		return current_score;
+		return this.current_score;
 	}
 
 	public void addPoints(int i) {
-		current_score += multiplier * i;
+		this.current_score += this.multiplier * i;
 	}
 
 	public void reset() {
-		current_score = 0;
-		multiplier = 1;
+		this.current_score = 0;
+		this.multiplier = 1;
 	}
 
 }

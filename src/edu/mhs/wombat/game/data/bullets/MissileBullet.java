@@ -17,10 +17,10 @@ import edu.mhs.wombat.utils.ResourceManager;
 public class MissileBullet extends Bullet {
 	private Vector2f pos;
 	private Vector2f vel;
-	private Vector2f accel;
+	private final Vector2f accel;
 	private EntityState state;
 	private static Image image;
-	private Rectangle shape;
+	private final Rectangle shape;
 
 	public MissileBullet(Vector2f source, Vector2f target, float ivel,
 			float iaccel) {
@@ -30,22 +30,22 @@ public class MissileBullet extends Bullet {
 					image.getHeight() / 2);
 		}
 
-		shape = new Rectangle(source.x, source.y, 28, 14);
+		this.shape = new Rectangle(source.x, source.y, 28, 14);
 
-		pos = source.copy();
-		Vector2f target_vel = target.copy().sub(pos.copy()).normalise();
-		vel = target_vel.copy().normalise().scale(ivel);
-		accel = target_vel.scale(iaccel);
+		this.pos = source.copy();
+		Vector2f target_vel = target.copy().sub(this.pos.copy()).normalise();
+		this.vel = target_vel.copy().normalise().scale(ivel);
+		this.accel = target_vel.scale(iaccel);
 	}
 
 	@Override
 	public EntityState getState() {
-		return state;
+		return this.state;
 	}
 
 	@Override
 	public void setState(EntityState es) {
-		state = es;
+		this.state = es;
 
 	}
 
@@ -56,32 +56,32 @@ public class MissileBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		pos = pos.add(vel);
-		vel = vel.add(accel);
-		if (!Globals.isInField(pos))
-			state = EntityState.DEAD;
+		this.pos = this.pos.add(this.vel);
+		this.vel = this.vel.add(this.accel);
+		if (!Globals.isInField(this.pos))
+			this.state = EntityState.DEAD;
 
 	}
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		image.setRotation((float) vel.getTheta());
-		shape.setCenterX(pos.x);
-		shape.setCenterY(pos.y);
-		if (Globals.isInField(pos))
-			image.drawCentered(pos.x, pos.y);
+		image.setRotation((float) this.vel.getTheta());
+		this.shape.setCenterX(this.pos.x);
+		this.shape.setCenterY(this.pos.y);
+		if (Globals.isInField(this.pos))
+			image.drawCentered(this.pos.x, this.pos.y);
 
 	}
 
 	@Override
 	public Shape getHitBox() {
-		return shape;
+		return this.shape;
 	}
 
 	@Override
 	public void collideWith(Entity b) {
 		if (!(b instanceof Bullet))
-			state = EntityState.DEAD;
+			this.state = EntityState.DEAD;
 	}
 
 	@Override
@@ -91,7 +91,7 @@ public class MissileBullet extends Bullet {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

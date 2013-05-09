@@ -27,15 +27,16 @@ public class Wombat extends StateBasedGame {
 	/**
 	 * @see org.newdawn.slick.state.StateBasedGame#initStatesList(org.newdawn.slick.GameContainer)
 	 */
+	@Override
 	public void initStatesList(GameContainer container) {
-		addState(new PreloaderState());
-		addState(new MenuState());
-		addState(new CreditsState());
-		addState(new OptionsState());
-		addState(new GameState());
-		addState(new DefeatState());
-		addState(new VictoryState());
-		addState(new HighState());
+		this.addState(new PreloaderState());
+		this.addState(new MenuState());
+		this.addState(new CreditsState());
+		this.addState(new OptionsState());
+		this.addState(new GameState());
+		this.addState(new DefeatState());
+		this.addState(new VictoryState());
+		this.addState(new HighState());
 	}
 
 	/**

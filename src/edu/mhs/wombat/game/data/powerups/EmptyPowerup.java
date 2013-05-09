@@ -21,9 +21,9 @@ public class EmptyPowerup implements Entity {
 	}
 
 	public EmptyPowerup(float ix, float iy) {
-		state = EntityState.ALIVE;
-		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(0, 0);
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(ix, iy);
+		this.vel = new Vector2f(0, 0);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		switch (state) {
+		switch (this.state) {
 		case ALIVE:
 			break;
 		case DEAD:
@@ -76,7 +76,7 @@ public class EmptyPowerup implements Entity {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

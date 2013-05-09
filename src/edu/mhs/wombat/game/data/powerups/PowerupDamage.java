@@ -17,16 +17,16 @@ public class PowerupDamage implements Entity {
 	public EntityState state;
 
 	public PowerupDamage() {
-		state = EntityState.ALIVE;
-		pos = new Vector2f(0, 0);
-		vel = new Vector2f(10 * (float) (Math.random() - 0.5),
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(0, 0);
+		this.vel = new Vector2f(10 * (float) (Math.random() - 0.5),
 				10 * (float) (Math.random() - 0.5));
 	}
 
 	public PowerupDamage(float ix, float iy) {
-		state = EntityState.ALIVE;
-		pos = new Vector2f(ix, iy);
-		vel = new Vector2f(10 * (float) (Math.random() - 0.5),
+		this.state = EntityState.ALIVE;
+		this.pos = new Vector2f(ix, iy);
+		this.vel = new Vector2f(10 * (float) (Math.random() - 0.5),
 				10 * (float) (Math.random() - 0.5));
 	}
 
@@ -47,7 +47,7 @@ public class PowerupDamage implements Entity {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		switch (state) {
+		switch (this.state) {
 		case ALIVE:
 			break;
 		case DEAD:
@@ -72,7 +72,7 @@ public class PowerupDamage implements Entity {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.drawRect(pos.x, pos.y, 10, 10);
+		g.drawRect(this.pos.x, this.pos.y, 10, 10);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class PowerupDamage implements Entity {
 
 	@Override
 	public Vector2f getPos() {
-		return pos;
+		return this.pos;
 	}
 
 	@Override

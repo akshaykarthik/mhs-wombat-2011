@@ -20,10 +20,7 @@ public class Camera {
 	}
 
 	public static void preDraw(Graphics g, GameStatus gs) {
-		x = (-gs.player.pos.x - gs.player.vel.x * velsf) + Globals.WIDTH / 2; // player
-		// is
-		// now
-		// center
+		x = (-gs.player.pos.x - gs.player.vel.x * velsf) + Globals.WIDTH / 2;
 		y = (-gs.player.pos.y - gs.player.vel.y * velsf) + Globals.HEIGHT / 2;
 		g.translate(x, y);
 

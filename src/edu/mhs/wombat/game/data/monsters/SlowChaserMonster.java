@@ -62,6 +62,7 @@ public class SlowChaserMonster extends Monster {
 		default:
 			break;
 		}
+
 		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise();
 		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.50 : .50)));
 		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.50 : .50)));
@@ -87,8 +88,7 @@ public class SlowChaserMonster extends Monster {
 	public void render(StateBasedGame game, Graphics g) {
 
 		if (Globals.isInField(this.pos))
-			;
-		g.draw(this.shape);
+			g.draw(this.shape);
 	}
 
 	@Override

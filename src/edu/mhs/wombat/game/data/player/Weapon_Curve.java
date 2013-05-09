@@ -7,8 +7,9 @@ public class Weapon_Curve extends Weapon {
 	@Override
 	public void fire(GameStatus gs) {
 		super.fire(gs);
-		if (canFire)
-			gs.addEntity(new CurveBullet(gs.player.pos, getMousePos(), 7.5f));
+		if (this.canFire)
+			gs.addEntity(new CurveBullet(gs.player.pos, this.getMousePos(),
+					7.5f));
 	}
 
 	@Override

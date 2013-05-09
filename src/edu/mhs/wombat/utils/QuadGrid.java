@@ -11,7 +11,7 @@ import edu.mhs.wombat.game.core.Entity;
 public class QuadGrid {
 
 	private GameStatus gs;
-	private Rectangle bounds;
+	private final Rectangle bounds;
 
 	private QuadGrid topL;
 	private QuadGrid topR;
@@ -25,40 +25,40 @@ public class QuadGrid {
 	}
 
 	public QuadGrid(Vector2f topL, Vector2f size, GameStatus gs) {
-		bounds = new Rectangle(0, 0, size.x, size.y);
+		this.bounds = new Rectangle(0, 0, size.x, size.y);
 
 	}
 
 	public void addEntities(ArrayList<Entity> entities) {
 		for (Entity a : entities) {
-			if (a.getHitBox().intersects(bounds)) {
+			if (a.getHitBox().intersects(this.bounds)) {
 				entities.add(a);
 			}
 		}
 	}
 
 	public void removeEntities() {
-		entities.clear();
+		this.entities.clear();
 
 	}
 
 	public ArrayList<Entity> getEntities() {
-		return entities;
+		return this.entities;
 	}
 
 	public ArrayList<QuadGrid> getSubdivisions() {
 		ArrayList<QuadGrid> grids = new ArrayList<QuadGrid>();
-		grids.add(topL);
-		grids.add(topR);
-		grids.add(botL);
-		grids.add(botR);
+		grids.add(this.topL);
+		grids.add(this.topR);
+		grids.add(this.botL);
+		grids.add(this.botR);
 		return grids;
 	}
 
 	public ArrayList<QuadGrid> getPlayerGrid() {
 		ArrayList<QuadGrid> grids = new ArrayList<QuadGrid>();
-		for (QuadGrid a : getSubdivisions()) {
-			if (a.bounds.intersects(gs.player.getHitBox())) {
+		for (QuadGrid a : this.getSubdivisions()) {
+			if (a.bounds.intersects(this.gs.player.getHitBox())) {
 				grids.add(a);
 			}
 		}
@@ -67,40 +67,42 @@ public class QuadGrid {
 
 	public void subdivide() {
 		Vector2f halfSize = new Vector2f(
-				(bounds.getMaxX() - bounds.getMinX()) / 2,
-				(bounds.getMaxY() - bounds.getMinY()) / 2);
-		Vector2f minXY = new Vector2f(bounds.getMinX(), bounds.getMinY());
-		topL = new QuadGrid(minXY, halfSize, gs);
-		topR = new QuadGrid(new Vector2f(minXY.x + halfSize.x, minXY.y),
-				halfSize, gs);
-		botL = new QuadGrid(new Vector2f(minXY.x, minXY.y + halfSize.y),
-				halfSize, gs);
-		botR = new QuadGrid(minXY.add(halfSize), halfSize, gs);
+				(this.bounds.getMaxX() - this.bounds.getMinX()) / 2,
+				(this.bounds.getMaxY() - this.bounds.getMinY()) / 2);
+		Vector2f minXY = new Vector2f(this.bounds.getMinX(),
+				this.bounds.getMinY());
+		this.topL = new QuadGrid(minXY, halfSize, this.gs);
+		this.topR = new QuadGrid(new Vector2f(minXY.x + halfSize.x, minXY.y),
+				halfSize, this.gs);
+		this.botL = new QuadGrid(new Vector2f(minXY.x, minXY.y + halfSize.y),
+				halfSize, this.gs);
+		this.botR = new QuadGrid(minXY.add(halfSize), halfSize, this.gs);
 
 	}
 
 	public ArrayList<QuadGrid> subdivideN(int n) {
 		ArrayList<QuadGrid> grids = new ArrayList<QuadGrid>();
 		Vector2f halfSize = new Vector2f(
-				(bounds.getMaxX() - bounds.getMinX()) / 2,
-				(bounds.getMaxY() - bounds.getMinY()) / 2);
-		Vector2f minXY = new Vector2f(bounds.getMinX(), bounds.getMinY());
+				(this.bounds.getMaxX() - this.bounds.getMinX()) / 2,
+				(this.bounds.getMaxY() - this.bounds.getMinY()) / 2);
+		Vector2f minXY = new Vector2f(this.bounds.getMinX(),
+				this.bounds.getMinY());
 
-		topL = new QuadGrid(minXY, halfSize, gs);
-		topR = new QuadGrid(new Vector2f(minXY.x + halfSize.x, minXY.y),
-				halfSize, gs);
-		botL = new QuadGrid(new Vector2f(minXY.x, minXY.y + halfSize.y),
-				halfSize, gs);
-		botR = new QuadGrid(minXY.add(halfSize), halfSize, gs);
+		this.topL = new QuadGrid(minXY, halfSize, this.gs);
+		this.topR = new QuadGrid(new Vector2f(minXY.x + halfSize.x, minXY.y),
+				halfSize, this.gs);
+		this.botL = new QuadGrid(new Vector2f(minXY.x, minXY.y + halfSize.y),
+				halfSize, this.gs);
+		this.botR = new QuadGrid(minXY.add(halfSize), halfSize, this.gs);
 
 		if (n > 1) {
-			topL.subdivideN(n - 1);
-			topR.subdivideN(n - 1);
-			botL.subdivideN(n - 1);
-			botR.subdivideN(n - 1);
+			this.topL.subdivideN(n - 1);
+			this.topR.subdivideN(n - 1);
+			this.botL.subdivideN(n - 1);
+			this.botR.subdivideN(n - 1);
 		} else if (n == 1) {
 			this.subdivide();
-			grids.addAll(getSubdivisions());
+			grids.addAll(this.getSubdivisions());
 			return grids;
 		}
 		return grids;
