@@ -11,14 +11,12 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.bullets.Bullet;
-import edu.mhs.wombat.game.data.monsterbullet.MonsterBullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class ShooterMonster extends Monster {
-
+public class PullMonster extends Monster {
 	private static Image image;
 	private final Shape hitbox;
 
@@ -27,10 +25,12 @@ public class ShooterMonster extends Monster {
 	public EntityState state;
 	public float maxvel = 2;
 
-	private float time = 0;
-	private final float reset = 5000;
+	public float playerDist;
+	public float pullSpeed = .15f;
+	public final float scalePullRadius = 3f;
+	public float pullRadius;
 
-	public ShooterMonster(float ix, float iy) {
+	public PullMonster(float ix, float iy) {
 
 		this.collideDoDamage = 5f;
 		this.collideTakeDamage = this.health;
@@ -38,16 +38,19 @@ public class ShooterMonster extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 25;
-		this.health = 25;
-		
+		this.maxHealth = 30;
+		this.health = 30;
+
 		if (image == null) {
-			image = ResourceManager.getSpriteSheet("monsters_circle")
-					.getSubImage(1, 0).getScaledCopy(0.75f);
+			image = ResourceManager.getSpriteSheet("monsters_circle") // CHANGE
+																		// THIS
+					.getSubImage(4, 0).getScaledCopy(1.25f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+
+		pullRadius = maxHealth / scalePullRadius + 100;
 	}
 
 	@Override
@@ -67,12 +70,31 @@ public class ShooterMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.pos = this.pos.add(this.vel);
+		pullRadius = this.health / scalePullRadius + 100;
+		Vector2f distance = gs.player.pos.copy().sub(this.pos.copy());
+		playerDist = (float) Math.sqrt(Math.pow(distance.x, 2)
+				+ Math.pow(distance.y, 2));
+		Vector2f scaling = distance.normalise().scale(pullSpeed);
 
-		this.time += delta;
-		if (this.time >= this.reset) {
-			this.time = 0;
-			gs.addEntity(new MonsterBullet(this.pos, gs.player.pos, 3.5f));
+		switch (this.state) {
+		case ALIVE:
+			break;
+		case DEAD:
+			break;
+		case DYING:
+			pullSpeed = pullSpeed / 2;
+			break;
+		case SPAWNING:
+			break;
+		case STUNNED:
+			break;
+		default:
+			break;
+		}
+
+		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise().scale(0.2f);
+		if (playerDist < pullRadius) {
+			gs.player.vel = gs.player.vel.copy().sub(scaling);
 		}
 
 		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
@@ -83,6 +105,8 @@ public class ShooterMonster extends Monster {
 
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
+
+		this.pos = this.pos.add(this.vel);
 
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);

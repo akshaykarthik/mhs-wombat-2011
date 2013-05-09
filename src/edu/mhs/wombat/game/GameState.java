@@ -8,6 +8,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
+import edu.mhs.wombat.game.data.monsters.PullMonster;
 import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
 import edu.mhs.wombat.game.data.monsters.ShooterMonster;
 import edu.mhs.wombat.utils.Globals;
@@ -32,11 +33,15 @@ public class GameState extends BasicGameState {
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
 		if (this.firstTime) {
+<<<<<<< HEAD
 			int NUMTEST = 10;
+=======
+			int NUMTEST = 4;
+>>>>>>> Pull Monsters + HP for Shooters
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
 				for (int j = 0; j < sqrtNumTest; j++) {
-					this.gs.addEntity(new ShooterMonster(i
+					this.gs.addEntity(new PullMonster(i
 							* Globals.ARENA_WIDTH / sqrtNumTest, j
 							* Globals.ARENA_HEIGHT / sqrtNumTest));
 				}
