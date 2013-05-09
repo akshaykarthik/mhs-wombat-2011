@@ -72,7 +72,7 @@ public class MineBullet extends Bullet {
 	public void render(StateBasedGame game, Graphics g) {
 		g.setColor(Color.red);
 
-		image.rotate(0.5f);
+		image.rotate(0.25f);
 		if (Globals.isInField(this.pos))
 			image.drawCentered(this.pos.x, this.pos.y);
 		g.setColor(Color.white);
