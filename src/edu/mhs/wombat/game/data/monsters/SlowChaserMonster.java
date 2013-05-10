@@ -29,6 +29,10 @@ public class SlowChaserMonster extends Monster {
 		this.health = 20;
 	}
 
+	public SlowChaserMonster(Vector2f pos2) {
+		this(pos2.x, pos2.y);
+	}
+
 	@Override
 	public EntityState getState() {
 		return this.state;

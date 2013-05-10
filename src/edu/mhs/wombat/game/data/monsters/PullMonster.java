@@ -59,6 +59,10 @@ public class PullMonster extends Monster {
 				+ this.basePullRadius);
 	}
 
+	public PullMonster(Vector2f pos) {
+		this(pos.x, pos.y);
+	}
+
 	@Override
 	public EntityState getState() {
 		return this.state;

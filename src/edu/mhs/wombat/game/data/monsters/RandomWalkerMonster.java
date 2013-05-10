@@ -25,6 +25,10 @@ public class RandomWalkerMonster extends Monster {
 	public EntityState state;
 	public float maxvel = 2;
 
+	public RandomWalkerMonster(Vector2f pos) {
+		this(pos.x, pos.y);
+	}
+
 	public RandomWalkerMonster(float ix, float iy) {
 
 		this.collideDoDamage = 0.5f;

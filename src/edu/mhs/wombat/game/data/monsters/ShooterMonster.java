@@ -40,7 +40,7 @@ public class ShooterMonster extends Monster {
 		this.vel = new Vector2f(0, 0);
 		this.maxHealth = 25;
 		this.health = 25;
-		
+
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
 					.getSubImage(1, 0).getScaledCopy(0.75f);
@@ -48,6 +48,10 @@ public class ShooterMonster extends Monster {
 					image.getHeight() / 2f);
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+	}
+
+	public ShooterMonster(Vector2f pos) {
+		this(pos.x, pos.y);
 	}
 
 	@Override
