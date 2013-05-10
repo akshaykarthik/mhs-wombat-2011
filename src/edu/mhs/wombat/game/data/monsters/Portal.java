@@ -71,11 +71,12 @@ public class Portal extends Monster {
 			this.time = 0;
 			double val = Math.random();
 			/* @formatter:off */
-			Entity es = (val < 0.45) ?  new RandomWalkerMonster(this.pos) : // 45 %
-				 		(val < 0.65) ?  new SlowChaserMonster(this.pos) :	// 20 %
-				 		(val < 0.85) ?  new ShooterMonster(this.pos):  		// 20%
-				 		(val < 0.99) ?  new PullMonster(this.pos):			// 15%
-				 						null;
+			Entity es = (val < 0.450) ?  new RandomWalkerMonster(this.pos) :// 45 %
+				 		(val < 0.650) ?  new SlowChaserMonster(this.pos) :	// 20 %
+				 		(val < 0.850) ?  new ShooterMonster(this.pos):  	// 20%
+				 		(val < 0.925) ?  new PullMonster(this.pos):			// 7.5%
+				 		(val < 1.000) ?  new PushMonster(this.pos):			// 7.5%
+				 						 null;
 			/* @formatter:on */
 			if (es != null) {
 				gs.addEntity(es);
