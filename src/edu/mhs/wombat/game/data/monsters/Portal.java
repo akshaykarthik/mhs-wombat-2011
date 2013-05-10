@@ -40,7 +40,7 @@ public class Portal extends Monster {
 		this.pos = new Vector2f(ix, iy);
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
-					.getSubImage(3, 0).getScaledCopy(0.5f);
+					.getSubImage(3, 0).getScaledCopy(0.8f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
@@ -72,7 +72,8 @@ public class Portal extends Monster {
 			double val = Math.random();
 			/* @formatter:off */
 			Entity es = (val < 0.450) ?  new RandomWalkerMonster(this.pos) :// 45 %
-				 		(val < 0.650) ?  new SlowChaserMonster(this.pos) :	// 20 %
+				 		(val < 0.550) ?  new SlowChaserMonster(this.pos) :	// 10 %
+				 		(val < 0.650) ?  new BumperMonster(this.pos) :		// 10%
 				 		(val < 0.850) ?  new ShooterMonster(this.pos):  	// 20%
 				 		(val < 0.925) ?  new PullMonster(this.pos):			// 7.5%
 				 		(val < 1.000) ?  new PushMonster(this.pos):			// 7.5%

@@ -62,10 +62,10 @@ public class EmptyMonster extends Monster {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.pos = this.pos.add(this.vel);
 
-		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
+		if (!MathU.inBounds(this.pos.x, 1, Globals.ARENA_WIDTH - 1))
 			this.vel.x *= -1;
 
-		if (!MathU.inBounds(this.pos.y, 0, Globals.ARENA_WIDTH))
+		if (!MathU.inBounds(this.pos.y, 1, Globals.ARENA_HEIGHT - 1))
 			this.vel.y *= -1;
 
 		if (!Globals.isInField(this.pos))

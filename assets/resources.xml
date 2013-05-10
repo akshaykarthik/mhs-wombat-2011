@@ -28,6 +28,7 @@
 	<sheet key="weps_bomb" file="weps/bomb.png" width="32" height="32"/>
 	<image key="weps_piercing" file="weps/piercing.png"/>
 	<sheet key="monsters_circle" file="monsters/circle_monster.png" width="32" height="32"/>
+	<sheet key="monsters_square" file ="monsters/square_monster.png" width="32" height="32"/>
 	<group name="fonts">
 		<unicodefont key="font20" file="fonts/AliquamREG.ttf" fontSize="20" />
 		<unicodefont key="font40" file="fonts/AliquamREG.ttf" fontSize="40" />

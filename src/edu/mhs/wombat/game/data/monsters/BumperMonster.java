@@ -11,47 +11,46 @@ import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
 import edu.mhs.wombat.game.data.bullets.Bullet;
-import edu.mhs.wombat.game.data.monsterbullet.MonsterBullet;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.MathU;
 import edu.mhs.wombat.utils.ResourceManager;
 
-public class ShooterMonster extends Monster {
-
+public class BumperMonster extends Monster {
 	private static Image image;
 	private final Shape hitbox;
 
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	public float maxvel = 2;
+	public float maxvel = 8;
 
-	private float time = 0;
-	private final float reset = 5000;
+	public BumperMonster(float ix, float iy) {
 
-	public ShooterMonster(float ix, float iy) {
-
-		this.collideDoDamage = 5f;
+		this.collideDoDamage = 2f;
 		this.collideTakeDamage = this.health;
 
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
-		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 25;
-		this.health = 25;
+		this.vel = new Vector2f((float) Math.random() * Globals.ARENA_WIDTH,
+				(float) Math.random() * Globals.ARENA_HEIGHT)
+				.sub(this.pos.copy()).normalise().scale(maxvel);
 
 		if (image == null) {
-			image = ResourceManager.getSpriteSheet("monsters_circle")
-					.getSubImage(1, 0).getScaledCopy(0.75f);
+			image = ResourceManager.getSpriteSheet("monsters_square") // CHANGE
+																		// THIS
+					.getSubImage(0, 0).getScaledCopy(1f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+
+		this.maxHealth = 20;
+		this.health = 20;
 	}
 
-	public ShooterMonster(Vector2f pos) {
-		this(pos.x, pos.y);
+	public BumperMonster(Vector2f pos2) {
+		this(pos2.x, pos2.y);
 	}
 
 	@Override
@@ -71,13 +70,10 @@ public class ShooterMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.pos = this.pos.add(this.vel);
+		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.50 : .50)));
+		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.50 : .50)));
 
-		this.time += delta;
-		if (this.time >= this.reset) {
-			this.time = 0;
-			gs.addEntity(new MonsterBullet(this.pos, gs.player.pos, 3.5f));
-		}
+		this.pos = this.pos.add(this.vel);
 
 		if (!MathU.inBounds(this.pos.x, 1, Globals.ARENA_WIDTH - 1))
 			this.vel.x *= -1;

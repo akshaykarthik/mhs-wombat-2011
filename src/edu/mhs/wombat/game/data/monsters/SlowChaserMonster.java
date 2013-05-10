@@ -70,10 +70,10 @@ public class SlowChaserMonster extends Monster {
 		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise();
 		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.50 : .50)));
 		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.50 : .50)));
-		if (!MathU.inBounds(this.pos.x, 0, Globals.ARENA_WIDTH))
+		if (!MathU.inBounds(this.pos.x, 1, Globals.ARENA_WIDTH - 1))
 			this.vel.x *= -1;
 
-		if (!MathU.inBounds(this.pos.y, 0, Globals.ARENA_WIDTH))
+		if (!MathU.inBounds(this.pos.y, 1, Globals.ARENA_HEIGHT - 1))
 			this.vel.y *= -1;
 
 		this.pos.add(this.vel.copy().scale(moveScale));
