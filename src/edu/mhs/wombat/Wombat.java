@@ -40,10 +40,10 @@ public class Wombat extends StateBasedGame {
 	}
 
 	/**
-	 * Entry point to our test
+	 * Entry point to our Game
 	 * 
 	 * @param argv
-	 *            The arguments to pass into the test
+	 *            The arguments to pass into the Game
 	 */
 	public static void main(String[] argv) {
 		try {

@@ -16,9 +16,10 @@ public class GameStatus {
 	public Player player;
 	public ArrayList<Entity> entities;
 	public HighScoreSystem scores;
+	public LevelManager levelManager;
+
 	private final ArrayList<Entity> markForAdd;
 	private final ArrayList<Entity> markForRemove;
-	private final LevelManager levelManager;
 
 	public GameStatus() {
 		this.player = new Player();
@@ -28,7 +29,7 @@ public class GameStatus {
 		this.entities = new ArrayList<Entity>();
 		this.markForAdd = new ArrayList<Entity>();
 		this.markForRemove = new ArrayList<Entity>();
-		this.levelManager = new LevelManager(this);
+		this.levelManager = new LevelManager();
 	}
 
 	public void addEntity(Entity ei) {
@@ -75,9 +76,16 @@ public class GameStatus {
 			}
 		}
 		this.player.render(game, g);
-
 		if (Globals.GAME_DEBUG) {
 			g.draw(this.player.getHitBox());
 		}
+	}
+
+	public void clear() {
+		for (Entity e : this.entities) {
+			e.close(this);
+		}
+		this.entities.clear();
+
 	}
 }

@@ -31,7 +31,7 @@ public class GameState extends BasicGameState {
 
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) {
-		if (this.firstTime) {
+		/*if (this.firstTime) {
 			int NUMTEST = 4;
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
 			for (int i = 0; i < sqrtNumTest; i++) {
@@ -42,7 +42,7 @@ public class GameState extends BasicGameState {
 				}
 			}
 			this.firstTime = false;
-		}
+		}*/
 
 	}
 
@@ -117,7 +117,7 @@ public class GameState extends BasicGameState {
 		}
 
 		if (key == Input.KEY_F12) {
-			this.gs.entities.clear();
+			this.gs.clear();
 		}
 		if (key == Input.KEY_F11) {
 			for (int i = 0; i < 100; i++) {

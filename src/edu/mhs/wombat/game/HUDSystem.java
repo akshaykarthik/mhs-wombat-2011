@@ -92,9 +92,10 @@ public class HUDSystem {
 
 	public void render(StateBasedGame game, GameStatus gs, Graphics g) {
 		g.setFont(ResourceManager.getFont("font20"));
-		g.drawString("score : " + gs.scores.getScore(), 10, 70);
-		g.drawString("multiplier : " + gs.scores.getMultiplier(), 10, 90);
-		g.drawString("weapon : " + gs.player.weps.getName(), 10, 110);
+		g.drawString("level : " + gs.levelManager.difficulty, 10, 70);
+		g.drawString("score : " + gs.scores.getScore(), 10, 90);
+		g.drawString("multiplier : " + gs.scores.getMultiplier(), 10, 110);
+		g.drawString("weapon : " + gs.player.weps.getName(), 10, 130);
 		this.drawHealthBarPlayer(gs, g);
 		this.drawEnergyBarPlayer(gs, g);
 

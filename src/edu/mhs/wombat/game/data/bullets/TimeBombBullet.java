@@ -12,18 +12,24 @@ import org.newdawn.slick.state.StateBasedGame;
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.core.Entity;
 import edu.mhs.wombat.game.core.EntityState;
+import edu.mhs.wombat.game.data.monsters.BumperMonster;
+import edu.mhs.wombat.game.data.monsters.PullMonster;
+import edu.mhs.wombat.game.data.monsters.PushMonster;
+import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
+import edu.mhs.wombat.game.data.monsters.ShooterMonster;
+import edu.mhs.wombat.game.data.monsters.SlowChaserMonster;
 import edu.mhs.wombat.game.data.player.Player;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
+import edu.mhs.wombat.utils.Timer;
 
 public class TimeBombBullet extends Bullet {
 	private Vector2f pos;
 	private final Vector2f vel;
 	private EntityState state;
 
-	private final int bomb = 2000;
-	private int time = 0;
-
+	private Timer timer;
+	
 	private final float subDamage = 10;
 	private final int projectiles = 30;
 
@@ -43,6 +49,7 @@ public class TimeBombBullet extends Bullet {
 			image4 = bomb.getSubImage(3, 0);
 			image = image1;
 		}
+		this.timer = new Timer(2000, true);
 		this.hitbox = new Rectangle(source.x, source.y, 15, 15);
 		this.pos = source.copy();
 		Vector2f norm = target.copy().sub(this.pos.copy());
@@ -68,24 +75,20 @@ public class TimeBombBullet extends Bullet {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.time += delta;
-		if (this.time >= this.bomb) {
+		timer.update(delta);
+		if(timer.isComplete()){
 			this.state = EntityState.DYING;
 		}
 
-		float fourth = this.bomb / 4;
-		if (this.time < fourth) {
-			image = image1;
-		} else if (this.time > fourth && this.time < 2 * fourth) {
-			image = image2;
-		} else if (this.time > 2 * fourth && this.time < 3 * fourth) {
-			image = image3;
-		} else {
-			image = image4;
-		}
-
-		this.pos = this.pos.add(this.vel.copy().scale(
-				(this.bomb - this.time) / this.bomb));
+		float percent = timer.percent();
+		
+		/* @formatter:off */
+		image = (percent < 0.25) ?  image1:
+			 	(percent < 0.50) ?  image2:
+			 	(percent < 0.75) ?  image3:
+			 						image4;
+		/* @formatter:on */
+	
 
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);

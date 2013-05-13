@@ -1,8 +1,9 @@
 package edu.mhs.wombat.game.data.monsters;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -25,6 +26,7 @@ public class Portal extends Monster {
 
 	private final float timer;
 	private float time;
+	private Vector2f playerPos = new Vector2f();
 
 	public Portal(float ix, float iy, float itimer) {
 		this.maxHealth = 100;
@@ -39,12 +41,13 @@ public class Portal extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		if (image == null) {
-			image = ResourceManager.getSpriteSheet("monsters_circle")
-					.getSubImage(3, 0).getScaledCopy(0.8f);
+			image = ResourceManager.getSpriteSheet("monsters_square")
+					.getSubImage(3, 0).getScaledCopy(1.8f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
-		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+		this.hitbox = new Rectangle(this.pos.x, this.pos.y, image.getWidth(),
+				image.getHeight());
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);
 	}
@@ -66,6 +69,7 @@ public class Portal extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
+		this.playerPos = gs.player.pos.copy();
 		this.time += delta;
 		if (this.time > this.timer) {
 			this.time = 0;
@@ -99,12 +103,16 @@ public class Portal extends Monster {
 		image.drawCentered(this.pos.x, this.pos.y);
 		Shape shape = this.hitbox;
 		Vector2f pos = this.pos;
-		float timer = (this.health / this.maxHealth);
-		float timerX = pos.x - shape.getWidth() / 2;
-		float timerY = pos.y - shape.getHeight();
-		g.fillRect(timerX, timerY, MathU.clamp(timer, 0, 1) * image.getWidth(),
-				2);
-		g.drawRect(timerX, timerY, image.getWidth(), 2);
+		float health = (this.health / this.maxHealth);
+		float healthX = pos.x - shape.getWidth() / 2;
+		float healthY = pos.y - shape.getHeight();
+		float healthHeight = 3;
+		g.fillRect(healthX, healthY,
+				MathU.clamp(health, 0, 1) * image.getWidth(), healthHeight);
+		g.drawRect(healthX, healthY, image.getWidth(), healthHeight);
+		g.setColor(new Color(0.4f, 0.4f, 0.4f, 0.4f));
+		g.drawLine(playerPos.x, playerPos.y, pos.x, pos.y);
+		g.setColor(Color.white);d
 	}
 
 	@Override

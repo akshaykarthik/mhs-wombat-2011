@@ -2,31 +2,21 @@ package edu.mhs.wombat.utils;
 
 public class Timer {
 	private float current;
-	private boolean repeat;
 	private boolean started;
 	private float target;
 
 	public Timer(float target) {
-		this(target, true, false);
+		this(target, true);
 	}
 
 	public Timer(float target, boolean startImmediately) {
-		this(target, startImmediately, false);
-	}
-
-	public Timer(float target, boolean startImmediately, boolean repeat) {
 		this.target = target;
 		this.started = startImmediately;
-		this.repeat = repeat;
 	}
 
-	public void update(int delta) {
+	public void update(float delta) {
 		if (this.started) {
 			this.current += delta;
-
-			if (this.repeat && this.current > this.target) {
-				this.current = 0;
-			}
 		}
 	}
 
@@ -35,16 +25,21 @@ public class Timer {
 	}
 
 	public void reset() {
+		this.started = false;
 		this.current = 0;
-		this.target = 0;
 	}
 
-	public boolean isRepeat() {
-		return this.repeat;
+	public void resetAndStart() {
+		this.started = true;
+		this.current = 0;
 	}
 
-	public void setRepeat(boolean repeat) {
-		this.repeat = repeat;
+	public float percent() {
+		if (target != 0) {
+			return current / target;
+		} else {
+			return -1;
+		}
 	}
 
 	public boolean isStarted() {
