@@ -83,7 +83,6 @@ public class SmallExplosion extends Bullet {
 		this.hitbox = new Circle(this.pos.x, this.pos.y,
 				(float) (maxRadius * Math.sin((Math.PI * this.time)
 						/ this.reset)));
-		System.out.println(this.hitbox.radius);
 
 	}
 

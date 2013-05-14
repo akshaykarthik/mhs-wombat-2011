@@ -27,12 +27,16 @@ public class Portal extends Monster {
 	private final float timer;
 	private float time;
 	private Vector2f playerPos = new Vector2f();
+	private float difficulty;
 
-	public Portal(float ix, float iy, float itimer) {
-		this.maxHealth = 100;
-		this.health = 100;
+	private boolean new_level = true;
 
-		this.timer = itimer;
+	public Portal(float ix, float iy, float difficulty) {
+		this.difficulty = difficulty;
+		this.maxHealth = 100 + 50 * difficulty;
+		this.health = maxHealth;
+
+		this.timer = MathU.clamp(2000 - difficulty * 10f, 100, 2000);
 		this.time = 0;
 
 		this.collideDoDamage = 0.5f;
@@ -71,23 +75,39 @@ public class Portal extends Monster {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.playerPos = gs.player.pos.copy();
 		this.time += delta;
+		this.image.rotate(delta / 1000f);
 		if (this.time > this.timer) {
 			this.time = 0;
 			double val = Math.random();
-			/* @formatter:off */
-			Entity es = (val < 0.450) ?  new RandomWalkerMonster(this.pos) :// 45 %
-				 		(val < 0.550) ?  new SlowChaserMonster(this.pos) :	// 10 %
-				 		(val < 0.650) ?  new BumperMonster(this.pos) :		// 10%
-				 		(val < 0.850) ?  new ShooterMonster(this.pos):  	// 20%
-				 		(val < 0.925) ?  new PullMonster(this.pos):			// 7.5%
-				 		(val < 1.000) ?  new PushMonster(this.pos):			// 7.5%
-				 						 null;
-			/* @formatter:on */
-			if (es != null) {
-				gs.addEntity(es);
+			System.out.println((int)difficulty);
+			switch ((int) difficulty) {
+			case 3:
+				if(this.new_level){
+					for(int i = 0; i < 40; i++){
+						gs.addEntity(new RandomWalkerMonster(this.pos));
+					}
+				}
+				this.new_level = false;
+				break;
+			default:
+				/* @formatter:off */
+				Entity es = (val < 0.450) ?  new RandomWalkerMonster(this.pos) :// 45 %
+							(val < 0.550) ?  new SlowChaserMonster(this.pos) :	// 10 %
+							(val < 0.650) ?  new BumperMonster(this.pos) :		// 10%
+							(val < 0.850) ?  new ShooterMonster(this.pos):  	// 20%
+							(val < 0.925) ?  new PullMonster(this.pos):		// 7.5%
+							(val < 1.000) ?  new PushMonster(this.pos):		// 7.5%
+											 null;
+				if (es != null) {
+					gs.addEntity(es);
+				}
+				this.new_level = false;
+				/* @formatter:on */
 			}
+
 		}
 
+		
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
 
@@ -103,16 +123,29 @@ public class Portal extends Monster {
 		image.drawCentered(this.pos.x, this.pos.y);
 		Shape shape = this.hitbox;
 		Vector2f pos = this.pos;
+
+		float healthHeight = 3;
 		float health = (this.health / this.maxHealth);
 		float healthX = pos.x - shape.getWidth() / 2;
-		float healthY = pos.y - shape.getHeight();
-		float healthHeight = 3;
+		float healthY = pos.y - shape.getHeight() / 2 - 5 - healthHeight;
+
 		g.fillRect(healthX, healthY,
 				MathU.clamp(health, 0, 1) * image.getWidth(), healthHeight);
 		g.drawRect(healthX, healthY, image.getWidth(), healthHeight);
 		g.setColor(new Color(0.4f, 0.4f, 0.4f, 0.4f));
 		g.drawLine(playerPos.x, playerPos.y, pos.x, pos.y);
-		g.setColor(Color.white);d
+		g.setColor(Color.white);
+
+		float itimer = this.time / this.timer;
+		float timerX = pos.x - shape.getWidth() / 2;
+		float timerY = pos.y + shape.getHeight() / 2 + 5;
+		float timerHeight = 3;
+		g.fillRect(timerX, timerY,
+				MathU.clamp(itimer, 0, 1) * image.getWidth(), timerHeight);
+		g.drawRect(timerX, timerY, image.getWidth(), timerHeight);
+		g.setColor(new Color(0.4f, 0.4f, 0.4f, 0.4f));
+		g.drawLine(playerPos.x, playerPos.y, pos.x, pos.y);
+		g.setColor(Color.white);
 	}
 
 	@Override

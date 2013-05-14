@@ -69,7 +69,6 @@ public class CurveBullet extends Bullet {
 		this.time += delta;
 		this.pos = this.pos.add(this.vel);
 		float angle = 360f;
-		System.out.println(delta);
 		if (this.time < this.wobble) {
 			this.vel = this.vel.add(angle * (delta / 1000f));
 		} else if (this.time < this.reset) {
