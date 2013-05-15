@@ -1,6 +1,7 @@
 package edu.mhs.wombat.game;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -23,12 +24,21 @@ public class LevelManager {
 		if (portal == null || portal.isEmpty()/* state == EntityState.DEAD */) {
 			difficulty++;
 			for (int i = 0; i < difficulty / 4; i++) {
-				float portalx = (float) Math.random() * Globals.ARENA_WIDTH;
-				float portaly = (float) Math.random() * Globals.ARENA_HEIGHT;
-				portal.add(new Portal(portalx, portaly, difficulty));
+//				if (difficulty % 3 == 0) {
+					float portalx = (float) Math.random() * Globals.ARENA_WIDTH;
+					float portaly = (float) Math.random()
+							* Globals.ARENA_HEIGHT;
+					portal.add(new Portal(portalx, portaly, difficulty));
+//				}
 				for (Portal a : portal) {
 					gameStatus.addEntity(a);
 				}
+			}
+		}
+		for(Iterator<Portal> iterator = portal.iterator(); iterator.hasNext(); ){
+			Portal p = iterator.next();
+			if(p.state == EntityState.DEAD){
+				iterator.remove();
 			}
 		}
 
