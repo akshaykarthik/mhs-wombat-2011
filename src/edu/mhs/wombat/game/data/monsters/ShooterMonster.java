@@ -25,7 +25,7 @@ public class ShooterMonster extends Monster {
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	public float maxvel = 2;
+	public float maxvel = .75f;
 
 	private float time = 0;
 	private final float reset = 5000;
@@ -71,7 +71,10 @@ public class ShooterMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.pos = this.pos.add(this.vel);
+		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise();
+		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.20 : .20)));
+		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.20 : .20)));
+		this.pos = this.pos.add(this.vel.copy().scale(maxvel));
 
 		this.time += delta;
 		if (this.time >= this.reset) {
