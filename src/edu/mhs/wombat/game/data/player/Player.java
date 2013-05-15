@@ -36,6 +36,7 @@ public class Player implements Entity {
 	private final Input input = new Input(Globals.HEIGHT);
 
 	public WeaponSystem weps = new WeaponSystem();
+	public WeaponSystem specialWeps = new WeaponSystem();	
 
 	public Image image;
 	public Image image2;
@@ -58,7 +59,10 @@ public class Player implements Entity {
 			this.weps.update(delta);
 			if (Mouse.isButtonDown(0)) {
 				this.weps.fire(gs);
+			} else if(Mouse.isButtonDown(1)){
+				this.specialWeps.fire(gs);
 			}
+			
 			float eps = 5;
 			float hps = 0.5f;
 			this.energy += eps * (delta / 1000f);

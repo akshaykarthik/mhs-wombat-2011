@@ -85,8 +85,12 @@ public class GameState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		this.hs.update(game, this.gs, delta);
-		if (!this.paused)
+		if (!this.paused){
 			this.gs.update(game, delta);
+		}
+		if(gs.player.health <= 0){
+			StateUtils.switchTo(this.gm, States.DEFEAT);
+		}
 	}
 
 	@Override

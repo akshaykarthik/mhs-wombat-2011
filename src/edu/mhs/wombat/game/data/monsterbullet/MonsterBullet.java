@@ -21,7 +21,7 @@ public class MonsterBullet implements Entity {
 	private final Vector2f vel;
 	private EntityState state;
 
-	private float damage = 1;
+	private float damage = 10;
 
 	private static Image image;
 	private final Shape hitbox;;
