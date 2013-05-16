@@ -70,10 +70,19 @@ public class BumperMonster extends Monster {
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -.50 : .50)));
-		this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -.50 : .50)));
-
+		float vr = 1.0f; // was 0.5f
+		this.vel.x = (float) (this.vel.x + (Math.random() < 0.5 ? -vr : vr));
+		this.vel.y = (float) (this.vel.y + (Math.random() < 0.5 ? -vr : vr));
 		this.pos = this.pos.add(this.vel);
+		
+		if (this.vel.length() > this.maxvel)
+			this.vel.normalise().scale(this.maxvel);
+		
+		this.hitbox.setCenterX(this.pos.x);
+		this.hitbox.setCenterY(this.pos.y);
+		
+
+
 
 		if (!MathU.inBounds(this.pos.x, 1, Globals.ARENA_WIDTH - 1))
 			this.vel.x *= -1;
@@ -83,12 +92,6 @@ public class BumperMonster extends Monster {
 
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
-
-		this.hitbox.setCenterX(this.pos.x);
-		this.hitbox.setCenterY(this.pos.y);
-
-		if (this.vel.length() > this.maxvel)
-			this.vel.normalise().scale(this.maxvel);
 	}
 
 	@Override
@@ -120,7 +123,7 @@ public class BumperMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10);
+		gs.scores.addPoints(10, gs);
 	}
 
 }

@@ -1,5 +1,7 @@
 package edu.mhs.wombat.utils.data;
 
+import edu.mhs.wombat.game.GameStatus;
+
 public class HighScoreSystem {
 	private int current_score = 0;
 	private int multiplier = 1;
@@ -16,8 +18,9 @@ public class HighScoreSystem {
 		return this.current_score;
 	}
 
-	public void addPoints(int i) {
-		this.current_score += this.multiplier * i;
+	public void addPoints(int i, GameStatus gs) {
+		this.current_score += this.multiplier * i * gs.levelManager.difficulty
+				/ 2f;
 	}
 
 	public void reset() {

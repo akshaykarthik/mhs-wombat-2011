@@ -41,7 +41,5 @@ public class LevelManager {
 				iterator.remove();
 			}
 		}
-
 	}
-
 }

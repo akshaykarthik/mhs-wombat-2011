@@ -168,7 +168,7 @@ public class PullMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10);
+		gs.scores.addPoints(10, gs);
 	}
 
 }

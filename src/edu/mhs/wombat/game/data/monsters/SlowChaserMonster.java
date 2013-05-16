@@ -114,7 +114,7 @@ public class SlowChaserMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(100);
+		gs.scores.addPoints(100, gs);
 	}
 
 }

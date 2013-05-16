@@ -44,6 +44,7 @@ public class Portal extends Monster {
 
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
+		
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_square")
 					.getSubImage(3, 0).getScaledCopy(1.8f);
@@ -57,29 +58,23 @@ public class Portal extends Monster {
 	}
 
 	@Override
-	public EntityState getState() {
-		return this.state;
-	}
-
-	@Override
-	public void setState(EntityState es) {
-		this.state = es;
-	}
-
-	@Override
 	public void init(GameStatus gs) {
+	
+	}
 
+	@Override
+	public void close(GameStatus gs) {
+		gs.scores.addPoints(1000, gs);
 	}
 
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.playerPos = gs.player.pos.copy();
 		this.time += delta;
-		this.image.rotate(delta / 1000f);
+		Portal.image.rotate(delta / 1000f);
 		if (this.time > this.timer) {
 			this.time = 0;
 			double val = Math.random();
-			System.out.println((int)difficulty);
 			switch ((int) difficulty) {
 			case 3:
 				if(this.new_level){
@@ -93,8 +88,8 @@ public class Portal extends Monster {
 				/* @formatter:off */
 				Entity es = (val < 0.450) ?  new RandomWalkerMonster(this.pos) :// 45 %
 							(val < 0.550) ?  new SlowChaserMonster(this.pos) :	// 10 %
-							(val < 0.650) ?  new BumperMonster(this.pos) :		// 10%
-							(val < 0.850) ?  new ShooterMonster(this.pos):  	// 20%
+							(val < 0.650) ?  new BumperMonster(this.pos) :	// 10%
+							(val < 0.850) ?  new ShooterMonster(this.pos):  // 20%
 							(val < 0.925) ?  new PullMonster(this.pos):		// 7.5%
 							(val < 1.000) ?  new PushMonster(this.pos):		// 7.5%
 											 null;
@@ -104,18 +99,13 @@ public class Portal extends Monster {
 				this.new_level = false;
 				/* @formatter:on */
 			}
-
+	
 		}
-
+	
 		
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
-
-	}
-
-	@Override
-	public Shape getHitBox() {
-		return this.hitbox;
+	
 	}
 
 	@Override
@@ -123,19 +113,19 @@ public class Portal extends Monster {
 		image.drawCentered(this.pos.x, this.pos.y);
 		Shape shape = this.hitbox;
 		Vector2f pos = this.pos;
-
+	
 		float healthHeight = 3;
 		float health = (this.health / this.maxHealth);
 		float healthX = pos.x - shape.getWidth() / 2;
 		float healthY = pos.y - shape.getHeight() / 2 - 5 - healthHeight;
-
+	
 		g.fillRect(healthX, healthY,
 				MathU.clamp(health, 0, 1) * image.getWidth(), healthHeight);
 		g.drawRect(healthX, healthY, image.getWidth(), healthHeight);
 		g.setColor(new Color(0.4f, 0.4f, 0.4f, 0.4f));
 		g.drawLine(playerPos.x, playerPos.y, pos.x, pos.y);
 		g.setColor(Color.white);
-
+	
 		float itimer = this.time / this.timer;
 		float timerX = pos.x - shape.getWidth() / 2;
 		float timerY = pos.y + shape.getHeight() / 2 + 5;
@@ -156,18 +146,29 @@ public class Portal extends Monster {
 	}
 
 	@Override
-	public Vector2f getPos() {
-		return this.pos;
-	}
-
-	@Override
 	public void playerCollide(Player a) {
 		this.takeDamage(this.collideTakeDamage);
 	}
 
 	@Override
-	public void close(GameStatus gs) {
-		gs.scores.addPoints(10);
+	public EntityState getState() {
+		return this.state;
+	}
+
+	@Override
+	public void setState(EntityState es) {
+		this.state = es;
+	}
+
+
+	@Override
+	public Vector2f getPos() {
+		return this.pos;
+	}
+
+	@Override
+	public Shape getHitBox() {
+		return this.hitbox;
 	}
 
 }
