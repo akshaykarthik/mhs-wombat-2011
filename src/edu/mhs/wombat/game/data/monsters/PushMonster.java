@@ -86,6 +86,9 @@ public class PushMonster extends Monster {
 		this.pushCircle.setCenterX(this.pos.x);
 		this.pushCircle.setCenterY(this.pos.y);
 
+		this.maxHealth = _MonsterData.Push_Health;
+		this.health = this.maxHealth;
+		
 		this.pushCircle.setRadius(this.pushRadius
 				* (this.health / this.maxHealth) + this.basepushRadius);
 
@@ -168,7 +171,7 @@ public class PushMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10, gs);
+		gs.scores.addPoints(_MonsterData.Push_Points, gs);
 	}
 
 }

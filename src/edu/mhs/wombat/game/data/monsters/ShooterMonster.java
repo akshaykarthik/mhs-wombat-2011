@@ -28,7 +28,7 @@ public class ShooterMonster extends Monster {
 	public float maxvel = .75f;
 
 	private float time = 0;
-	private final float reset = 5000;
+	private final float reset = _MonsterData.Shooter_Timer;
 
 	public ShooterMonster(float ix, float iy) {
 
@@ -38,8 +38,8 @@ public class ShooterMonster extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 25;
-		this.health = 25;
+		this.maxHealth = _MonsterData.Shooter_Health;
+		this.health = this.maxHealth;
 
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
@@ -127,7 +127,7 @@ public class ShooterMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10, gs);
+		gs.scores.addPoints(_MonsterData.Shooter_Points, gs);
 	}
 
 }

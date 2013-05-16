@@ -20,7 +20,7 @@ public class ShrapnelBullet extends Bullet {
 	private final Vector2f vel;
 	private EntityState state;
 
-	private float damage = 1;
+	private float damage = _BulletData.Shrapnel_Damage;
 
 	private static Image image;
 	private final Shape hitbox;;

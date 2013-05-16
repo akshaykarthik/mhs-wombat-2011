@@ -44,6 +44,8 @@ public class RandomWalkerMonster extends Monster {
 					image.getHeight() / 2f);
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
+		this.maxHealth = _MonsterData.RandomWalker_Health;
+		this.health = this.maxHealth;
 	}
 
 	@Override
@@ -112,7 +114,7 @@ public class RandomWalkerMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10, gs);
+		gs.scores.addPoints(_MonsterData.RandomWalker_Points, gs);
 	}
 
 }

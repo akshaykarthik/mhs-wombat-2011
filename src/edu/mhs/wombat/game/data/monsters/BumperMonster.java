@@ -45,8 +45,8 @@ public class BumperMonster extends Monster {
 		}
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
 
-		this.maxHealth = 20;
-		this.health = 20;
+		this.maxHealth = _MonsterData.Bumper_Health;
+		this.health = this.maxHealth;
 	}
 
 	public BumperMonster(Vector2f pos2) {
@@ -123,7 +123,7 @@ public class BumperMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10, gs);
+		gs.scores.addPoints(_MonsterData.Bumper_Points, gs);
 	}
 
 }

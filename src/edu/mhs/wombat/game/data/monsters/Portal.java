@@ -33,7 +33,7 @@ public class Portal extends Monster {
 
 	public Portal(float ix, float iy, float difficulty) {
 		this.difficulty = difficulty;
-		this.maxHealth = 100 + 50 * difficulty;
+		this.maxHealth = 250 + 25 * difficulty;
 		this.health = maxHealth;
 
 		this.timer = MathU.clamp(2000 - difficulty * 10f, 100, 2000);

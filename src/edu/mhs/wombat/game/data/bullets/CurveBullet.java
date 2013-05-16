@@ -22,7 +22,7 @@ public class CurveBullet extends Bullet {
 	private static Image image;
 	private final Shape hitbox;
 
-	private float damage = 5;
+	private float damage = _BulletData.Curve_Damage;
 	private float time = 0;
 	private final float wobble = 500;
 	private final float reset = 1000;

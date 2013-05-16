@@ -25,8 +25,8 @@ public class SlowChaserMonster extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 20;
-		this.health = 20;
+		this.maxHealth = _MonsterData.SlowChaser_Health;
+		this.health = this.maxHealth;
 	}
 
 	public SlowChaserMonster(Vector2f pos2) {
@@ -114,7 +114,7 @@ public class SlowChaserMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(100, gs);
+		gs.scores.addPoints(_MonsterData.SlowChaser_Points, gs);
 	}
 
 }

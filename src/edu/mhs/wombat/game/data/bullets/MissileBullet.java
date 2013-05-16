@@ -102,7 +102,7 @@ public class MissileBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 10;
+		return _BulletData.Missile_Damage;
 	}
 
 	@Override

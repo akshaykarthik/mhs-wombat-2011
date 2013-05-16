@@ -44,8 +44,8 @@ public class PullMonster extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 30;
-		this.health = 30;
+		this.maxHealth = _MonsterData.Pull_Health;
+		this.health = this.maxHealth;
 
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
@@ -168,7 +168,7 @@ public class PullMonster extends Monster {
 
 	@Override
 	public void close(GameStatus gs) {
-		gs.scores.addPoints(10, gs);
+		gs.scores.addPoints(_MonsterData.Pull_Points, gs);
 	}
 
 }

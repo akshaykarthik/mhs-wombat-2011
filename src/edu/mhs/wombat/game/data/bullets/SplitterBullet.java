@@ -58,28 +58,19 @@ public class SplitterBullet extends Bullet {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.pos = this.pos.add(this.vel);
 
+		float splitterDamage = _BulletData.SplitterSplit_Damage;
+
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);
 		if (!Globals.isInField(this.pos))
 			this.state = EntityState.DEAD;
 
 		if (this.state == EntityState.DYING) {
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(10)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(-10)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(20)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(-20)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(30)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(-30)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(45)), 10));
-			gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
-					this.vel.copy().add(-45)), 10));
+			for (int i = -50; i < 50; i += 10) {
+				gs.addEntity(new LinearBullet(this.pos, this.pos.copy().add(
+						this.vel.copy().add(i)), splitterDamage));
+			}
+
 			this.state = EntityState.DEAD;
 		}
 	}
@@ -117,7 +108,7 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 1;
+		return _BulletData.Splitter_Damage;
 	}
 
 	@Override

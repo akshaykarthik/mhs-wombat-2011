@@ -103,7 +103,7 @@ public class MineBullet extends Bullet {
 
 	@Override
 	public float getDamage() {
-		return 100;
+		return _BulletData.Mine_Damage;
 	}
 
 	@Override
