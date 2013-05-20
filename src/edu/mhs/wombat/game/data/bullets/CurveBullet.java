@@ -76,6 +76,8 @@ public class CurveBullet extends Bullet {
 		} else {
 			this.time = 0;
 		}
+		
+		this.hitbox.setLocation(new Vector2f(0, 0));
 
 		this.hitbox.setCenterX(this.pos.x);
 		this.hitbox.setCenterY(this.pos.y);
@@ -87,7 +89,7 @@ public class CurveBullet extends Bullet {
 	public void render(StateBasedGame game, Graphics g) {
 		image.setRotation((float) this.vel.getTheta());
 		if (Globals.isInField(this.pos)) {
-			this.image.drawCentered(this.pos.x, this.pos.y);
+			CurveBullet.image.drawCentered(this.pos.x, this.pos.y);
 		}
 	}
 

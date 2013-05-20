@@ -22,7 +22,7 @@ public class SmallExplosion extends Bullet {
 	private final Vector2f pos;
 	private EntityState state;
 
-	private final float damage = 100f / 60f;
+	private float damage = 100f / 60f;
 
 	private static Image image;
 	private Circle hitbox;
@@ -33,7 +33,8 @@ public class SmallExplosion extends Bullet {
 
 	private static Image[] images = new Image[10];
 
-	public SmallExplosion(Vector2f pos, float rtime) {
+	public SmallExplosion(Vector2f pos, float rtime, float damage) {
+		this.damage = damage/rtime;
 		this.reset = rtime;
 		if (images[0] == null) {
 			for (int i = 0; i < images.length; i++) {
@@ -48,7 +49,7 @@ public class SmallExplosion extends Bullet {
 	}
 
 	public SmallExplosion(Vector2f pos) {
-		this(pos, 1000);
+		this(pos, 1000, 45);
 	}
 
 	@Override

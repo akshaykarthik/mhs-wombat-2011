@@ -22,6 +22,8 @@ public class MissileBullet extends Bullet {
 	private EntityState state;
 	private static Image image;
 	private final Rectangle shape;
+	
+	private Vector2f ePos;
 
 	public MissileBullet(Vector2f source, Vector2f target, float ivel,
 			float iaccel) {
@@ -64,7 +66,7 @@ public class MissileBullet extends Bullet {
 
 		if (this.state == EntityState.DYING) {
 			this.state = EntityState.DEAD;
-			gs.addEntity(new SmallExplosion(this.pos, 300));
+			gs.addEntity(new SmallExplosion(this.ePos, 300, 50));
 		}
 
 	}
@@ -86,8 +88,10 @@ public class MissileBullet extends Bullet {
 
 	@Override
 	public void collideWith(Entity b) {
-		if (!(b instanceof Bullet))
+		if (!(b instanceof Bullet)){
 			this.state = EntityState.DYING;
+			ePos = b.getPos();
+		}
 	}
 
 	@Override

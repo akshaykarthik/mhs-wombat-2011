@@ -2,7 +2,6 @@ package edu.mhs.wombat.game.data.player;
 
 import edu.mhs.wombat.game.GameStatus;
 import edu.mhs.wombat.game.data.bullets.MineBullet;
-import edu.mhs.wombat.game.data.explosions.SmallExplosion;
 
 public class Weapon_Mine extends Weapon {
 	public Weapon_Mine() {

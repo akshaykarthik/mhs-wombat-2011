@@ -19,7 +19,7 @@ public class SlowChaserMonster extends Monster {
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
-	private final Shape shape = new Polygon(new float[] { 0, 0, 4, 8, 8, 0 });
+	private final Shape shape = new Polygon(new float[] { 0, 0, 8, 16, 16, 0 });
 
 	public SlowChaserMonster(float ix, float iy) {
 		this.state = EntityState.ALIVE;

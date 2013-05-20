@@ -44,8 +44,8 @@ public class PushMonster extends Monster {
 		this.state = EntityState.ALIVE;
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
-		this.maxHealth = 30;
-		this.health = 30;
+		this.maxHealth = _MonsterData.Push_Health;
+		this.health = this.maxHealth;
 
 		if (image == null) {
 			image = ResourceManager.getSpriteSheet("monsters_circle")
@@ -85,9 +85,6 @@ public class PushMonster extends Monster {
 		this.hitbox.setCenterY(this.pos.y);
 		this.pushCircle.setCenterX(this.pos.x);
 		this.pushCircle.setCenterY(this.pos.y);
-
-		this.maxHealth = _MonsterData.Push_Health;
-		this.health = this.maxHealth;
 		
 		this.pushCircle.setRadius(this.pushRadius
 				* (this.health / this.maxHealth) + this.basepushRadius);

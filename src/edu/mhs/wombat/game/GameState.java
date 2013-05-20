@@ -8,7 +8,6 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import edu.mhs.wombat.States;
-import edu.mhs.wombat.game.data.monsters.Portal;
 import edu.mhs.wombat.game.data.monsters.RandomWalkerMonster;
 import edu.mhs.wombat.utils.Globals;
 import edu.mhs.wombat.utils.ResourceManager;
@@ -19,7 +18,6 @@ public class GameState extends BasicGameState {
 	private GameStatus gs;
 	private final HUDSystem hs = new HUDSystem();
 	private boolean paused = false;
-	private boolean firstTime = true;
 
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
