@@ -30,7 +30,7 @@ public class PushMonster extends Monster {
 	public float playerDist;
 	public float pushSpeed = .15f;
 	public float pushRadius = 100f;
-	public float basepushRadius = 50f;
+	public float basePushRadius = 50f;
 
 	private Vector2f scaling = new Vector2f(0, 0);
 	private Vector2f playerPos = new Vector2f(0, 0);
@@ -45,6 +45,8 @@ public class PushMonster extends Monster {
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
 		this.maxHealth = _MonsterData.Push_Health;
+		this.pushRadius = _MonsterData.PushPull_BaseRadius;
+		this.basePushRadius = _MonsterData.PushPull_MinRadius;
 		this.health = this.maxHealth;
 
 		if (image == null) {
@@ -56,7 +58,7 @@ public class PushMonster extends Monster {
 		this.hitbox = new Circle(this.pos.x, this.pos.y, image.getWidth() / 2f);
 
 		this.pushCircle = new Circle(this.pos.x, this.pos.y, this.pushRadius
-				+ this.basepushRadius);
+				+ this.basePushRadius);
 	}
 
 	public PushMonster(Vector2f pos) {
@@ -87,14 +89,14 @@ public class PushMonster extends Monster {
 		this.pushCircle.setCenterY(this.pos.y);
 		
 		this.pushCircle.setRadius(this.pushRadius
-				* (this.health / this.maxHealth) + this.basepushRadius);
+				* (this.health / this.maxHealth) + this.basePushRadius);
 
 		this.pushSpeed = 0.15f * (gs.player.pos.distance(this.pos) / this.pushRadius);
 		Vector2f distance = gs.player.pos.copy().sub(this.pos.copy());
 		this.scaling = distance.normalise().scale(this.pushSpeed);
 
 		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise()
-				.scale(0.2f);
+				.scale(0.5f);
 
 		this.player_in_range = gs.player.shape.intersects(this.pushCircle);
 

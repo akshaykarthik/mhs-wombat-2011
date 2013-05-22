@@ -45,6 +45,8 @@ public class PullMonster extends Monster {
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
 		this.maxHealth = _MonsterData.Pull_Health;
+		this.pullRadius = _MonsterData.PushPull_BaseRadius;
+		this.basePullRadius = _MonsterData.PushPull_MinRadius;
 		this.health = this.maxHealth;
 
 		if (image == null) {
@@ -94,7 +96,7 @@ public class PullMonster extends Monster {
 		this.scaling = distance.normalise().scale(this.pullSpeed);
 
 		this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise()
-				.scale(0.2f);
+				.scale(0.5f);
 
 		this.player_in_range = gs.player.shape.intersects(this.pullCircle);
 
