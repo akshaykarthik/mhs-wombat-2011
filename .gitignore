@@ -50,3 +50,6 @@ dist/
 #################
 *.sublime-project
 *.sublime-workspace
+
+
+Thumbs.db
