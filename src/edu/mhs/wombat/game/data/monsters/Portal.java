@@ -90,7 +90,7 @@ public class Portal extends Monster {
 				Entity es = null;
 				float bag = 0;
 				while (bag <= this.difficulty * 1.0f) {
-					int tempID = (int) (Math.random() * 5);
+					int tempID = (int) Math.floor((Math.random() * 5) + 0.5);
 					System.out.println("looping " + tempID + " " + bag + " " + this.difficulty * 1.0f);
 					if (_MonsterData.getDifficultyOnID(tempID) <= difficulty) {
 						es = _MonsterData.getMonsterOnId(tempID, this.pos);
