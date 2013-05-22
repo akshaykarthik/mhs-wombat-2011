@@ -29,11 +29,14 @@ public class Portal extends Monster {
 	private Timer _timer;
 	private Vector2f playerPos = new Vector2f();
 	private float difficulty;
+	private static float maxSpawnedEntities = 10;
+	private float spawnedEntities = 0;
 
 	private boolean new_level = true;
 
 	public Portal(float ix, float iy, float difficulty) {
 		this.difficulty = difficulty;
+		maxSpawnedEntities = 5 + 2.5f * difficulty;
 		this.maxHealth = 250 + 25 * difficulty;
 		this.health = maxHealth;
 
@@ -71,7 +74,7 @@ public class Portal extends Monster {
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
 		this.playerPos = gs.player.pos.copy();
 		this._timer.update(delta);
-		if (this._timer.isComplete()) {
+		if (this._timer.isComplete() && spawnedEntities < maxSpawnedEntities) {
 			this._timer.resetAndStart();
 			double val = Math.random();
 			switch ((int) difficulty) {
@@ -97,6 +100,7 @@ public class Portal extends Monster {
 					}
 					if (es != null) {
 						gs.addEntity(es);
+						spawnedEntities++;
 					}
 				}
 				/* @formatter:off */

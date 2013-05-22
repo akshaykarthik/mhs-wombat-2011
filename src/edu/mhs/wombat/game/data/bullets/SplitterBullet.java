@@ -29,8 +29,8 @@ public class SplitterBullet extends Bullet {
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
-		this.hitbox = new Rectangle(source.x, source.y, image.getWidth(),
-				image.getHeight());
+		this.hitbox = new Rectangle(source.x, source.y, 18,
+				10);
 		this.pos = source.copy();
 		Vector2f norm = target.copy().sub(this.pos.copy());
 		this.vel = norm.normalise().scale(velocity);
