@@ -66,6 +66,8 @@ public class _MonsterData {
 	public static final float Shooter_Health = 25;
 	public static final float Shooter_Timer = 2500;
 	
+	//MonkeyBossMonster
+	
 
 
 }
