@@ -24,7 +24,9 @@ public class GameState extends BasicGameState {
 			throws SlickException {
 		this.gm = game;
 		this.gs = new GameStatus();
-
+		if(Globals.GAME_DEBUG){
+			this.gs.levelManager.difficulty = 4;
+		}
 	}
 
 	@Override

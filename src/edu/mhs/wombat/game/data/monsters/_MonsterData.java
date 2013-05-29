@@ -16,6 +16,7 @@ public class _MonsterData {
 		case 3: m = new PushMonster(pos); break;
 		case 4: m = new SlowChaserMonster(pos); break;
 		case 5: m = new ShooterMonster(pos); break;
+		case 6: m = new MonkeyBossMonster(pos); break;
 		}
 		/* @formatter:on */
 		return m;
@@ -30,17 +31,18 @@ public class _MonsterData {
 		case 3: return 4; //m = new PushMonster(pos); break;
 		case 4: return 8; //m = new SlowChaserMonster(pos); break;
 		case 5: return 4; //m = new ShooterMonster(pos); break;
+		case 6: return 15;//m = new MonkeyBossMonster(pos); break;
 		default: return 0;
 		}
 		/* @formatter:on */
 	}
 	// walkermonster
-	public static final int RandomWalker_Points = 5;
+	public static final int RandomWalker_Points = 7;
 	public static final float RandomWalker_Health = 10;
 	public static final float RandomWalker_Difficulty = 1;
 	
 	// bumpermonster
-	public static final int Bumper_Points = 10;
+	public static final int Bumper_Points = 35;
 	public static final float Bumper_Health = 20;
 	public static final float Bumper_Difficulty = 3;
 	
@@ -67,7 +69,7 @@ public class _MonsterData {
 	public static final float Shooter_Timer = 2500;
 	
 	//MonkeyBossMonster
-	
-
+	public static final int Monkey_Points = 1200;
+	public static final float Monkey_Health = 450;
 
 }

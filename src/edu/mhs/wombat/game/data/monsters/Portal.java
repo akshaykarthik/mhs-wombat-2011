@@ -25,7 +25,8 @@ public class Portal extends Monster {
 	private static final Color lineColor = new Color(0.4f, 0.4f, 0.4f, 0.4f);
 	public Vector2f pos;
 	public EntityState state;
-
+	
+	private static final float numMonsterTypes = 6;
 	private Timer _timer;
 	private Vector2f playerPos = new Vector2f();
 	private float difficulty;
@@ -86,11 +87,15 @@ public class Portal extends Monster {
 				}
 				this.new_level = false;
 				break;
+			case 5: 
+				if(this.new_level){
+					gs.addEntity(new MonkeyBossMonster(this.pos));
+				}
 			default:
 				Entity es = null;
 				float bag = 0;
 				while (bag <= this.difficulty * 1.0f) {
-					int tempID = (int) Math.floor((Math.random() * 5) + 0.5);
+					int tempID = (int) Math.floor((Math.random() * numMonsterTypes) + 0.5);
 					System.out.println("looping " + tempID + " " + bag + " " + this.difficulty * 1.0f);
 					if (_MonsterData.getDifficultyOnID(tempID) <= difficulty) {
 						es = _MonsterData.getMonsterOnId(tempID, this.pos);

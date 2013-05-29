@@ -21,7 +21,7 @@ public class Wombat extends StateBasedGame {
 	 * Create a new test
 	 */
 	public Wombat() {
-		super("Wombat");
+		super("Bacterium");
 	}
 
 	/**
@@ -48,10 +48,13 @@ public class Wombat extends StateBasedGame {
 	public static void main(String[] argv) {
 		try {
 			AppGameContainer container = new AppGameContainer(new Wombat());
+			container.setResizable(false);
+			
 			container.setDisplayMode(Globals.WIDTH, Globals.HEIGHT, false);
 			container.setTargetFrameRate(Globals.TARGET_FPS);
 			container.setShowFPS(Globals.DEBUG);
 			container.setVerbose(Globals.DEBUG);
+			container.setTitle("Bacterium");
 			container.setVSync(true);
 			container.start();
 		} catch (SlickException e) {
