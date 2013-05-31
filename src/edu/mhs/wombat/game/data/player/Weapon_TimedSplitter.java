@@ -23,7 +23,7 @@ public class Weapon_TimedSplitter extends Weapon {
 
 	@Override
 	public String getName() {
-		return "Timed Shrapnel";
+		return "timed shrapnel";
 	}
 
 }

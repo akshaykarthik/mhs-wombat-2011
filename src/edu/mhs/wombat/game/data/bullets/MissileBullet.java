@@ -66,7 +66,7 @@ public class MissileBullet extends Bullet {
 
 		if (this.state == EntityState.DYING) {
 			this.state = EntityState.DEAD;
-			gs.addEntity(new SmallExplosion(this.ePos, 300, 50));
+			gs.addEntity(new SmallExplosion(this.ePos, 300, 75));
 		}
 
 	}

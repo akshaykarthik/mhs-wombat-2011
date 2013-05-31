@@ -19,7 +19,7 @@ public class Weapon_Basic extends Weapon {
 
 	@Override
 	public String getName() {
-		return "basic weapon";
+		return "pew pew gun";
 	}
 
 }

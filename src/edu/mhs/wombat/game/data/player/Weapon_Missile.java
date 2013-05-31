@@ -25,7 +25,7 @@ public class Weapon_Missile extends Weapon {
 
 	@Override
 	public String getName() {
-		return "Missile";
+		return "missile launcher";
 	}
 
 }

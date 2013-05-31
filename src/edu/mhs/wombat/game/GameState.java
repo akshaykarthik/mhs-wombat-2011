@@ -29,7 +29,7 @@ public class GameState extends BasicGameState {
 		this.gm = game;
 		this.gs = new GameStatus();
 		if(Globals.GAME_DEBUG){
-			this.gs.levelManager.difficulty = 4;
+			this.gs.levelManager.difficulty = 9;
 		}
 		/*if (this.firstTime) {
 			int NUMTEST = 4;

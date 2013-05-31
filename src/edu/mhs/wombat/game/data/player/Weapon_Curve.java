@@ -19,7 +19,7 @@ public class Weapon_Curve extends Weapon {
 
 	@Override
 	public String getName() {
-		return "curve";
+		return "curvetacular gun";
 	}
 
 }

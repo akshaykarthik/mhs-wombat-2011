@@ -22,7 +22,7 @@ public class Weapon_Mine extends Weapon {
 
 	@Override
 	public String getName() {
-		return "mine";
+		return "mine dropper";
 	}
 
 }

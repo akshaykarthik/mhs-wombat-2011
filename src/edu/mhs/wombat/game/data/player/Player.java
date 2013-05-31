@@ -45,6 +45,7 @@ public class Player implements Entity {
 	public Player() {
 		this.pos = new Vector2f(250, 250);
 		this.vel = new Vector2f(0, 0);
+		specialWeps.current_weapon = 3;
 	}
 
 	public void init(GameStatus gs) {

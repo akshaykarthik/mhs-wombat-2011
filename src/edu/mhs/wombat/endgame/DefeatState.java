@@ -39,7 +39,7 @@ public class DefeatState extends BasicGameState {
 
 		this.bg.render(g);
 		g.setFont(ResourceManager.getFont("font100"));
-		g.drawString("Defeat!", Globals.WIDTH / 2 - 20, Globals.HEIGHT / 2);
+		g.drawString("Defeat!", Globals.WIDTH / 2 - 140, Globals.HEIGHT / 2 - 50);
 
 	}
 

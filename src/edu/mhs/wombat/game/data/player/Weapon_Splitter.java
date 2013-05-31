@@ -15,7 +15,7 @@ public class Weapon_Splitter extends Weapon {
 
 	@Override
 	public float getAttackCD() {
-		return 350;
+		return 650;
 	}
 
 	@Override

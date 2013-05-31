@@ -3,7 +3,7 @@ package edu.mhs.wombat.game.data.player;
 import edu.mhs.wombat.game.GameStatus;
 
 public class WeaponSystem {
-	public int current_weapon = 3;
+	public int current_weapon = 4;
 
 	public Weapon[] weapons = new Weapon[] { new Weapon_Missile(), // linear
 																	// bullet
