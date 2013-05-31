@@ -136,6 +136,7 @@ public class MonkeyBossMonster extends Boss {
 		}
 		if (attacks.anyComplete()) {
 			attacks.resetAll();
+			cdTimer.resetAndStart();
 			bulletTime = 0;
 		}
 	}

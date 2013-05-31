@@ -25,7 +25,7 @@ public class Portal extends Monster {
 	private static final Color lineColor = new Color(0.4f, 0.4f, 0.4f, 0.4f);
 	public Vector2f pos;
 	public EntityState state;
-	
+
 	private static final float numMonsterTypes = 6;
 	private Timer _timer;
 	private Vector2f playerPos = new Vector2f();
@@ -87,25 +87,29 @@ public class Portal extends Monster {
 				}
 				this.new_level = false;
 				break;
-			case 5: 
-				if(this.new_level){
-					gs.addEntity(new MonkeyBossMonster(this.pos));
-				}
+
 			default:
-				Entity es = null;
-				float bag = 0;
-				while (bag <= this.difficulty * 1.0f) {
-					int tempID = (int) Math.floor((Math.random() * numMonsterTypes) + 0.5);
-					System.out.println("looping " + tempID + " " + bag + " " + this.difficulty * 1.0f);
-					if (_MonsterData.getDifficultyOnID(tempID) <= difficulty) {
-						es = _MonsterData.getMonsterOnId(tempID, this.pos);
-						bag += _MonsterData.getDifficultyOnID(tempID);
-						System.out.println("spawning");
-						
-					}
-					if (es != null) {
-						gs.addEntity(es);
-						spawnedEntities++;
+				if (this.new_level && difficulty % 5 == 0) {
+					gs.addEntity(new MonkeyBossMonster(this.pos));
+					this.new_level = false;
+				} else if (difficulty % 5 != 0) {
+					Entity es = null;
+					float bag = 0;
+					while (bag <= this.difficulty * 1.0f) {
+						int tempID = (int) Math
+								.floor((Math.random() * numMonsterTypes) + 0.5);
+						System.out.println("looping " + tempID + " " + bag
+								+ " " + this.difficulty * 1.0f);
+						if (_MonsterData.getDifficultyOnID(tempID) <= difficulty) {
+							es = _MonsterData.getMonsterOnId(tempID, this.pos);
+							bag += _MonsterData.getDifficultyOnID(tempID);
+							System.out.println("spawning");
+
+						}
+						if (es != null) {
+							gs.addEntity(es);
+							spawnedEntities++;
+						}
 					}
 				}
 				/* @formatter:off */
