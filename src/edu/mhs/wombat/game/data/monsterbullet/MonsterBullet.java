@@ -1,6 +1,5 @@
 package edu.mhs.wombat.game.data.monsterbullet;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -42,7 +41,6 @@ public class MonsterBullet implements Entity {
 		this.pos = source.copy();
 		Vector2f norm = target.copy().sub(this.pos.copy());
 		this.vel = norm.normalise().scale(velocity);
-
 		this.state = EntityState.ALIVE;
 	}
 
@@ -75,12 +73,9 @@ public class MonsterBullet implements Entity {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(Color.red);
 		image.setRotation((float) this.vel.getTheta());
 		if (Globals.isInField(this.pos))
 			image.drawCentered(this.pos.x, this.pos.y);
-
-		g.setColor(Color.white);
 	}
 
 	@Override

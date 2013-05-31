@@ -103,6 +103,7 @@ public class Player implements Entity {
 		this.image2.drawCentered(this.pos.x, this.pos.y);
 
 		// draw crosshair
+		g.setColor(this.health < (this.maxHealth/10f) ? Color.red : Color.white);
 		float ch_size = this.vel.length();
 		g.drawLine(mousepos.x, mousepos.y - ch_size, mousepos.x, mousepos.y);
 		g.drawLine(mousepos.x, mousepos.y + ch_size, mousepos.x, mousepos.y);

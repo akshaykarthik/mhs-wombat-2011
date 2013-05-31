@@ -2,7 +2,6 @@ package edu.mhs.wombat.preloader;
 
 import java.io.IOException;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -49,7 +48,8 @@ public class PreloaderState extends BasicGameState {
 		unicodeFont.setDisplayListCaching(true);
 
 		this.font = unicodeFont;
-		unicodeFont = new UnicodeFont("assets/fonts/AliquamREG.ttf", 40, false,
+		unicodeFont 
+		= new UnicodeFont("assets/fonts/AliquamREG.ttf", 40, false,
 				false);
 		unicodeFont.getEffects().add(new ColorEffect());
 		unicodeFont.addAsciiGlyphs();
@@ -68,11 +68,6 @@ public class PreloaderState extends BasicGameState {
 		g.drawString(this.description, 250, 350);
 		g.drawRoundRect(100, 500, Globals.WIDTH - 200, 10, 10);
 		g.fillRoundRect(100, 500, (Globals.WIDTH - 200) * this.percent, 10, 10);
-		g.setColor(Color.red);
-		g.fillArc(98, 450, 100, 100, 0, 360 * this.percent);
-		g.setColor(Color.white);
-		g.drawArc(99, 450, 99, 99, 0, 360 * this.percent);
-
 	}
 
 	private float timer = 0.0f;

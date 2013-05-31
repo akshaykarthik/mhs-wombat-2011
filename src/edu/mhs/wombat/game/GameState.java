@@ -22,15 +22,15 @@ public class GameState extends BasicGameState {
 	@Override
 	public void init(GameContainer container, StateBasedGame game)
 			throws SlickException {
+	}
+
+	@Override
+	public void enter(GameContainer container, StateBasedGame game) {
 		this.gm = game;
 		this.gs = new GameStatus();
 		if(Globals.GAME_DEBUG){
 			this.gs.levelManager.difficulty = 4;
 		}
-	}
-
-	@Override
-	public void enter(GameContainer container, StateBasedGame game) {
 		/*if (this.firstTime) {
 			int NUMTEST = 4;
 			int sqrtNumTest = (int) Math.sqrt(NUMTEST);

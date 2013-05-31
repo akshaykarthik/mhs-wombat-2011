@@ -19,15 +19,15 @@ import edu.mhs.wombat.utils.ResourceManager;
 import edu.mhs.wombat.utils.Timer;
 import edu.mhs.wombat.utils.TimerList;
 
-public class MonkeyBossMonster extends Monster {
+public class MonkeyBossMonster extends Boss {
 	private static Image image;
 	private final Shape hitbox;
 
 	private int currentAttack;
 	private Timer cdTimer;
 	private TimerList attacks;
-	private final int attack2Projectiles = 30;
-	
+	private final int attack2Projectiles = 15;
+
 	public Vector2f pos;
 	public Vector2f vel;
 	public EntityState state;
@@ -46,14 +46,15 @@ public class MonkeyBossMonster extends Monster {
 		this.pos = new Vector2f(ix, iy);
 		this.vel = new Vector2f(0, 0);
 
-		cdTimer = new Timer(2500);
+		cdTimer = new Timer(5000);
 		cdTimer.setStarted(true);
 		attacks = new TimerList();
 		attacks.addTimer(new Timer(3600, false));
 		attacks.addTimer(new Timer(3000, false));
 		attacks.resetAll();
 		if (image == null) {
-			image = ResourceManager.getImage("monsters_boss_1").getScaledCopy(1.0f);
+			image = ResourceManager.getImage("monsters_boss_1").getScaledCopy(
+					1.0f);
 			image.setCenterOfRotation(image.getWidth() / 2f,
 					image.getHeight() / 2f);
 		}
@@ -77,36 +78,45 @@ public class MonkeyBossMonster extends Monster {
 
 	}
 
+	private int bulletCount = 0;
+	private int bulletTime = 0;
+	private int bulletFrame = 750;
+
 	@Override
 	public void update(StateBasedGame game, GameStatus gs, int delta) {
-		
-		if (attacks.allDefault() && cdTimer.isComplete()) {
-			currentAttack = (int) Math.floor(Math.random() * (attacks.size() - 1)
-					+ 0.5);
+
+		if (!attacks.anyActive() && cdTimer.isComplete()) {
+			currentAttack = (int) Math.floor(Math.random()
+					* (attacks.size() - 1) + 0.5);
 			attacks.get(currentAttack).resetAndStart();
-		} else if (attacks.anyActive()) {
+		} else if (attacks.anyActive() && !attacks.anyComplete()) {
 			attacks.get(currentAttack).update(delta);
 			float attackPercent = attacks.get(currentAttack).percent();
 			if (currentAttack == 0) {
-				if ((attackPercent * 100) % 5 == 0) {
+				bulletTime += delta;
+				if (bulletTime > bulletFrame) {
+					bulletCount++;
+				}
+				gs.addEntity(new MonsterBullet(this.pos, this.pos.copy().add(
+						this.vel.copy().add(bulletCount * 50)), 5, 2.5f));
+
+			} else if (currentAttack == 1 && Math.random() > 0.97) {
+				for (int i = 0; i < attack2Projectiles; i++) {
 					gs.addEntity(new MonsterBullet(this.pos, this.pos.copy()
-							.add(this.vel.copy().add(attackPercent * 360)), 5,
-							15));
+							.add(this.vel.copy().add(
+									360 / this.attack2Projectiles * i)), 12.5f,
+							2.5f));
 				}
-			} else if (currentAttack == 1){
-				for(int i = 0; i < attack2Projectiles; i++){
-					gs.addEntity(new MonsterBullet(this.pos, this.pos.copy().add(
-						this.vel.copy().add(360 / this.attack2Projectiles * i)),
-						12.5f, 10));
-				}
+
 			}
 		} else {
 			cdTimer.update(delta);
 			this.vel = gs.player.pos.copy().sub(this.pos.copy()).normalise();
-		/*	this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -0.5
-					: 0.5)));
-			this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5 ? -0.5
-					: 0.5)));*/
+			/*
+			 * this.vel.x = ((float) (this.vel.x + (Math.random() < 0.5 ? -0.5 :
+			 * 0.5))); this.vel.y = ((float) (this.vel.y + (Math.random() < 0.5
+			 * ? -0.5 : 0.5)));
+			 */
 			this.pos = this.pos.add(this.vel);
 
 			if (!MathU.inBounds(this.pos.x, 1, Globals.ARENA_WIDTH - 1))
@@ -123,6 +133,10 @@ public class MonkeyBossMonster extends Monster {
 
 			if (this.vel.length() > this.maxvel)
 				this.vel.normalise().scale(this.maxvel);
+		}
+		if (attacks.anyComplete()) {
+			attacks.resetAll();
+			bulletTime = 0;
 		}
 	}
 

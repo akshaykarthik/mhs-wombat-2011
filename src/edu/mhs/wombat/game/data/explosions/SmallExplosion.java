@@ -1,6 +1,5 @@
 package edu.mhs.wombat.game.data.explosions;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Circle;
@@ -96,8 +95,6 @@ public class SmallExplosion extends Bullet {
 		if (Globals.isInField(this.pos)) {
 			image.drawCentered(this.pos.x, this.pos.y);
 		}
-
-		g.setColor(Color.white);
 	}
 
 	@Override

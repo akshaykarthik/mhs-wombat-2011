@@ -47,7 +47,15 @@ public class TimerList {
 
 	public boolean anyActive() {
 		for (Timer t : timers) {
-			if (t.percent() != 0) {
+			if (t.isStarted()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean anyComplete() {
+		for(Timer t : timers){
+			if(t.isComplete()){
 				return true;
 			}
 		}

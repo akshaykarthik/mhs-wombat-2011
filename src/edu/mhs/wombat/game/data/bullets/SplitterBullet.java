@@ -1,6 +1,5 @@
 package edu.mhs.wombat.game.data.bullets;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -77,11 +76,8 @@ public class SplitterBullet extends Bullet {
 
 	@Override
 	public void render(StateBasedGame game, Graphics g) {
-		g.setColor(Color.red);
 		image.setRotation((float) this.vel.getTheta());
 		image.drawCentered(this.pos.x, this.pos.y);
-
-		g.setColor(Color.white);
 	}
 
 	@Override
