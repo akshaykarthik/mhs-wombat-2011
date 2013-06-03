@@ -18,8 +18,8 @@ public class Globals {
 	public static final float TRANSITION_FACTOR2 = 1.5f;
 	public static final float TRANSITION_FACTOR3 = 500f;
 
-	public static final boolean DEBUG = true;
-	public static boolean GAME_DEBUG = true;
+	public static final boolean DEBUG = false;
+	public static boolean GAME_DEBUG = false;
 
 	public static boolean isInField(Vector2f pos) {
 		return (pos.x >= 0 && pos.x <= ARENA_WIDTH)

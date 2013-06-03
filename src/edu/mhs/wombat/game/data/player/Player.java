@@ -27,8 +27,8 @@ public class Player implements Entity {
 	public float dv = 10;
 	public float mv = 10;
 
-	public float health = 75;
-	public float energy = 75;
+	public float health = 100;
+	public float energy = 100;
 	public float maxEnergy = 100;
 	public float maxHealth = 100;
 

@@ -28,21 +28,17 @@ public class GameState extends BasicGameState {
 	public void enter(GameContainer container, StateBasedGame game) {
 		this.gm = game;
 		this.gs = new GameStatus();
-		if(Globals.GAME_DEBUG){
+		if (Globals.GAME_DEBUG) {
 			this.gs.levelManager.difficulty = 9;
 		}
-		/*if (this.firstTime) {
-			int NUMTEST = 4;
-			int sqrtNumTest = (int) Math.sqrt(NUMTEST);
-			for (int i = 0; i < sqrtNumTest; i++) {
-				for (int j = 0; j < sqrtNumTest; j++) {
-					float posx = 10 + i * Globals.ARENA_WIDTH / sqrtNumTest;
-					float posy = 10 + j * Globals.ARENA_HEIGHT / sqrtNumTest;
-					this.gs.addEntity(new Portal(posx, posy, 2500f));
-				}
-			}
-			this.firstTime = false;
-		}*/
+		/*
+		 * if (this.firstTime) { int NUMTEST = 4; int sqrtNumTest = (int)
+		 * Math.sqrt(NUMTEST); for (int i = 0; i < sqrtNumTest; i++) { for (int
+		 * j = 0; j < sqrtNumTest; j++) { float posx = 10 + i *
+		 * Globals.ARENA_WIDTH / sqrtNumTest; float posy = 10 + j *
+		 * Globals.ARENA_HEIGHT / sqrtNumTest; this.gs.addEntity(new
+		 * Portal(posx, posy, 2500f)); } } this.firstTime = false; }
+		 */
 
 	}
 
@@ -54,7 +50,7 @@ public class GameState extends BasicGameState {
 	@Override
 	public void render(GameContainer container, StateBasedGame game, Graphics g)
 			throws SlickException {
-		g.setAntiAlias(!Globals.GAME_DEBUG);
+		//g.setAntiAlias(!Globals.GAME_DEBUG);
 
 		// draw with camera
 		Camera.preDraw(g, this.gs);
@@ -85,10 +81,10 @@ public class GameState extends BasicGameState {
 	public void update(GameContainer container, StateBasedGame game, int delta)
 			throws SlickException {
 		this.hs.update(game, this.gs, delta);
-		if (!this.paused){
+		if (!this.paused) {
 			this.gs.update(game, delta);
 		}
-		if(gs.player.health <= 0){
+		if (gs.player.health <= 0) {
 			StateUtils.switchTo(this.gm, States.DEFEAT);
 		}
 	}
@@ -105,27 +101,29 @@ public class GameState extends BasicGameState {
 			this.resume();
 		}
 
-		if (key == Input.KEY_F1) {
-			Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
-		}
+		if (Globals.DEBUG) {
+			if (key == Input.KEY_F1) {
+				Globals.GAME_DEBUG = !Globals.GAME_DEBUG;
+			}
 
-		if (key == Input.KEY_F6) {
-			this.gs.player.energy -= 10;
-		}
+			if (key == Input.KEY_F6) {
+				this.gs.player.energy -= 10;
+			}
 
-		if (key == Input.KEY_F8) {
-			this.gs.player.health += 10;
-		}
-		if (key == Input.KEY_F7) {
-			this.gs.player.health -= 10;
-		}
+			if (key == Input.KEY_F8) {
+				this.gs.player.health += 10;
+			}
+			if (key == Input.KEY_F7) {
+				this.gs.player.health -= 10;
+			}
 
-		if (key == Input.KEY_F12) {
-			this.gs.clear();
-		}
-		if (key == Input.KEY_F11) {
-			for (int i = 0; i < 100; i++) {
-				this.gs.addEntity(new RandomWalkerMonster(150, 150));
+			if (key == Input.KEY_F12) {
+				this.gs.clear();
+			}
+			if (key == Input.KEY_F11) {
+				for (int i = 0; i < 100; i++) {
+					this.gs.addEntity(new RandomWalkerMonster(150, 150));
+				}
 			}
 		}
 	}
